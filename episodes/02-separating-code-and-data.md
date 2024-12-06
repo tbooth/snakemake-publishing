@@ -35,4 +35,5 @@ The goal is that:
    - output results
    - logs and metrics
 
-At what point do I want to talk about "snakedeploy"? I still don't get what it does.
+At what point do I want to talk about "snakedeploy"? I still don't get what it does. Need to do
+some testing of that on the sample workflow.

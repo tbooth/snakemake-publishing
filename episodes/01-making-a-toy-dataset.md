@@ -4,22 +4,20 @@ teaching: 30
 exercises: 30
 ---
 
-In this episode, we'll consider how to make a toy dataset for your workflow.
+In this episode, we'll consider how and why to make a toy dataset for your workflow.
 
 ## Integration testing and regression testing (and unit testing)
 
 TODO - Give some practical examples.
 
-We already have a working workflow, so why are we now talking about testing it? Let's consider
-some specific issues that may arise when the workflow is set to work on a new analysis task on a
-new environment.
+We already have a working workflow, so why are we now talking about testing it? Things may
+not work so well when the workflow is set to work on a new analysis task on a
+new environment. Specifically...
 
-1) A specific step may not work on a specific new input. For example, does the filter step still
-work if the FASTQ is not gzipped? What if the filter criteria are too stringent and eliminate all
-the sequences? What if we try to index a reference genome contains ambiguous bases? You can't check
-every possible such case but it's good practise to look through your rules and see if there are
-obvious cases that could be tested. Such checks would be called "unit tests" as they test a single
-unit (in this case a rule) in your workflow.
+1) A specific step may fail with a new input file. For example, [add a better example]
+You can't anticipate every possible case but it's good practise to look through your rules and see
+if there are obvious cases that could be tested. Such checks would be called "unit tests" as they
+test a single unit (in this case a rule) in your workflow.
 
 2) A workflow that runs on one system (like your local compute server) may not run on another system.
 Maybe you depend on particular software versions, including Snakemake itself? Maybe you assume
@@ -59,7 +57,7 @@ many uses.
 1. If you developed the pipeline on your own research data, this may not be freely redistributable.
    The toy dataset should be at least as re-usable as the pipeline itself.
 
-## Startegy for making a toy dataset
+## Strategy for making a toy dataset
 
 Here we need a practical example. We can base it on the existing sample data.
 
@@ -67,3 +65,11 @@ Do I want to say anything about making a sample dataset for genome assembly?
 - Maybe using https://github.com/lh3/wgsim
 
 I'm not sure if this belongs here, but it is cool, and worth a look.
+
+Yes, I think it does. Making a toy "genome" and then generating some reads from it is a good
+idea.
+
+So I could add the stuff I tried out in ~/wgsim_test and make it be a practical, then show it
+working on the assembly workflow.
+
+

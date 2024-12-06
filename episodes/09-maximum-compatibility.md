@@ -13,4 +13,4 @@ in itself?
 
 3) Container and Conda deployments.
 
-That's probably it.
+That's probably it. Plenty to be getting on with.

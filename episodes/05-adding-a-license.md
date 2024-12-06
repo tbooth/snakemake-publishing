@@ -14,3 +14,7 @@ Chosing a license:
  - Is it compatible with the tools you are using?
  - Is it suitable for your users?
  - Is it acceptable to your employer?
+
+# A citation file
+
+Here we can explain the citation .cff and how to make it, and how to validate it.
