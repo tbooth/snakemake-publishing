@@ -7,7 +7,7 @@ exercises: 30
 Explain the difference between licence and copyright.
 
 Explain the difference between legal restrictions and requests. Ie. "please cite" vs.
-"you must cite".
+"you must cite", and why this is problematic for sharing services.
 
 Chosing a license:
 
@@ -18,3 +18,6 @@ Chosing a license:
 # A citation file
 
 Here we can explain the citation .cff and how to make it, and how to validate it.
+
+Apparently the .cff file is parsed by WFH and translated to the format needed for RO-Crate,
+so that's good.

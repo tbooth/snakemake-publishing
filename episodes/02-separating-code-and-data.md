@@ -14,6 +14,8 @@ for your initial analysis.
 Suggested file locations as per Snakemake. Where's the link?? Now we have a Snakefile and a toy
 dataset we can start to split things out.
 
+https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html
+
 Snakefile into workflow/Snakefile
 Sample data into .tests/integration (explain the term integration testing. Maybe in the previous ep?)
 Sample config into ???
@@ -24,7 +26,7 @@ The goal is that:
    - configurable items
    - hard-coded strings or paths (eg. location of reference files)
    - optional steps (not sure if it belongs here but it's relevant)
-   - optional/additonal prameters to rules (as a general strategy)
+   - optional/additional prameters to rules (as a general strategy)
 2) We can run the unmodified Snakefile on different computers
    - hard-coded strings or paths eg. scratch or home or working directories
 3) We do not have everything in the same directory. Specifically:

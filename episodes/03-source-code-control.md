@@ -15,37 +15,31 @@ Commit = a snapshot of all code files at a certain point it time. Git gives each
 you can always refer to it unambiguously and retrieve the code as long as it is stored in some
 git database.
 
-Branch = a series of commits recording code development. In the simplest case we work on a single
-branch and the commits just form a timeline. You can make new branches for various reasons, but
-we'll not worry about that here
+Branch = a series of commits recording code development. In the simple case we work on a single
+branch and the commits will form a timeline. You can make new branches for various reasons, but
+we'll not worry about that here, so just think of a branch as a timeline of work.
 
-Tag = a name you attach to a commit. We want to use tags to indicate versions of the code. The
-match between the tag in git and the version in Workflowhub wil tie everything together.
+Tag = git allows you to give a name to any commit. We want to use tags to indicate versions of the
+code. The match between the tag in git and the version in Workflowhub will tie everything together.
 
 ## Git + GitHub + WorkflowHub
 
 Explain how these components interact. I need a diagram with paths going between them.
 
-## Sematic versioning
+GitHub is the most popular service for hosting code managed in Git. It's by no means the only one,
+as there are other public Git repository hosts, and you may well have one hosted by your
+institution. It's also possible to use Git without a repository, but this negates many of the
+advantages of using Git.
 
-This probably should live here. I think most people have seen this. It bears repeating:
+Note that moving code, with the entire commit history, between different Git hosting services is
+very easy, so you will not be locked in to your first choice.
 
-v1.2.3 = major + minor + patch
+## Callout on Git dangers
 
-Explain what they do. Changing to a new patch version should not affect the output at all, other
-than in the case of fixing something which is clearly broken.
+Many people worry about sharing their un-finished code in a public repository. In practise, there
+is not much to fear but there are some specific dangers.
 
-The decision over whether to make a major or minor release is more subjective. For some software
-(bowtie and bwa are a case in point) the new major release is a re-write such that the new version
-is essentially a whole new program in itself, so it's reasonable to say that making a major release
-is on the same level as giving the software a new name.
+The main one is leaking passwords, authentication tokens, and private data,
 
-v0.x releases - used for development. The minor and patch numbers are understood to be less
-meaningful
-
-v24.12.p format - a variation where you still use the major+minor+patch format but rather than just
-adding the the major and minor versions sequentially you use the 2-digit year (24) and the month.
-The patch number is still just a sequential number. Used in a few popular projects, but an obvious
-isse is that you can never have more than one minor release in a month.
-
+*** TODO - maybe say something about credential management. Does that belong here?
 

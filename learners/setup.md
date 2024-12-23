@@ -2,9 +2,6 @@
 title: Setup
 ---
 
-FIXME: Setup instructions live in this document. Please specify the tools and
-the data sets the Learner needs to have installed.
-
 ## Data Sets
 
 <!--
@@ -12,6 +9,9 @@ FIXME: place any data you want learners to use in `episodes/data` and then use
        a relative link ( [data zip file](data/lesson-data.zip) ) to provide a
        link to it, replacing the example.com link.
 -->
+We'll need to start with a sample Snakefile. I think the assembly one from the main
+course seems reasonable.
+
 Download the [data zip file](https://example.com/FIXME) and unzip it to your Desktop
 
 ## Software Setup
@@ -20,10 +20,9 @@ Download the [data zip file](https://example.com/FIXME) and unzip it to your Des
 
 ### Details
 
-Setup for different systems can be presented in dropdown menus via a `spoiler`
-tag. They will join to this discussion block, so you can give a general overview
-of the software used in this lesson here and fill out the individual operating
-systems (and potentially add more, e.g. online setup) in the solutions blocks.
+You will need the Snakemake software installed and working. One way to do this is to follow
+the same setup instructions as for the [Snakemake for Bioinformatics lesson](
+https://carpentries-incubator.github.io/snakemake-novice-bioinformatics/#software-installation).
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -31,7 +30,8 @@ systems (and potentially add more, e.g. online setup) in the solutions blocks.
 
 ### Windows
 
-Use PuTTY
+This lesson is currently not tested to work on Windows. You may use a WSL Linux environment,
+or else connect to a Linux system.
 
 ::::::::::::::::::::::::
 
@@ -48,7 +48,7 @@ Use Terminal.app
 
 ### Linux
 
-Use Terminal
+You are good.
 
 ::::::::::::::::::::::::
 

@@ -13,4 +13,12 @@ in itself?
 
 3) Container and Conda deployments.
 
+Conda is already covered in the main tutorial but there is a bit more to say.
+Containers are a whole new topic.
+
+## Callout - HPC systems and cloud compatibility
+
+Also, what about running on an HPC system? Do I want to go into any details about the profile setup
+for that? Maybe just link to the docs as a callout.
+
 That's probably it. Plenty to be getting on with.
