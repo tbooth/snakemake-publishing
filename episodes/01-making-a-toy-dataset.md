@@ -4,6 +4,22 @@ teaching: 30
 exercises: 30
 ---
 
+::::::::::::::::::::::::::::::::::::::: objectives
+
+- Learn about unit tests, integration tests and regression tests
+- Review the example assembly workflow
+- Create a toy dataset to test the workflow
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- What do we mean by testing in the context of workflows?
+- What makes a suitable dataset for testing?
+- How do we go about designing tests?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 ## Publishing and sharing your workflows
 
 In this and the following episodes, we'll look at the requirements and considerations to make your
@@ -72,25 +88,23 @@ yeast transcriptome and are not going to assemble together. We could map reads b
 assembly and look to extract an assembly-friendly set, but in practise it's easier to go
 back to the transcriptome and make up some synthetic reads.
 
-################# code
+:::::::::::::::::::::::::: code
 
 $ zcat Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz | grep '^>' | wc -l
 6612
 
-######
+:::::::::::::::
 
 In this code, `zcat` deals with uncompressing the gzipped data, `grep` is selecting just the FASTA
 header lines, and this reveals that there are...
 
 6612 transcripts in our yeast transcriptome. Let's take the first five.
 
-################# code
-
+```bash
 $ zcat Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz | \
    fasta_formatter | \
    head -n 10 > first5.fa
-
-######
+```
 
 In the code above, the `fasta_formatter` is part of the standard fastx_toolkit (the same set of
 tools that includes `fastx_trimmer`) and this joins the sequences onto a single line each, meaning
@@ -99,24 +113,20 @@ that the first ten lines, as saved from the `head` command, contain the first fi
 We will now use `wgsim`, a simple short read simulator. It can be installed standalone but is
 normally packaged with samtools [linky] (check it really is in the conda package).
 
-############### code
-
+```bash
 $ wgsim -e0.01 -d50 -N100 -175 -275 top5.fa toy_1_1.fq  toy_1_2.fq
 $ wgsim -e0.01 -d50 -N100 -175 -275 top5.fa toy_2_1.fq  toy_2_2.fq
-
-######
+```
 
 With the above commands, we generate a total of 200 read pairs (`-N100`) with a read length of 75
 (`-175 -275`). The `-d` parameter sets the virtual fragment length and the `-e0.01` add a few
 errors in the reads. We can confirm that these reads do assemble (to some extent) with velvet.
 
-############# code
-
+```bash
 $ velveth velvet_toy 21 -shortPaired -fastq -separate toy_1_1.fq toy_1_2.fq toy_2_1.fq toy_2_2.fq
 $ velvetg velvet_toy
 $ tail velvet_toy/contigs.fa
-
-########
+```
 
 The exact result will vary since there are random variables in both the `wgsim` read generation
 and the `velveth` graph construction, but you should expect to see around 60 contigs. By no means
@@ -157,8 +167,10 @@ Failing that, ask yourself what should always be true. Let's have a multiple gue
 
 And finally we'll just have a script that runs the test and makes some cursory checks.
 
+```bash
 $ snakemake -Fn ...
 $ check that the final output has 4 lines in there
+```
 
 ## Callout - continuous integration
 

@@ -4,6 +4,21 @@ teaching: 30
 exercises: 30
 ---
 
+::::::::::::::::::::::::::::::::::::::: objectives
+
+- Understand the difference between license and copyright
+- Understand what might inform, or limit, our choice of license
+- Add a license to our own code
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- What OSI licenses are available?
+- How do I record ownership and authorship of my code?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 Explain the difference between licence and copyright.
 
 Explain the difference between legal restrictions and requests. Ie. "please cite" vs.

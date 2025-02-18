@@ -4,6 +4,21 @@ teaching: 30
 exercises: 30
 ---
 
+::::::::::::::::::::::::::::::::::::::: objectives
+
+- Add resources to our rules
+- Something something containers?
+- ???
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- TODO
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+
 This is currently a placeholder for several things.
 
 1) Resources. Setting them and adding them. That could be most of this episode. Maybe an episode

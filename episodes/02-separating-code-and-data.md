@@ -4,6 +4,21 @@ teaching: 30
 exercises: 30
 ---
 
+::::::::::::::::::::::::::::::::::::::: objectives
+
+- Separate the code of our workflow from the configuration
+- Remove hard-coded paths and machine-specific settings
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- What makes for tidy code, and why do we care?
+- What features of Snakemake can help?
+- How does this fit in with testing?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 Note sure this is a whole episode? It's basically a big code tidy-up, and we have to explain what
 it means for code to be "tidy" and why we care. Most tutorials exhort you to be tidy from the
 start, but in practise everyone making a new workflow will start by just "getting it done" and
@@ -19,6 +34,8 @@ https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html
 Snakefile into workflow/Snakefile
 Sample data into .tests/integration (explain the term integration testing. Maybe in the previous ep?)
 Sample config into ???
+
+## What makes for tidy workflow code?
 
 The goal is that:
 
