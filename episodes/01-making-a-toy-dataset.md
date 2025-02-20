@@ -135,20 +135,18 @@ We will now use `wgsim`, a simple short read simulator. It can be installed stan
 normally [packaged with samtools](https://anaconda.org/bioconda/samtools/files).
 
 ```bash
-$ wgsim -e0.01 -d50 -N80 -175 -275 first5.fa toy_1_1.fq  toy_1_2.fq
-$ wgsim -e0.01 -d50 -N80 -175 -275 first5.fa toy_2_1.fq  toy_2_2.fq
-$ wgsim -e0.01 -d50 -N80 -175 -275 first5.fa toy_3_1.fq  toy_3_2.fq
+$ wgsim -e0.01 -d50 -N120 -175 -275 first5.fa toy_1_1.fq toy_1_2.fq
+$ wgsim -e0.01 -d50 -N120 -175 -275 first5.fa toy_2_1.fq toy_2_2.fq
 ```
 
-With the above commands, we generate a total of 240 read pairs (`-N80`) with a read length of 75
+With the above commands, we generate a total of 240 read pairs (`-N120`) with a read length of 75
 (`-175 -275`). The `-d` parameter sets the virtual fragment length and the `-e0.01` add a few
 errors in the reads. We can confirm that these reads do assemble (to some extent) with velvet.
 
 ```bash
 $ velveth velvet_toy 21 -shortPaired -fastq -separate \
     toy_1_1.fq toy_1_2.fq \
-    toy_2_1.fq toy_2_2.fq \
-    toy_3_1.fq toy_3_2.fq
+    toy_2_1.fq toy_2_2.fq
 $ velvetg velvet_toy
 $ tail velvet_toy/contigs.fa
 ```
@@ -157,6 +155,13 @@ The exact result will vary since there are random variables in both the `wgsim` 
 and the `velveth` graph construction, but you should expect to see around 60 contigs. By no means
 a good assembly, but this is not the point. The longest contig is a few hundred bases and this
 is enough. It may be biological nonsense, but now have a suitable toy dataset for our workflow.
+
+Let's put these into a test directory.
+
+```
+$ mkdir -p tests/integration/toy_reads
+$ mv -v toy_*.fq tests/integration/toy_reads
+```
 
 :::::::::::::::::: callout
 
@@ -181,38 +186,65 @@ These toy reads will be the basis of our automated tests.
 
 :::::::::::::::::: challenge
 
-## Running the toya dataset
+## Running the toy dataset
 
 Starting with the original working answer, adapt the assembler Snakefile so that it processes
-these reads.
+these toy reads and assembles them with the four different k-mer length settings.
+
+What did you need to change?
 
 :::::::::::: solution
 
-What did I need to change?
+Assuming you started with the sample answer, three changes are needed:
+
+1) The `CONDITIONS` list needs to change to just `["toy"]`
+2) In the `cutadapt` rule, the `input` directory needs to change from `reads` to
+   `tests/integration/toy_reads`.
+3) In the `concatenate` rule, the `input` lists need to be shortened from three to two
+   items.
 
 :::::::::::
 
 :::::::::::::::
 
-It's easiest to decide if a test has passed of failed if the expected output is identical every
-time.
-Get them to work out if this is the case here.
+It's easiest to decide if a test has passed or failed if the expected output is identical every
+time, but that might not be the case here as the assemblies can vary a bit. If we can't guarantee
+identical output, we can at least make some stipulations for the test run to be judged successful.
 
-Failing that, ask yourself what should always be true. Let's have a multiple guess:
+:::::::::::::::::: challenge
 
-1) There will always be a contig longer than 300bp
-2) The output file will always have 4 lines
-3) The last contig will always be "contig_57"
-4) Other stuff
+Which of these should always be true for our toy dataset? Which would be most reasonable to check?
 
-And finally we'll just have a script that runs the test and makes some cursory checks.
+1) There will always be a contig *longer than 300bp*
+2) There will always be a contig *longer than 500bp*
+3) The max contig with *k21* will be longer than with *k25*
+3) There will always be exactly 313 contigs in total, over all output files
+4) There will be over 50 contigs in every output file
+
+::::::::::::::::
+
+Finally, we can look to automate the tests. This version just checks that the
+`assem/toy_k19_max_contig.txt` file has a number over 300. We'll save this into
+a file named `tests/integration/run.sh`.
 
 ```bash
-$ snakemake -Fn ...
-$ check that the final output has 4 lines in there
+#!/bin/bash
+
+snakemake -F --use-conda -j1
+max_len=$( egrep -o '[0-9]+$' assem/toy_k19_max_contig.txt )
+if [[ "$max_len"  > 300 ]] ; then echo PASS ; else echo FAIL ; fi
 ```
 
-## Callout - continuous integration
+The fist line marks this out as a shell script. After running *snakemake*, the `egrep -o ...`
+command is used to get just the number from the file, the `max_len=$( ... )` syntax captures
+that number into a shell variable named `max len`, and we can use internal shell arithmetic to
+check the number is >300, finally printing *PASS* or *FAIL*.
 
-No technical details, but mention that once we have Git we can consider GitHub CI
-or whatever.
+And we can run the test in the terminal:
+
+```bash
+$ chmod +x tests/integration/run.sh
+$ tests/integration/run.sh
+```
+
+It's simple, and it can be improved, but it works. Our workflow has an integration test.
