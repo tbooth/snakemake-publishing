@@ -7,14 +7,14 @@ exercises: 30
 ::::::::::::::::::::::::::::::::::::::: objectives
 
 - Separate the code of our workflow from the configuration
-- Remove hard-coded paths and machine-specific settings
+- Have a single workflow that runs on our original and test data
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- What makes for tidy code, and why do we care?
-- What features of Snakemake can help?
+- What needs to be configurable in our workflow?
+- How do we express these settings using the Snakemake config mechanism?
 - How does this fit in with testing?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -27,7 +27,7 @@ the code from the configuration, and have a single Snakefile that assembles eith
 reads, or the toy reads, or any other reads, according to the *config* settings.
 
 We have already learned about the use of the `--config` and `--configfile` options to Snakemake,
-and we will now rearrange our workflow into three files:
+and we will now rearrange our workflow and configuration into three files:
 
 * `Snakefile` which will have all the rules
 * `yeast_config.yaml` which will assemble the original test reads
@@ -76,59 +76,70 @@ Hint: to vary the number of replicates in the *concatenate* rule, you can use an
 expression, but you will need to put extra brackets around `{{condition}}` to avoid getting a
 `WildcardError`.
 
-::::::::
+:::::::::: solution
 
+This is an equivalent config file, which could go under `tests/integration/toy_config.yaml`:
 
-Note sure this is a whole episode? It's basically a big code tidy-up, and we have to explain what
-it means for code to be "tidy" and why we care. Most tutorials exhort you to be tidy from the
-start, but in practise everyone making a new workflow will start by just "getting it done" and
-worry about tidying it up later. So we'll not deny this reality. You must be prepared to
-substantially re-write and re-organise your code to make it re-usable, even if you got it working
-for your initial analysis.
+```
+conditions: ["toy"]
+reads_dir: "tests/integration/toy_reads"
+replicates: ["1", "2"]
+```
 
-Suggested file locations as per Snakemake. Where's the link?? Now we have a Snakefile and a toy
-dataset we can start to split things out.
+In the Snakefile, at the top:
 
-https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html
+```
+CONDITIONS = config["conditions"]
+```
 
-Snakefile into workflow/Snakefile
-Sample data into .tests/integration (explain the term integration testing. Maybe in the previous ep?)
-Sample config into ???
+In the *cutadapt* rule, there are other ways to write this but this is probably the simplest:
 
-## What makes for tidy workflow code?
+```
+input:
+    read1 = config["reads_dir"] + "/{sample}_1.fq",
+    read2 = config["reads_dir"] + "/{sample}_2.fq",
+```
 
-The goal is that:
+In the *concatenate* rule, we need to change not only the input patterns but the number
+of inputs based upon the configured replicates. Again, there are different ways to do this
+but this will work. The `{rep}` gets replaced with replicate numbers by the `expand()` function
+but then the `{{condition}}` keyword remains as `{condition}` so it still acts as a wildcard.
 
-1) We can run the unmodified Snakefile on different input data
-   - configurable items
-   - hard-coded strings or paths (eg. location of reference files)
-   - optional steps (not sure if it belongs here but it's relevant)
-   - optional/additional prameters to rules (as a general strategy)
-2) We can run the unmodified Snakefile on different computers
-   - hard-coded strings or paths eg. scratch or home or working directories
-3) We do not have everything in the same directory. Specifically:
-   - code
-   - configuration
-   - input data
-   - intermediate files
-   - output results
-   - logs and metrics
+```
+input:
+    read1s = expand("cutadapt/{{condition}}_{rep}_1.fq", rep=config["replicates"]),
+    read2s = expand("cutadapt/{{condition}}_{rep}_2.fq", rep=config["replicates"]),
+```
 
-At what point do I want to talk about "snakedeploy"? I still don't get what it does. Need to do
-some testing of that on the sample workflow.
+In the `tests/integration/run.sh` script we just need an extra `--configfile` parameter
+when calling snakemake.
+
+```
+snakemake -F --use-conda -j1 --configfile tests/integration/toy_config.yaml
+```
+
+:::::::
+
+:::::::::::
+
+If you have not done so already, move the `toy_config.yaml` file to the tests/integration
+directory and run the `run.sh` script to reassure yourself the test still works.
 
 :::::::::::::: callout
 
 ## What if the different conditions have a different number of replicates?
 
-This situation can be handled. The configuration could look like this:
+This situation can be handled. The configuration could look like this.
 
 ```
-conditions:
-    ref:    ["1", "2", "3"]
-    etoh60: ["1", "2"]
-    temp33: ["2", "3"]
 reads_dir: "reads"
+conditions:
+    ref:
+      replicates: ["1", "2", "3"]
+    etoh60:
+      replicates: ["1", "2"]
+    temp33:
+      replicates: ["2", "3"]
 ```
 
 The input for the *concatenate* rule now gets a bit more complex.
@@ -137,14 +148,15 @@ The input for the *concatenate* rule now gets a bit more complex.
 input:
     read1s = lambda wc: expand( "cutadapt/{condition}_{rep}_1.fq",
                                 condition=wc.condition,
-                                rep=config["conditions"][wc.condition]),
+                                rep=config["conditions"][wc.condition]["replicates"]),
     read2s = lambda wc: expand( "cutadapt/{condition}_{rep}_2.fq",
                                 condition=wc.condition,
-                                rep=config["conditions"][wc.condition]),
+                                rep=config["conditions"][wc.condition]["replicates"]),
 ```
 
 To understand this, you need to read about [input functions](
 https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#input-functions)
-in the Snakemake docs. A `lambda:` expression in Python defines an anonymous function.
+in the Snakemake docs. Using input functions allows you to go beyond the basic wildcard
+replacement logic for rule inputs. The `lambda:` keyword in Python defines an anonymous function.
 
 ::::::::::
