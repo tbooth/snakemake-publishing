@@ -31,6 +31,8 @@ course then they should be already familiar with writing pipelines in Snakemake,
 Learners should also follow the set-up instructions for the introductory course, in order to have
 the full software environment.
 
+::::::::::::::::::::::
+
 ## Notes
 
 [WorkflowHub.eu][wfh] is a a FAIR registry for describing, sharing and publishing scientific
