@@ -68,10 +68,11 @@ contact: 'tim.booth@ed.ac.uk'
 episodes:
 - 01-making-a-toy-dataset.md
 - 02-separating-code-and-data.md
-- 03-source-code-control.md
-- 04-using-standrd-file-locations.md
+- 03-using-standard-file-locations.md
+- 04-source-code-control.md
 - 05-adding-a-license.md
-- 07-upload-to-workflowhub.md
+- 06-upload-to-workflowhub.md
+- 07-ro-crates.md
 - 08-releasing-a-new-version.md
 - 09-maximum-compatibility.md
 

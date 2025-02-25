@@ -4,44 +4,87 @@ teaching: 30
 exercises: 30
 ---
 
-In this episode, we'll consider how to make a toy dataset for your workflow.
+::::::::::::::::::::::::::::::::::::::: objectives
 
-## Integration testing and regression testing (and unit testing)
+- Learn about unit tests, integration tests and regression tests
+- Review the example assembly workflow
+- Create a toy dataset to test the workflow
 
-TODO - Give some practical examples.
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
-We already have a working workflow, so why are we now talking about testing it? Let's consider
-some specific issues that may arise when the workflow is set to work on a new analysis task on a
-new environment.
+:::::::::::::::::::::::::::::::::::::::: questions
 
-1) A specific step may not work on a specific new input. For example, does the filter step still
-work if the FASTQ is not gzipped? What if the filter criteria are too stringent and eliminate all
-the sequences? What if we try to index a reference genome contains ambiguous bases? You can't check
-every possible such case but it's good practise to look through your rules and see if there are
-obvious cases that could be tested. Such checks would be called "unit tests" as they test a single
-unit (in this case a rule) in your workflow.
+- What do we mean by testing in the context of workflows?
+- What makes a suitable dataset for testing?
+- How do we go about designing tests?
 
-2) A workflow that runs on one system (like your local compute server) may not run on another system.
-Maybe you depend on particular software versions, including Snakemake itself? Maybe you assume
-that certain paths or local databases are available. Maybe you assume that there is always network
-access. Maybe you have bugs that only manifest when multiple jobs are run in parallel.
-Tests that check that the whole workflow is operational are "integration tests" as they
-ensure all the components are working together. Integration tests are great to have when you are
-setting up the workflow on a new system, as they reassure you everything is working before you
-try to analyse real data.
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
-3) If you modify your workflow in future, how do you know that changes to add functionality or to
-fix one problem do not cause a new problem elsewhere? Such bugs in code are called "regressions"
-and "Regression tests" are checks you can make to reassure yourself you did not introduce any.
-In practise, both "unit tests" and "integration tests" can act as regression tests as long as you
-have the ability to go back and re-run them.
+## Publishing and sharing your workflows
 
-So, a "test suite" is a collection of unit tests and/or integration tests that can be run, ideally
-with a single script, whenever you modify the code or install the workflow on a new system. At
-minimum, your test suite will have an integration test that involves running the whole workflow
-based on your toy dataset.
+In this and the following episodes, we'll look at the requirements and considerations to make your
+workflow into a re-usable resource that you can publish and share. If all you want is to archive
+your code and get a DOI for publication then you may find that some of this is overkill, but if you
+envision your workflow being actively used in future then the time invested to follow these steps
+will be well worth it.
 
-Right. Now make that relevant to the example at hand.
+We will start with the assembly workflow from [episode 12 of the introductory lessons](
+https://carpentries-incubator.github.io/snakemake-novice-bioinformatics/12-assembly_challenge.html
+). We will take this workflow and imagine this is something that we are looking to publish.
+If you have your own working solution you may want to work with that, but for demonstration
+purposes we will use [the standard sample answer](
+https://carpentries-incubator.github.io/snakemake-novice-bioinformatics/files/ep12/sample_answer.Snakefile
+).
+
+In this first episode, we'll consider how and why to make a toy dataset for our workflow.
+
+## Integration testing and regression testing
+
+We are starting with a working workflow, so it may seem strange that we are now talking about
+testing it, but we want to assure ourselves that it will behave when set to work
+on a new analysis task or in a new computing environment.
+
+:::::::::::::::::::: challenge
+
+## Quick quiz
+
+What things might stop a Snakefile from running if it was copied over to a new system or given
+new data?
+
+:::::::::::::: solution
+
+A workflow may depend on:
+
+   * Details of the input data format or file naming
+   * Specific software packages, including Snakemake itself
+   * Features of a particular operating system
+   * Filesystem paths or local databases being available
+   * Network resources or internet access
+   * Additional files that are outside of the Snakefile
+   * Features or capacity of the hardware being used
+
+...and probably more.
+
+:::::::::::::
+
+::::::::::::::::
+
+A software test consists of some sample input data, a command to run, and an expected
+result. The test may run through the whole workflow, which would be termed an **integration test**,
+or you could make individual tests that run specific rules in the workflow and these would be
+called **unit tests**. *Either approach is valid here.* Such tests can be re-run at any time to
+check that the whole workflow is operational. When setting up the workflow on a new system,
+this provides reassurance that everything is working before any attempt to analyse real data.
+
+Further, if you modify your workflow in future, or want to use updated versions of tools, you want
+to be sure that your changes do not cause a new bug in something that already worked. Such bugs
+in code are called **regression**, and **regression tests** aim to show them up. In practise, both
+unit tests and integration tests can be effective regression tests as long as you have an easy
+way to go back and re-run them.
+
+A **test suite** is a collection of unit tests and/or integration tests that can be run quickly,
+ideally with a single command. For this simple workflow, our "suite" can be an integration test
+that runs the whole workflow on a **toy dataset**.
 
 ## What is a toy dataset?
 
@@ -49,21 +92,159 @@ A toy dataset is a small sample dataset that can be used to run the pipeline. Yo
 include other test datasets with your pipeline, but having one which is as small as possible has
 many uses.
 
-1. The small toy files can be stored directly in Git with the code.
+1. The small "toy" files can be stored alongside the code, eg. in GitHub.
 1. The whole pipeline can be run very quickly even on a small computer, to check that all the
    tools, conda envs, containers, etc. are behaving themselves.
-1. In Snakemake, you can use the toy dataset as a basis for generating the sample DAG (ie. a
+1. In Snakemake, you can use the toy dataset as a basis for generating a sample DAG (ie. a
    diagram to represent your workflow).
-1. Even a small FASTQ file nowadays will have thousands of lines, but a user or developer should
-   be able to directly examine the toy dataset and the intermediate and final results.
+1. Even a small FASTQ file nowadays is too large for a human to read, but a user or developer
+   should be able to directly examine the toy dataset and the intermediate and final results on
+   their screen.
 1. If you developed the pipeline on your own research data, this may not be freely redistributable.
-   The toy dataset should be at least as re-usable as the pipeline itself.
+   The toy dataset should be open data, or at least as redistributable as the pipeline itself.
 
-## Startegy for making a toy dataset
+## A strategy for making a toy dataset
 
-Here we need a practical example. We can base it on the existing sample data.
+We're working with RNA reads in FASTQ files, so an obvious idea is to down-sample these files to,
+say, a couple of hundred reads. However, these reads are going to be from different parts of the
+yeast transcriptome and are not going to assemble together. We could map reads back to the draft
+assembly and look to extract an assembly-friendly set, but in practise it's easier to go
+back to the transcriptome and make up some synthetic reads.
 
-Do I want to say anything about making a sample dataset for genome assembly?
-- Maybe using https://github.com/lh3/wgsim
+```bash
+$ zcat transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz | grep '^>' | wc -l
+6612
+```
 
-I'm not sure if this belongs here, but it is cool, and worth a look.
+In this code, `zcat` deals with uncompressing the gzipped data, `grep` is selecting just the FASTA
+header lines, and this reveals that there are...
+
+6612 transcripts in our yeast transcriptome. Let's take the first five.
+
+```bash
+$ zcat transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz | \
+   fasta_formatter | \
+   head -n 10 > first5.fa
+```
+
+In the code above, the `fasta_formatter` is part of the standard fastx_toolkit (the same set of
+tools that includes `fastx_trimmer`) and this joins the sequences onto a single line each, meaning
+that the first ten lines, as saved from the `head` command, contain the first five transcripts.
+
+We will now use `wgsim`, a simple short read simulator. It can be installed standalone but is
+normally [packaged with samtools](https://anaconda.org/bioconda/samtools/files).
+
+```bash
+$ wgsim -e0.01 -d50 -N120 -175 -275 first5.fa toy_1_1.fq toy_1_2.fq
+$ wgsim -e0.01 -d50 -N120 -175 -275 first5.fa toy_2_1.fq toy_2_2.fq
+```
+
+With the above commands, we generate a total of 240 read pairs (`-N120`) with a read length of 75
+(`-175 -275`). The `-d` parameter sets the virtual fragment length and the `-e0.01` add a few
+errors in the reads. We can confirm that these reads do assemble (to some extent) with velvet.
+
+```bash
+$ velveth velvet_toy 21 -shortPaired -fastq -separate \
+    toy_1_1.fq toy_1_2.fq \
+    toy_2_1.fq toy_2_2.fq
+$ velvetg velvet_toy
+$ tail velvet_toy/contigs.fa
+```
+
+The exact result will vary since there are random variables in both the `wgsim` read generation
+and the `velveth` graph construction, but you should expect to see around 60 contigs. By no means
+a good assembly, but this is not the point. The longest contig is a few hundred bases and this
+is enough. It may be biological nonsense, but now have a suitable toy dataset for our workflow.
+
+Let's put these into a test directory.
+
+```
+$ mkdir -p tests/integration/toy_reads
+$ mv -v toy_*.fq tests/integration/toy_reads
+```
+
+:::::::::::::::::: callout
+
+## Coming to a toy dataset through trial and error
+
+Finding the right flags to `wgsim` to make the commands above took a mixture of guesswork and
+trial and error. Different options were tried and Velvet was repeatedly re-run to see the result.
+There is no correct answer here, we just need something that works, and as the commands run in a
+matter of seconds the tinkering process can be pretty quick.
+
+We can also see in the *wgsim* log messages that one of the transcripts is too short to use, so we
+are actually simulating reads from just four sequences. If we were really sequencing such short
+fragments on a physical sequencer then the read pairs would overlap and we might even sequence
+right through the whole fragment into the adapter. *wgsim* cannot simulate this so it just skips
+the short sequence.
+
+::::::::::
+
+## Making the integration test
+
+These toy reads will be the basis of our automated tests.
+
+:::::::::::::::::: challenge
+
+## Running the toy dataset
+
+Starting with the original working answer, adapt the assembler Snakefile so that it processes
+these toy reads and assembles them with the four different k-mer length settings.
+
+What did you need to change?
+
+:::::::::::: solution
+
+Assuming you started with the sample answer, three changes are needed:
+
+1) The `CONDITIONS` list needs to change to just `["toy"]`
+2) In the `cutadapt` rule, the `input` directory needs to change from `reads` to
+   `tests/integration/toy_reads`.
+3) In the `concatenate` rule, the `input` lists need to be shortened from three to two
+   items.
+
+:::::::::::
+
+:::::::::::::::
+
+It's easiest to decide if a test has passed or failed if the expected output is identical every
+time, but that might not be the case here as the assemblies can vary a bit. If we can't guarantee
+identical output, we can at least make some stipulations for the test run to be judged successful.
+
+:::::::::::::::::: challenge
+
+Which of these should always be true for our toy dataset? Which would be most reasonable to check?
+
+1) There will always be a contig *longer than 300bp*
+2) There will always be a contig *longer than 500bp*
+3) The max contig with *k21* will be longer than with *k25*
+3) There will always be exactly 313 contigs in total, over all output files
+4) There will be over 50 contigs in every output file
+
+::::::::::::::::
+
+Finally, we can look to automate the tests. This version just checks that the
+`assem/toy_k19_max_contig.txt` file has a number over 300. We'll save this into
+a file named `tests/integration/run.sh`.
+
+```bash
+#!/bin/bash
+
+snakemake -F --use-conda -j1
+max_len=$( egrep -o '[0-9]+$' assem/toy_k19_max_contig.txt )
+if [[ "$max_len"  > 300 ]] ; then echo PASS ; else echo FAIL ; fi
+```
+
+The fist line marks this out as a shell script. After running *snakemake*, the `egrep -o ...`
+command is used to get just the number from the file, the `max_len=$( ... )` syntax captures
+that number into a shell variable named `max len`, and we can use internal shell arithmetic to
+check the number is >300, finally printing *PASS* or *FAIL*.
+
+And we can run the test in the terminal:
+
+```bash
+$ chmod +x tests/integration/run.sh
+$ tests/integration/run.sh
+```
+
+It's simple, and it can be improved, but it works. Our workflow has an integration test.
