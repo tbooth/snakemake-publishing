@@ -255,7 +255,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="02-separating-code-and-data.html">2. Separating code and data</a>
+        <a href="02-separating-code-and-data.html">2. Separating code and configuration</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -267,7 +267,7 @@
 <div class="accordion accordion-flush" id="accordionFlush4">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading4">
-        <a href="03-source-code-control.html">3. Source code control</a>
+        <a href="03-using-standard-file-locations.html">3. Using standard file locations</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -279,7 +279,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="04-using-standrd-file-locations.html">4. Using standard file locations</a>
+        <a href="04-source-code-control.html">4. Source code control</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -303,7 +303,7 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="07-upload-to-workflowhub.html">6. Upload to workflowhub</a>
+        <a href="06-upload-to-workflowhub.html">6. Upload to workflowhub</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -315,7 +315,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="08-releasing-a-new-version.html">7. Releasing a new version</a>
+        <a href="07-ro-crates.html">7. RO-Crates</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -327,7 +327,19 @@
 <div class="accordion accordion-flush" id="accordionFlush9">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading9">
-        <a href="09-maximum-compatibility.html">8. Maximum compatibility</a>
+        <a href="08-releasing-a-new-version.html">8. Releasing a new version</a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush10">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading10">
+        <a href="09-maximum-compatibility.html">9. Maximum compatibility</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -392,54 +404,120 @@
         
 <section id="aio-01-making-a-toy-dataset"><p>Content from <a href="01-making-a-toy-dataset.html">Making a toy dataset</a></p>
 <hr>
-<p>Last updated on 2024-10-29 |
+<p>Last updated on 2025-02-25 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/01-making-a-toy-dataset.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
-<p>In this episode, we’ll consider how to make a toy dataset for your
-workflow.</p>
-<section><h2 class="section-heading" id="integration-testing-and-regression-testing-and-unit-testing">Integration testing and regression testing (and unit testing)<a class="anchor" aria-label="anchor" href="#integration-testing-and-regression-testing-and-unit-testing"></a>
+<div class="overview card">
+<h2 class="card-header">Overview</h2>
+<div class="row g-0">
+<div class="col-md-4">
+<div class="card-body">
+<div class="inner">
+<h3 class="card-title">Questions</h3>
+<ul>
+<li>What do we mean by testing in the context of workflows?</li>
+<li>What makes a suitable dataset for testing?</li>
+<li>How do we go about designing tests?</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="inner bordered">
+<h3 class="card-title">Objectives</h3>
+<ul>
+<li>Learn about unit tests, integration tests and regression tests</li>
+<li>Review the example assembly workflow</li>
+<li>Create a toy dataset to test the workflow</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section><h2 class="section-heading" id="publishing-and-sharing-your-workflows">Publishing and sharing your workflows<a class="anchor" aria-label="anchor" href="#publishing-and-sharing-your-workflows"></a>
 </h2>
 <hr class="half-width">
-<p>TODO - Give some practical examples.</p>
-<p>We already have a working workflow, so why are we now talking about
-testing it? Let’s consider some specific issues that may arise when the
-workflow is set to work on a new analysis task on a new environment.</p>
-<ol style="list-style-type: decimal">
-<li><p>A specific step may not work on a specific new input. For
-example, does the filter step still work if the FASTQ is not gzipped?
-What if the filter criteria are too stringent and eliminate all the
-sequences? What if we try to index a reference genome contains ambiguous
-bases? You can’t check every possible such case but it’s good practise
-to look through your rules and see if there are obvious cases that could
-be tested. Such checks would be called “unit tests” as they test a
-single unit (in this case a rule) in your workflow.</p></li>
-<li><p>A workflow that runs on one system (like your local compute
-server) may not run on another system. Maybe you depend on particular
-software versions, including Snakemake itself? Maybe you assume that
-certain paths or local databases are available. Maybe you assume that
-there is always network access. Maybe you have bugs that only manifest
-when multiple jobs are run in parallel. Tests that check that the whole
-workflow is operational are “integration tests” as they ensure all the
-components are working together. Integration tests are great to have
-when you are setting up the workflow on a new system, as they reassure
-you everything is working before you try to analyse real data.</p></li>
-<li><p>If you modify your workflow in future, how do you know that
-changes to add functionality or to fix one problem do not cause a new
-problem elsewhere? Such bugs in code are called “regressions” and
-“Regression tests” are checks you can make to reassure yourself you did
-not introduce any. In practise, both “unit tests” and “integration
-tests” can act as regression tests as long as you have the ability to go
-back and re-run them.</p></li>
-</ol>
-<p>So, a “test suite” is a collection of unit tests and/or integration
-tests that can be run, ideally with a single script, whenever you modify
-the code or install the workflow on a new system. At minimum, your test
-suite will have an integration test that involves running the whole
-workflow based on your toy dataset.</p>
-<p>Right. Now make that relevant to the example at hand.</p>
+<p>In this and the following episodes, we’ll look at the requirements
+and considerations to make your workflow into a re-usable resource that
+you can publish and share. If all you want is to archive your code and
+get a DOI for publication then you may find that some of this is
+overkill, but if you envision your workflow being actively used in
+future then the time invested to follow these steps will be well worth
+it.</p>
+<p>We will start with the assembly workflow from <a href="https://carpentries-incubator.github.io/snakemake-novice-bioinformatics/12-assembly_challenge.html" class="external-link">episode
+12 of the introductory lessons</a>. We will take this workflow and
+imagine this is something that we are looking to publish. If you have
+your own working solution you may want to work with that, but for
+demonstration purposes we will use <a href="https://carpentries-incubator.github.io/snakemake-novice-bioinformatics/files/ep12/sample_answer.Snakefile" class="external-link">the
+standard sample answer</a>.</p>
+<p>In this first episode, we’ll consider how and why to make a toy
+dataset for our workflow.</p>
+</section><section><h2 class="section-heading" id="integration-testing-and-regression-testing">Integration testing and regression testing<a class="anchor" aria-label="anchor" href="#integration-testing-and-regression-testing"></a>
+</h2>
+<hr class="half-width">
+<p>We are starting with a working workflow, so it may seem strange that
+we are now talking about testing it, but we want to assure ourselves
+that it will behave when set to work on a new analysis task or in a new
+computing environment.</p>
+<div id="quick-quiz" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<div id="quick-quiz" class="callout-inner">
+<h3 class="callout-title">Quick quiz</h3>
+<div class="callout-content">
+<p>What things might stop a Snakefile from running if it was copied over
+to a new system or given new data?</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<p>A workflow may depend on:</p>
+<ul>
+<li>Details of the input data format or file naming</li>
+<li>Specific software packages, including Snakemake itself</li>
+<li>Features of a particular operating system</li>
+<li>Filesystem paths or local databases being available</li>
+<li>Network resources or internet access</li>
+<li>Additional files that are outside of the Snakefile</li>
+<li>Features or capacity of the hardware being used</li>
+</ul>
+<p>…and probably more.</p>
+</div>
+</div>
+</div>
+</div>
+<p>A software test consists of some sample input data, a command to run,
+and an expected result. The test may run through the whole workflow,
+which would be termed an <strong>integration test</strong>, or you could
+make individual tests that run specific rules in the workflow and these
+would be called <strong>unit tests</strong>. <em>Either approach is
+valid here.</em> Such tests can be re-run at any time to check that the
+whole workflow is operational. When setting up the workflow on a new
+system, this provides reassurance that everything is working before any
+attempt to analyse real data.</p>
+<p>Further, if you modify your workflow in future, or want to use
+updated versions of tools, you want to be sure that your changes do not
+cause a new bug in something that already worked. Such bugs in code are
+called <strong>regression</strong>, and <strong>regression
+tests</strong> aim to show them up. In practise, both unit tests and
+integration tests can be effective regression tests as long as you have
+an easy way to go back and re-run them.</p>
+<p>A <strong>test suite</strong> is a collection of unit tests and/or
+integration tests that can be run quickly, ideally with a single
+command. For this simple workflow, our “suite” can be an integration
+test that runs the whole workflow on a <strong>toy dataset</strong>.</p>
 </section><section><h2 class="section-heading" id="what-is-a-toy-dataset">What is a toy dataset?<a class="anchor" aria-label="anchor" href="#what-is-a-toy-dataset"></a>
 </h2>
 <hr class="half-width">
@@ -448,171 +526,1262 @@ pipeline. You may want to include other test datasets with your
 pipeline, but having one which is as small as possible has many
 uses.</p>
 <ol style="list-style-type: decimal">
-<li>The small toy files can be stored directly in Git with the
-code.</li>
+<li>The small “toy” files can be stored alongside the code, eg. in
+GitHub.</li>
 <li>The whole pipeline can be run very quickly even on a small computer,
 to check that all the tools, conda envs, containers, etc. are behaving
 themselves.</li>
 <li>In Snakemake, you can use the toy dataset as a basis for generating
-the sample DAG (ie. a diagram to represent your workflow).</li>
-<li>Even a small FASTQ file nowadays will have thousands of lines, but a
-user or developer should be able to directly examine the toy dataset and
-the intermediate and final results.</li>
+a sample DAG (ie. a diagram to represent your workflow).</li>
+<li>Even a small FASTQ file nowadays is too large for a human to read,
+but a user or developer should be able to directly examine the toy
+dataset and the intermediate and final results on their screen.</li>
 <li>If you developed the pipeline on your own research data, this may
-not be freely redistributable. The toy dataset should be at least as
-re-usable as the pipeline itself.</li>
-</ol></section><section><h2 class="section-heading" id="startegy-for-making-a-toy-dataset">Startegy for making a toy dataset<a class="anchor" aria-label="anchor" href="#startegy-for-making-a-toy-dataset"></a>
+not be freely redistributable. The toy dataset should be open data, or
+at least as redistributable as the pipeline itself.</li>
+</ol></section><section><h2 class="section-heading" id="a-strategy-for-making-a-toy-dataset">A strategy for making a toy dataset<a class="anchor" aria-label="anchor" href="#a-strategy-for-making-a-toy-dataset"></a>
 </h2>
 <hr class="half-width">
-<p>Here we need a practical example. We can base it on the existing
-sample data.</p>
-<p>Do I want to say anything about making a sample dataset for genome
-assembly? - Maybe using <a href="https://github.com/lh3/wgsim" class="external-link uri">https://github.com/lh3/wgsim</a></p>
-<p>I’m not sure if this belongs here, but it is cool, and worth a
-look.</p>
+<p>We’re working with RNA reads in FASTQ files, so an obvious idea is to
+down-sample these files to, say, a couple of hundred reads. However,
+these reads are going to be from different parts of the yeast
+transcriptome and are not going to assemble together. We could map reads
+back to the draft assembly and look to extract an assembly-friendly set,
+but in practise it’s easier to go back to the transcriptome and make up
+some synthetic reads.</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">$</span> zcat transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="st">'^&gt;'</span> <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="ex">6612</span></span></code></pre>
+</div>
+<p>In this code, <code>zcat</code> deals with uncompressing the gzipped
+data, <code>grep</code> is selecting just the FASTA header lines, and
+this reveals that there are…</p>
+<p>6612 transcripts in our yeast transcriptome. Let’s take the first
+five.</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">$</span> zcat transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>   <span class="ex">fasta_formatter</span> <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>   <span class="fu">head</span> <span class="at">-n</span> 10 <span class="op">&gt;</span> first5.fa</span></code></pre>
+</div>
+<p>In the code above, the <code>fasta_formatter</code> is part of the
+standard fastx_toolkit (the same set of tools that includes
+<code>fastx_trimmer</code>) and this joins the sequences onto a single
+line each, meaning that the first ten lines, as saved from the
+<code>head</code> command, contain the first five transcripts.</p>
+<p>We will now use <code>wgsim</code>, a simple short read simulator. It
+can be installed standalone but is normally <a href="https://anaconda.org/bioconda/samtools/files" class="external-link">packaged with
+samtools</a>.</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">$</span> wgsim <span class="at">-e0.01</span> <span class="at">-d50</span> <span class="at">-N120</span> <span class="at">-175</span> <span class="at">-275</span> first5.fa toy_1_1.fq toy_1_2.fq</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="ex">$</span> wgsim <span class="at">-e0.01</span> <span class="at">-d50</span> <span class="at">-N120</span> <span class="at">-175</span> <span class="at">-275</span> first5.fa toy_2_1.fq toy_2_2.fq</span></code></pre>
+</div>
+<p>With the above commands, we generate a total of 240 read pairs
+(<code>-N120</code>) with a read length of 75 (<code>-175 -275</code>).
+The <code>-d</code> parameter sets the virtual fragment length and the
+<code>-e0.01</code> add a few errors in the reads. We can confirm that
+these reads do assemble (to some extent) with velvet.</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">$</span> velveth velvet_toy 21 <span class="at">-shortPaired</span> <span class="at">-fastq</span> <span class="at">-separate</span> <span class="dt">\</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>    toy_1_1.fq toy_1_2.fq <span class="dt">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    toy_2_1.fq toy_2_2.fq</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="ex">$</span> velvetg velvet_toy</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="ex">$</span> tail velvet_toy/contigs.fa</span></code></pre>
+</div>
+<p>The exact result will vary since there are random variables in both
+the <code>wgsim</code> read generation and the <code>velveth</code>
+graph construction, but you should expect to see around 60 contigs. By
+no means a good assembly, but this is not the point. The longest contig
+is a few hundred bases and this is enough. It may be biological
+nonsense, but now have a suitable toy dataset for our workflow.</p>
+<p>Let’s put these into a test directory.</p>
+<pre><code>$ mkdir -p tests/integration/toy_reads
+$ mv -v toy_*.fq tests/integration/toy_reads</code></pre>
+<div id="coming-to-a-toy-dataset-through-trial-and-error" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="coming-to-a-toy-dataset-through-trial-and-error" class="callout-inner">
+<h3 class="callout-title">Coming to a toy dataset through trial and error</h3>
+<div class="callout-content">
+<p>Finding the right flags to <code>wgsim</code> to make the commands
+above took a mixture of guesswork and trial and error. Different options
+were tried and Velvet was repeatedly re-run to see the result. There is
+no correct answer here, we just need something that works, and as the
+commands run in a matter of seconds the tinkering process can be pretty
+quick.</p>
+<p>We can also see in the <em>wgsim</em> log messages that one of the
+transcripts is too short to use, so we are actually simulating reads
+from just four sequences. If we were really sequencing such short
+fragments on a physical sequencer then the read pairs would overlap and
+we might even sequence right through the whole fragment into the
+adapter. <em>wgsim</em> cannot simulate this so it just skips the short
+sequence.</p>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="making-the-integration-test">Making the integration test<a class="anchor" aria-label="anchor" href="#making-the-integration-test"></a>
+</h2>
+<hr class="half-width">
+<p>These toy reads will be the basis of our automated tests.</p>
+<div id="running-the-toy-dataset" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<div id="running-the-toy-dataset" class="callout-inner">
+<h3 class="callout-title">Running the toy dataset</h3>
+<div class="callout-content">
+<p>Starting with the original working answer, adapt the assembler
+Snakefile so that it processes these toy reads and assembles them with
+the four different k-mer length settings.</p>
+<p>What did you need to change?</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div class="accordion-body">
+<p>Assuming you started with the sample answer, three changes are
+needed:</p>
+<ol style="list-style-type: decimal">
+<li>The <code>CONDITIONS</code> list needs to change to just
+<code>["toy"]</code>
+</li>
+<li>In the <code>cutadapt</code> rule, the <code>input</code> directory
+needs to change from <code>reads</code> to
+<code>tests/integration/toy_reads</code>.</li>
+<li>In the <code>concatenate</code> rule, the <code>input</code> lists
+need to be shortened from three to two items.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<p>It’s easiest to decide if a test has passed or failed if the expected
+output is identical every time, but that might not be the case here as
+the assemblies can vary a bit. If we can’t guarantee identical output,
+we can at least make some stipulations for the test run to be judged
+successful.</p>
+<div id="discussion1" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<p>Which of these should always be true for our toy dataset? Which would
+be most reasonable to check?</p>
+<ol style="list-style-type: decimal">
+<li>There will always be a contig <em>longer than 300bp</em>
+</li>
+<li>There will always be a contig <em>longer than 500bp</em>
+</li>
+<li>The max contig with <em>k21</em> will be longer than with
+<em>k25</em>
+</li>
+<li>There will always be exactly 313 contigs in total, over all output
+files</li>
+<li>There will be over 50 contigs in every output file</li>
+</ol>
+</div>
+</div>
+</div>
+<p>Finally, we can look to automate the tests. This version just checks
+that the <code>assem/toy_k19_max_contig.txt</code> file has a number
+over 300. We’ll save this into a file named
+<code>tests/integration/run.sh</code>.</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">-F</span> <span class="at">--use-conda</span> <span class="at">-j1</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="va">max_len</span><span class="op">=</span><span class="va">$(</span> <span class="fu">egrep</span> <span class="at">-o</span> <span class="st">'[0-9]+$'</span> assem/toy_k19_max_contig.txt <span class="va">)</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="cf">if</span> <span class="kw">[[</span> <span class="st">"</span><span class="va">$max_len</span><span class="st">"</span>  <span class="ot">&gt;</span> 300 <span class="kw">]]</span> <span class="kw">;</span> <span class="cf">then</span> <span class="bu">echo</span> PASS <span class="kw">;</span> <span class="cf">else</span> <span class="bu">echo</span> FAIL <span class="kw">;</span> <span class="cf">fi</span></span></code></pre>
+</div>
+<p>The fist line marks this out as a shell script. After running
+<em>snakemake</em>, the <code>egrep -o ...</code> command is used to get
+just the number from the file, the <code>max_len=$( ... )</code> syntax
+captures that number into a shell variable named <code>max len</code>,
+and we can use internal shell arithmetic to check the number is &gt;300,
+finally printing <em>PASS</em> or <em>FAIL</em>.</p>
+<p>And we can run the test in the terminal:</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="ex">$</span> chmod +x tests/integration/run.sh</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="ex">$</span> tests/integration/run.sh</span></code></pre>
+</div>
+<p>It’s simple, and it can be improved, but it works. Our workflow has
+an integration test.</p>
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
-</section></section><section id="aio-02-separating-code-and-data"><p>Content from <a href="02-separating-code-and-data.html">Separating code and data</a></p>
+</section></section><section id="aio-02-separating-code-and-data"><p>Content from <a href="02-separating-code-and-data.html">Separating code and configuration</a></p>
 <hr>
-<p>Last updated on 2024-10-29 |
+<p>Last updated on 2025-02-25 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/02-separating-code-and-data.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
-<p>Note sure this is a whole episode? It’s basically a big code tidy-up,
-and we have to explain what it means for code to be “tidy” and why we
-care. Most tutorials exhort you to be tidy from the start, but in
-practise everyone making a new workflow will start by just “getting it
-done” and worry about tidying it up later. So we’ll not deny this
-reality. You must be prepared to substantially re-write and re-organise
-your code to make it re-usable, even if you got it working for your
-initial analysis.</p>
-<p>Suggested file locations as per Snakemake. Where’s the link?? Now we
-have a Snakefile and a toy dataset we can start to split things out.</p>
-<p>Snakefile into workflow/Snakefile Sample data into .tests/integration
-(explain the term integration testing. Maybe in the previous ep?) Sample
-config into ???</p>
-<p>The goal is that:</p>
-<ol style="list-style-type: decimal">
-<li>We can run the unmodified Snakefile on different input data
+<div class="overview card">
+<h2 class="card-header">Overview</h2>
+<div class="row g-0">
+<div class="col-md-4">
+<div class="card-body">
+<div class="inner">
+<h3 class="card-title">Questions</h3>
 <ul>
-<li>configurable items</li>
-<li>hard-coded strings or paths (eg. location of reference files)</li>
-<li>optional steps (not sure if it belongs here but it’s relevant)</li>
-<li>optional/additonal prameters to rules (as a general strategy)</li>
+<li>What needs to be configurable in our workflow?</li>
+<li>How do we express these settings using the Snakemake config
+mechanism?</li>
+<li>How does this fit in with testing?</li>
 </ul>
-</li>
-<li>We can run the unmodified Snakefile on different computers
+</div>
+</div>
+</div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="inner bordered">
+<h3 class="card-title">Objectives</h3>
 <ul>
-<li>hard-coded strings or paths eg. scratch or home or working
-directories</li>
+<li>Separate the code of our workflow from the configuration</li>
+<li>Have a single workflow that runs on our original and test data</li>
 </ul>
-</li>
-<li>We do not have everything in the same directory. Specifically:
-<ul>
-<li>code</li>
-<li>configuration</li>
-<li>input data</li>
-<li>intermediate files</li>
-<li>output results</li>
-<li>logs and metrics</li>
-</ul>
-</li>
-</ol>
-<p>At what point do I want to talk about “snakedeploy”? I still don’t
-get what it does.</p></section><section id="aio-03-source-code-control"><p>Content from <a href="03-source-code-control.html">Source code control</a></p>
-<hr>
-<p>Last updated on 2024-10-29 |
-
-        <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/03-source-code-control.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
-<div class="text-end">
-          <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
-        </div>
-<p>I cannot introduce GIT in a single module. So what do I need to say
-about it?</p>
-<ul>
-<li>Git records the history of your files, but you control that history
-by making commits, branches and tags.</li>
-</ul>
-<p>Then define:</p>
-<p>Commit = a snapshot of all code files at a certain point it time. Git
-gives each commit a GUUID so you can always refer to it unambiguously
-and retrieve the code as long as it is stored in some git database.</p>
-<p>Branch = a series of commits recording code development. In the
-simplest case we work on a single branch and the commits just form a
-timeline. You can make new branches for various reasons, but we’ll not
-worry about that here</p>
-<p>Tag = a name you attach to a commit. We want to use tags to indicate
-versions of the code. The match between the tag in git and the version
-in Workflowhub wil tie everything together.</p>
-<section><h2 class="section-heading" id="git-github-workflowhub">Git + GitHub + WorkflowHub<a class="anchor" aria-label="anchor" href="#git-github-workflowhub"></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section><h2 class="section-heading" id="making-a-configurable-workflow">Making a configurable workflow<a class="anchor" aria-label="anchor" href="#making-a-configurable-workflow"></a>
 </h2>
 <hr class="half-width">
-<p>Explain how these components interact. I need a diagram with paths
-going between them.</p>
+<p>In the last episode, we edited the assembly workflow to run on the
+toy dataset. This involved editing the Snakefile directly so we now have
+two versions of the Snakefile. We want to separate the code from the
+configuration, and have a single Snakefile that assembles either the
+original reads, or the toy reads, or any other reads, according to the
+<em>config</em> settings.</p>
+<p>We have already learned about the use of the <code>--config</code>
+and <code>--configfile</code> options to Snakemake, and we will now
+rearrange our workflow and configuration into three files:</p>
+<ul>
+<li>
+<code>Snakefile</code> which will have all the rules</li>
+<li>
+<code>yeast_config.yaml</code> which will assemble the original test
+reads</li>
+<li>
+<code>toy_config.yaml</code> which will assemble the toy reads</li>
+</ul>
+<p>Remember the three changes we had to make to the Snakefile (or use
+the Linux <code>diff</code> command to remind you what changed).</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">$</span> diff  sample_answer.Snakefile Snakefile</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="ex">3c3</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="op">&lt;</span> CONDITIONS <span class="ex">=</span> [<span class="st">"ref"</span>, <span class="st">"etoh60"</span>, <span class="st">"temp33"</span>]</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="ex">---</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="op">&gt;</span> CONDITIONS <span class="ex">=</span> <span class="pp">[</span><span class="st">"toy"</span><span class="pp">]</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="ex">16,17c16,17</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="op">&lt;</span>         read1 <span class="ex">=</span> <span class="st">"reads/{sample}_1.fq"</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="op">&lt;</span>         read2 <span class="ex">=</span> <span class="st">"reads/{sample}_2.fq"</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="ex">---</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="op">&gt;</span>         read1 <span class="ex">=</span> <span class="st">"tests/integration/toy_reads/{sample}_1.fq"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="op">&gt;</span>         read2 <span class="ex">=</span> <span class="st">"tests/integration/toy_reads/{sample}_2.fq"</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="ex">32,33c32,33</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="op">&lt;</span>         read1s <span class="ex">=</span> [<span class="st">"cutadapt/{condition}_1_1.fq"</span>, <span class="st">"cutadapt/{condition}_2_1.fq"</span>, <span class="st">"cutadapt/{condition}_3_1.fq"</span>],</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="op">&lt;</span>         read2s <span class="ex">=</span> [<span class="st">"cutadapt/{condition}_1_2.fq"</span>, <span class="st">"cutadapt/{condition}_2_2.fq"</span>, <span class="st">"cutadapt/{condition}_3_2.fq"</span>],</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="ex">---</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="op">&gt;</span>         read1s <span class="ex">=</span> [<span class="st">"cutadapt/{condition}_1_1.fq"</span>, <span class="st">"cutadapt/{condition}_2_1.fq"</span>],</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="op">&gt;</span>         read2s <span class="ex">=</span> [<span class="st">"cutadapt/{condition}_1_2.fq"</span>, <span class="st">"cutadapt/{condition}_2_2.fq"</span>],</span></code></pre>
+</div>
+<p>Here is a potential version of <code>yeast_config.yaml</code>. There
+are other things we could configure, like the list of kmer lengths, but
+this is the minimum to support being able to use the same Snakefile for
+both the toy and original data.</p>
+<pre><code>conditions: ["ref", "etoh60", "temp33"]
+reads_dir: "reads"
+replicates: ["1", "2", "3"]</code></pre>
+<div id="challenge1" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<ol style="list-style-type: decimal">
+<li>Make a config file for the toy data</li>
+<li>Modify the code to use the settings in the config file</li>
+<li>Modify the <code>run.sh</code> file and ensure the test still
+passes</li>
+</ol>
+<p>Hint: to vary the number of replicates in the <em>concatenate</em>
+rule, you can use an <code>expand()</code> expression, but you will need
+to put extra brackets around <code>{{condition}}</code> to avoid getting
+a <code>WildcardError</code>.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div class="accordion-body">
+<p>This is an equivalent config file, which could go under
+<code>tests/integration/toy_config.yaml</code>:</p>
+<pre><code>conditions: ["toy"]
+reads_dir: "tests/integration/toy_reads"
+replicates: ["1", "2"]</code></pre>
+<p>In the Snakefile, at the top:</p>
+<pre><code><span><span class="va">CONDITIONS</span> <span class="op">=</span> <span class="va">config</span><span class="op">[</span><span class="st">"conditions"</span><span class="op">]</span></span></code></pre>
+<p>In the <em>cutadapt</em> rule, there are other ways to write this but
+this is probably the simplest:</p>
+<pre><code>input:
+    read1 = config["reads_dir"] + "/{sample}_1.fq",
+    read2 = config["reads_dir"] + "/{sample}_2.fq",</code></pre>
+<p>In the <em>concatenate</em> rule, we need to change not only the
+input patterns but the number of inputs based upon the configured
+replicates. Again, there are different ways to do this but this will
+work. The <code>{rep}</code> gets replaced with replicate numbers by the
+<code>expand()</code> function but then the <code>{{condition}}</code>
+keyword remains as <code>{condition}</code> so it still acts as a
+wildcard.</p>
+<pre><code>input:
+    read1s = expand("cutadapt/{{condition}}_{rep}_1.fq", rep=config["replicates"]),
+    read2s = expand("cutadapt/{{condition}}_{rep}_2.fq", rep=config["replicates"]),</code></pre>
+<p>In the <code>tests/integration/run.sh</code> script we just need an
+extra <code>--configfile</code> parameter when calling snakemake.</p>
+<pre><code>snakemake -F --use-conda -j1 --configfile tests/integration/toy_config.yaml</code></pre>
+</div>
+</div>
+</div>
+</div>
+<p>If you have not done so already, move the
+<code>toy_config.yaml</code> file to the tests/integration directory and
+run the <code>run.sh</code> script to reassure yourself the test still
+works.</p>
+<div id="what-if-the-different-conditions-have-a-different-number-of-replicates" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="what-if-the-different-conditions-have-a-different-number-of-replicates" class="callout-inner">
+<h3 class="callout-title">What if the different conditions have a different number of replicates?</h3>
+<div class="callout-content">
+<p>This situation can be handled. The configuration could look like
+this.</p>
+<pre><code>reads_dir: "reads"
+conditions:
+    ref:
+      replicates: ["1", "2", "3"]
+    etoh60:
+      replicates: ["1", "2"]
+    temp33:
+      replicates: ["2", "3"]</code></pre>
+<p>The input for the <em>concatenate</em> rule now gets a bit more
+complex.</p>
+<pre><code>input:
+    read1s = lambda wc: expand( "cutadapt/{condition}_{rep}_1.fq",
+                                condition=wc.condition,
+                                rep=config["conditions"][wc.condition]["replicates"]),
+    read2s = lambda wc: expand( "cutadapt/{condition}_{rep}_2.fq",
+                                condition=wc.condition,
+                                rep=config["conditions"][wc.condition]["replicates"]),</code></pre>
+<p>To understand this, you need to read about <a href="https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#input-functions" class="external-link">input
+functions</a> in the Snakemake docs. Using input functions allows you to
+go beyond the basic wildcard replacement logic for rule inputs. The
+<code>lambda:</code> keyword in Python defines an anonymous
+function.</p>
+</div>
+</div>
+</div>
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
-</section></section><section id="aio-04-using-standrd-file-locations"><p>Content from <a href="04-using-standrd-file-locations.html">Using standard file locations</a></p>
+</section></section><section id="aio-03-using-standard-file-locations"><p>Content from <a href="03-using-standard-file-locations.html">Using standard file locations</a></p>
 <hr>
-<p>Last updated on 2024-10-29 |
+<p>Last updated on 2025-02-25 |
 
-        <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/04-using-standrd-file-locations.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+        <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/03-using-standard-file-locations.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
-<p>Oh wait, this is covered in ep02 already. Cool.</p></section><section id="aio-05-adding-a-license"><p>Content from <a href="05-adding-a-license.html">Adding a license</a></p>
+<div class="overview card">
+<h2 class="card-header">Overview</h2>
+<div class="row g-0">
+<div class="col-md-4">
+<div class="card-body">
+<div class="inner">
+<h3 class="card-title">Questions</h3>
+<ul>
+<li>What tools exist to check that the workflow files are all present
+and correct?</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="inner bordered">
+<h3 class="card-title">Objectives</h3>
+<ul>
+<li>Understand the Snakemake recommended file layout</li>
+<li>Reorganise our sample code to comply with this standard</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section><h2 class="section-heading" id="moving-files-to-appropriate-locations">Moving files to appropriate locations<a class="anchor" aria-label="anchor" href="#moving-files-to-appropriate-locations"></a>
+</h2>
+<hr class="half-width">
+<p>There is a recommended layout for files in a Snakemake workflow.
+Following this convention will help other users to understand your
+workflow when you share it.</p>
+<p>The following listing is taken from the <a href="https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html" class="external-link">Snakemake
+reference documenation</a></p>
+<pre><code>├── .gitignore
+├── README.md
+├── LICENSE.md
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── .tests
+│   ├── integration
+│   └── unit
+├── images
+│   └── rulegraph.svg
+├── workflow
+│   ├── rules
+│   │   ├── module1.smk
+│   │   └── module2.smk
+│   ├── envs
+│   │   ├── tool1.yaml
+│   │   └── tool2.yaml
+│   ├── scripts
+│   │   ├── script1.py
+│   │   └── script2.R
+│   ├── notebooks
+│   │   ├── notebook1.py.ipynb
+│   │   └── notebook2.r.ipynb
+│   ├── report
+│   │   ├── plot1.rst
+│   │   └── plot2.rst
+│   ├── Snakefile
+│   └── documentation.md
+├── config
+│   ├── config.yaml
+│   └── some-sheet.tsv
+├── results
+└── resources</code></pre>
+<p>What should we change in the light of this?</p>
+<ul>
+<li>The <code>.gitignore</code> file is related to using <em>Git</em>,
+which we will come to in the next chapter.</li>
+<li>The <code>README.md</code> should be a text file briefly describing
+the workflow. We’ll add this now.</li>
+<li>We’ll need a license before we share the code, but we’ll consider
+this later.</li>
+<li>We’ll skip the <code>CODE_OF_CONDUCT.md</code> and
+<code>CONTRIBUTING.md</code> files for now.</li>
+<li>We have a <code>tests</code> directory, but the official layout says
+it should be <code>.tests</code>
+</li>
+<li>We’ll generate a rulegraph using the <code>--dag</code> option of
+Snakemake</li>
+<li>We’ll move our <code>Snakefile</code> and conda environment file as
+suggested</li>
+<li>We’ll leave all our rules in the main Snakefile for now, but notice
+that we have the option to break out rules or groups of rules into
+modules.</li>
+<li>We have no scripts, notebooks, or reports in our simple workflow
+just now.</li>
+<li>We should put our <code>yeast_config.yaml</code> into a
+<code>config</code> subdirectory.</li>
+<li>The Snakemake workflow should put results into a
+<code>results</code> subdirectory.</li>
+</ul>
+<p>We’ll tidy our code to comply with the above points, and then keep to
+using standard file locations from now on. Let’s do the simpler stuff
+first.</p>
+</section><section><h2 class="section-heading" id="making-a-rulegraph-svg">Making a rulegraph.svg<a class="anchor" aria-label="anchor" href="#making-a-rulegraph-svg"></a>
+</h2>
+<hr class="half-width">
+<p>We could make the rulegraph from the yeast transcriptome data or the
+toy data. We’ll use the toy dataset.</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">$</span> snakemake <span class="at">-F</span> <span class="at">--dag</span> <span class="at">--configfile</span> tests/integration/toy_config.yaml <span class="op">&gt;</span> rulegraph.dag</span></code></pre>
+</div>
+<p>This file made by Snakemake is in <em>GraphViz</em> formay, not
+<em>SVG</em> format, but we can use the <code>dot</code> command line
+tool to generate the <em>SVG</em>.</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">$</span> dot <span class="at">-Tsvg</span> rulegraph.dag <span class="at">-o</span> rulegraph.svg</span></code></pre>
+</div>
+<p><em>SVG</em> is the Scalable Vector Graphics format. If you want to
+view the SVG directly you can try loading it in a web browser.</p>
+</section><section><h2 class="section-heading" id="moving-the-files-around">Moving the files around<a class="anchor" aria-label="anchor" href="#moving-the-files-around"></a>
+</h2>
+<hr class="half-width">
+<p>First, we’ll make the required subdirectories.</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">$</span> mkdir <span class="at">-p</span> images workflow/envs config results</span></code></pre>
+</div>
+<p>Now move the existing files</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">$</span> mv rulegraph.svg images/</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="ex">$</span> mv Snakefile workflow/</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="ex">$</span> mv mv assembly_conda_env.yaml workflow/envs/</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="ex">$</span> mv yeast_config.yaml config/</span></code></pre>
+</div>
+</section><section><h2 class="section-heading" id="renaming-the-tests-directory">Renaming the tests directory<a class="anchor" aria-label="anchor" href="#renaming-the-tests-directory"></a>
+</h2>
+<hr class="half-width">
+<p>The official layout guidance says that that tests should be in a
+directory called <code>.tests</code> which would be a hidden directory.
+Do we really need to hide our tests away in order to comply with the
+standard? A compromise is to rename the directory, but then make a
+symlink to keep it visible.</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="ex">$</span> mv tests .tests</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="ex">$</span> ln <span class="at">-s</span> .tests tests</span></code></pre>
+</div>
+</section><section><h2 class="section-heading" id="adding-a-readme-md">Adding a README.md<a class="anchor" aria-label="anchor" href="#adding-a-readme-md"></a>
+</h2>
+<hr class="half-width">
+<p>The idea of this <em>README</em> is to provide a top-level summary
+and introduction to your workflow. Some people will just add a brief
+description, while others will add comprehensive documentation in this
+file. We’ll just add a brief description.</p>
+<p>The <code>.md</code>/<em>Markdown</em> format, is an <a href="https://github.com/adam-p/markdown-here/wiki/markdown-cheatsheet" class="external-link">enhanced
+text format</a> that supports all sorts of formatting but for now we
+just need to know that lines beginning <code>#</code> will be shown as
+headings.</p>
+<p>Paste this into the file <code>README.md</code></p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu"># Demo de-novo assembly workflow</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>This workflow assembles short reads by running the obsolete Velvet assembler. It performs</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>the same assembly on every sample with different k-mer length settings, and reports the longest</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>contig in each case.</span></code></pre>
+</div>
+</section><section><h2 class="section-heading" id="output-to-the-results-directory">Output to the results directory<a class="anchor" aria-label="anchor" href="#output-to-the-results-directory"></a>
+</h2>
+<hr class="half-width">
+<p>All of our output files currently go into subdirectories within the
+current working directiory, but the standard says they need to be under
+<code>results</code>. On the face of it, it seems that we need to
+re-write all of our rules and add <code>results/</code> to all the
+paths. Fortunately there is a trick to avoid this.</p>
+<pre><code><span><span class="va">READS_DIR</span> <span class="op">=</span> <span class="fu">os.path.join</span><span class="op">(</span><span class="st">".."</span>, <span class="va">config</span><span class="op">[</span><span class="st">"reads_dir"</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">workdir</span><span class="op">:</span></span>
+<span>    <span class="fu">config.get</span><span class="op">(</span><span class="st">"results"</span>, <span class="st">"results"</span><span class="op">)</span></span></code></pre>
+<p>Then in the <em>cutadapt</em> rule, modify the <em>input</em> part to
+reference the new variable.</p>
+<pre><code>input:
+    read1 = READS_DIR + "/{sample}_1.fq",
+    read2 = READS_DIR + "/{sample}_2.fq",</code></pre>
+<p>The use of <code>os.path.join("..", ...)</code> will work regardless
+if the reads directory is given as a relative or absolute path.</p>
+<p>The <em>workdir</em> will now default to <code>results</code>, as per
+the standard layout, but we can override it.</p>
+<div id="discussion1" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<p>Edit the <code>toy_config.yaml</code> file so that the results for
+test runs go into a directory named <code>test_results</code>. See if
+the workflow is still working after all these changes. What do we still
+need to fix?</p>
+</div>
+</div>
+</div>
+<p>Do I lint the code at this point?</p>
+<p>At what point do I want to talk about “snakedeploy”? I still don’t
+get what it does. Need to do some testing of that on the sample
+workflow.</p>
+<!--
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use.
+ -->
+</section></section><section id="aio-04-source-code-control"><p>Content from <a href="04-source-code-control.html">Source code control</a></p>
 <hr>
-<p>Last updated on 2024-10-29 |
+<p>Last updated on 2025-02-25 |
+
+        <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/04-source-code-control.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+<div class="text-end">
+          <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
+        </div>
+<div class="overview card">
+<h2 class="card-header">Overview</h2>
+<div class="row g-0">
+<div class="col-md-4">
+<div class="card-body">
+<div class="inner">
+<h3 class="card-title">Questions</h3>
+<ul>
+<li>What are the key ideas of source control?</li>
+<li>What are the essential GIT commands we need to manage our simple
+code?</li>
+<li>How can git tags help to manage our code updates?</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="inner bordered">
+<h3 class="card-title">Objectives</h3>
+<ul>
+<li>Put our code under version control with GIT</li>
+<li>Record our changes and edits in the GIT commit history</li>
+<li>Push our code to GitHub</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section><h2 class="section-heading" id="source-code-control-with-git">Source code control with Git<a class="anchor" aria-label="anchor" href="#source-code-control-with-git"></a>
+</h2>
+<hr class="half-width">
+<p>Covering anything but the bare basics of Git here is not possible,
+but we need to know a few fundamentals:</p>
+<ul>
+<li>
+<em>Git</em> is a program that takes snapshots of all the files in a
+directory, and saves a log of every snapshot taken.</li>
+<li>These snapshots are known as <em>commits</em>, and a sequential
+timeline of commits is known as a <em>branch</em>. In the simple case,
+we have a linear series of <em>commits</em> over time, so just one
+<em>branch</em>.</li>
+<li>You decide when to make a commit, and enter a comment to summarize
+what changed.</li>
+<li>Git can then show you a <em>history</em> of you commits, or tell you
+exactly what changed (a <em>diff</em>) between two version.</li>
+</ul>
+<p>All this happens on your local system, by saving special files into a
+<code>.git</code> subdirectory, but you have the option to <em>push</em>
+that information to a <em>remote server</em>. The most popular such
+system, and the one we will use today, is GitHub.</p>
+<ul>
+<li>GitHub is a free-to-use service owned by Microsoft.</li>
+<li>It allows you to view your code on-line, and <em>pull</em> it to
+another computer.</li>
+</ul></section><section><h2 class="section-heading" id="git-github">Git + GitHub<a class="anchor" aria-label="anchor" href="#git-github"></a>
+</h2>
+<hr class="half-width">
+<p>Explain how these components interact. I need a diagram with paths
+going between them. Maybe have a version now and then a second version
+later that adds WorkflowHub? Yes!</p>
+<div class="section level3">
+<h3 id="i-think-this-probably-goes-in-the-version-episode-">I think this probably goes in the version episode.<a class="anchor" aria-label="anchor" href="#i-think-this-probably-goes-in-the-version-episode-"></a>
+</h3>
+<p>Tag = git allows you to give a name to any commit. Ultimataly we want
+to use tags to indicate versions of the code. The match between the tag
+in git and the version in Workflowhub will tie everything together.</p>
+<p>Here’s what we need to do, practically:</p>
+<ol style="list-style-type: decimal">
+<li>Git init (see this creates ./.git) and “git add . &amp;&amp; git
+commit” (adding a message)</li>
+</ol>
+<p>“git log” to reassure ourselves we are good.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Ensure everyone has a GitHub account. Many will have one aready. How
+is the sign-up process nowadays? Should we do this in advance?</li>
+</ol>
+<p>As of March 2023, GitHub requires 2FA, so you will need either an
+authenticator app or to be able to receive a code via SMS. We’ll assume
+you use SMS. Once you are logged in on the browser you will stay logged
+in.</p>
+<p>Need to generate and add an SSH key. Step them through that.</p>
+<p>Now push the code to a new personal repo. Again we need to do
+that.</p>
+<p>??? Should I do the signups for GitHub and Workflowhub at the same
+time?</p>
+<ol start="3" style="list-style-type: decimal">
+<li>We’re nto doing Workflowhub yet.</li>
+</ol>
+<div id="github-dangers" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="github-dangers" class="callout-inner">
+<h3 class="callout-title">GitHub dangers</h3>
+<div class="callout-content">
+<p>Many people worry about sharing their un-finished code in a public
+repository, or relying on the GitHub service. In practise, there is not
+much to fear, but there is one significant risk:</p>
+<p>Avoid leaking passwords, authentication tokens, and private data into
+Git. If you ever add such an item to a commit then removing it from the
+Git history is nearly impossible. Git is designed to never forget!
+Having good habits about separating your code, configuration and data is
+the best way to avoid this. For example, if your workflow needs to
+retrieve data from a server with a user name and password, put this into
+a configuration file outside of the workflow source directory.</p>
+<p>You may also worry that data on GitHub might be corrupted or lost,
+but this is less of a worry. The chain of commits on Git is
+cryptographically signed, so it’s unlikely that code can ever be
+tampered with. Also, moving code to another Git hosting service, along
+with the full commit history, is very easy. If you start out using
+GitHub you can move to an alternative host at any time.</p>
+</div>
+</div>
+</div>
+<p>*** TODO - maybe say something about credential management. Does that
+belong here?</p>
+<!--
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use.
+ -->
+</div>
+</section></section><section id="aio-05-adding-a-license"><p>Content from <a href="05-adding-a-license.html">Adding a license</a></p>
+<hr>
+<p>Last updated on 2025-02-25 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/05-adding-a-license.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
+<div class="overview card">
+<h2 class="card-header">Overview</h2>
+<div class="row g-0">
+<div class="col-md-4">
+<div class="card-body">
+<div class="inner">
+<h3 class="card-title">Questions</h3>
+<ul>
+<li>What OSI licenses are available?</li>
+<li>How do I record ownership and authorship of my code?</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="inner bordered">
+<h3 class="card-title">Objectives</h3>
+<ul>
+<li>Understand the difference between license and copyright</li>
+<li>Understand what might inform, or limit, our choice of license</li>
+<li>Add a license to our own code</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
 <p>Explain the difference between licence and copyright.</p>
 <p>Explain the difference between legal restrictions and requests. Ie.
-“please cite” vs. “you must cite”.</p>
+“please cite” vs. “you must cite”, and why this is problematic for
+sharing services.</p>
 <p>Chosing a license:</p>
 <ul>
 <li>Is it compatible with the tools you are using?</li>
 <li>Is it suitable for your users?</li>
 <li>Is it acceptable to your employer?</li>
-</ul></section><section id="aio-07-upload-to-workflowhub"><p>Content from <a href="07-upload-to-workflowhub.html">Upload to workflowhub</a></p>
+</ul>
+<div class="section level1">
+<h1 id="a-citation-file">A citation file<a class="anchor" aria-label="anchor" href="#a-citation-file"></a>
+</h1>
+<p>Here we can explain the citation .cff and how to make it, and how to
+validate it.</p>
+<p>Apparently the .cff file is parsed by WFH and translated to the
+format needed for RO-Crate, so that’s good.</p>
+<!--
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use.
+ -->
+</div></section><section id="aio-06-upload-to-workflowhub"><p>Content from <a href="06-upload-to-workflowhub.html">Upload to workflowhub</a></p>
 <hr>
-<p>Last updated on 2024-10-29 |
+<p>Last updated on 2025-02-25 |
 
-        <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/07-upload-to-workflowhub.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+        <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/06-upload-to-workflowhub.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
+<div class="overview card">
+<h2 class="card-header">Overview</h2>
+<div class="row g-0">
+<div class="col-md-4">
+<div class="card-body">
+<div class="inner">
+<h3 class="card-title">Questions</h3>
+<ul>
+<li>Why should I use WorkflowHub?</li>
+<li>How does WorkflowHub compare with the Snakemake Workflow
+Catalogue?</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="inner bordered">
+<h3 class="card-title">Objectives</h3>
+<ul>
+<li>Create an account on the WorkflowHub test server</li>
+<li>Submit our workflow to the system via the web interface</li>
+<li>Add tags and documentation to our workflow</li>
+<li>Review how our workflow will appear on the website</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section><h2 class="section-heading" id="about-workflowhub-eu">About WorkflowHub.eu<a class="anchor" aria-label="anchor" href="#about-workflowhub-eu"></a>
+</h2>
+<hr class="half-width">
+<p>WorkflowHub is a FAIR registry for describing, sharing and publishing
+scientific computational workflows. The registry is sponsored by
+multiple EU-wide projects, notably the European RI Cluster EOSC-Life,
+and the European Research Infrastructure ELIXIR.</p>
+<div id="callout1" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div class="callout-inner">
+<h3 class="callout-title">Callout</h3>
+<div class="callout-content">
+<p>While the project is EU-funded, and serves the needs of EU research
+projects, all users are welcome. You do not have to be in Europe, or
+part of any European project team, to make use of it.</p>
+</div>
+</div>
+</div>
+<p>From their own guide, these are the reasons why any research project
+(or team, or facility) producing workflows should register them in
+WorkflowHub:</p>
+<ul>
+<li>To give visibility to the workflows used by a project</li>
+<li>To share workflows across a project, within project networks and
+externally</li>
+<li>To credit and cite the people making workflows, and the networks to
+which they belong</li>
+<li>To track the new versions of workflows as they are produced,
+and</li>
+<li>To retain workflows for post-project use by a project’s members,
+their networks, and the broader scientific community</li>
+</ul>
+<p>As an individual user, the ability to search for workflows directly
+on the site or to obtain a workflow cited in a paper can be immediately
+useful. For the purposes of this workshop we will submit our own sample
+workflow to show how that side of things works. We’l submit to the
+development version of the site, so as not to fill up the main website
+with test workflows.</p>
+</section><section><h2 class="section-heading" id="registering-on-the-workflowhub-test-server">Registering on the WorkflowHub test server<a class="anchor" aria-label="anchor" href="#registering-on-the-workflowhub-test-server"></a>
+</h2>
+<hr class="half-width">
+<p>You will need an account on the test server to upload your workflow.
+Even if you previously registered on WorkflowHub, register a new account
+on the development server as the accounts are completely separate.</p>
+<ol style="list-style-type: decimal">
+<li>Visit <a href="https://dev.workflowhub.eu" class="external-link uri">https://dev.workflowhub.eu</a>
+</li>
+<li>Click the Register button</li>
+<li>Log in with GitHub to create a new account (todo - test
+this!!!)</li>
+<li>or… choose a user name and a password. You will need to use a real
+e-mail address that you can access today because there is a verification
+step.</li>
+<li>On the next screen, enter your name but leave the other details
+blank.</li>
+<li>Verify your account using the e-mail token</li>
+<li>Finally, log in using your user name and password</li>
+</ol>
+<div id="callout2" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div class="callout-inner">
+<h3 class="callout-title">Callout</h3>
+<div class="callout-content">
+<p>If for any reason some people are unable to create an account,
+learners may log into the account owned by the course tutor. Since this
+is a test server, this is OK.</p>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="joining-a-team">Joining a team<a class="anchor" aria-label="anchor" href="#joining-a-team"></a>
+</h2>
+<hr class="half-width">
+<p>In order to use the website, you must be a member of at least one
+team. One option would be to make a personal team. We’ll not do this
+today as it requires an administrator approval from the WorkflowHub
+maintainers and we don’t want to burden them with requests or have to
+wait for all the approvals. Instead, all learners can join a team owned
+by the course tutor. This team name is:</p>
+<p><strong>Submission Tutorial</strong></p>
+<ol style="list-style-type: decimal">
+<li>Click on the “Join a Team” option you see after successfully logging
+in.</li>
+<li>Find the team as named above and request access.</li>
+<li>Choose any existing organisation you like, be it your real
+organisation or not.</li>
+<li>You can fill in the other things or leave them blank.</li>
+<li>The tutor will approve all the requests via their own account.</li>
+</ol></section><section><h2 class="section-heading" id="submitting-our-test-workflow">Submitting our test workflow<a class="anchor" aria-label="anchor" href="#submitting-our-test-workflow"></a>
+</h2>
+<hr class="half-width">
+<p>[ Insert screenshot here - episodes/fig/wfh_new_workflow.png ]</p>
+<p>As we have now stored our workflow in GitHub, and the file layout
+matches the recommendations, the easiest option is to use the <em>Import
+Git Repository</em> method.</p>
+<p>You will be prompted for the “URL of the git repository”. For
+repositories on GitHub this is simply the regular URL you would use in
+your browser, with “.git” on the end. You can also find this by clicking
+the “Code” button on the project page within GitHub.</p>
+<p>[ step through ]</p>
+</section><section><h2 class="section-heading" id="the-snakemake-workflow-catalogue">The Snakemake Workflow Catalogue<a class="anchor" aria-label="anchor" href="#the-snakemake-workflow-catalogue"></a>
+</h2>
+<hr class="half-width">
+<p><a href="https://snakemake.github.io/snakemake-workflow-catalog/" class="external-link uri">https://snakemake.github.io/snakemake-workflow-catalog/</a></p>
+<p>This is another resource where you may find and share Snakemake
+workflows. It works a little differently to WorkflowHub, in that.</p>
+<ul>
+<li>This resource is specific to Snakemake workflows</li>
+<li>Workflows are not submitted directly to the catalogue, but are
+discovered and listed from GitHub</li>
+<li>All the listed workflows are public, as they must be public projects
+on GitHub to begin with</li>
+<li>There is no option to upload a workflow diagram or any extra
+documentation</li>
+<li>There is no option to mint a DOI for publication</li>
+</ul>
+<p>There is no reason why your workflow should not be in both
+places.</p>
 <p>I’ll include making a diagram in here.</p>
 <p>Upload to WFH is as per the instructions.</p>
 <p>Then we, I think, retrieve the Ro-Crate and commit it back to
 GIT.</p>
-<p>Check how that pans out with the sampel workflow.</p></section><section id="aio-08-releasing-a-new-version"><p>Content from <a href="08-releasing-a-new-version.html">Releasing a new version</a></p>
+<p>Check how that pans out with the sample workflow.</p>
+<!--
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use.
+ -->
+</section></section><section id="aio-07-ro-crates"><p>Content from <a href="07-ro-crates.html">RO-Crates</a></p>
 <hr>
-<p>Last updated on 2024-10-29 |
+<p>Last updated on 2025-02-25 |
+
+        <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/07-ro-crates.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+<div class="text-end">
+          <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
+        </div>
+<div class="overview card">
+<h2 class="card-header">Overview</h2>
+<div class="row g-0">
+<div class="col-md-4">
+<div class="card-body">
+<div class="inner">
+<h3 class="card-title">Questions</h3>
+<ul>
+<li>What are RO-crates in general?</li>
+<li>What are the specific types of RO-Crate?</li>
+<li>What can I do with an RO-Crate?</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="inner bordered">
+<h3 class="card-title">Objectives</h3>
+<ul>
+<li>Download the RO-crate for our workflow</li>
+<li>Understand the structure of an RO-Crate</li>
+<li>???</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section level1">
+<h1 id="a-general-introduction-to-ro-crates">A general introduction to RO-Crates<a class="anchor" aria-label="anchor" href="#a-general-introduction-to-ro-crates"></a>
+</h1>
+<p>An <a href="https://www.researchobject.org/ro-crate/about_ro_crate" class="external-link">RO-Crate</a>
+is simply a zip file that contains a collection of data files, and
+includes a description of what those files are.</p>
+<p>The base RO-Crate specification says that you can include any types
+of data files you like, but it does stipulate that the description must
+be in a file named <code>ro-crate-metadata.json</code> and that the
+format of this file is <a href="https://json-ld.org/" class="external-link">JSON LD</a>.</p>
+<p>We will not talk about the details of the JSON LD format, since it’s
+pretty technical and also because WorkflowHub is going to make the file
+for us. But we do need to understand that it contains:</p>
+<ul>
+<li>Information about the data collection as a whole
+<ul>
+<li>who created it</li>
+<li>who may use it (the license)</li>
+</ul>
+</li>
+<li>A description of what each of the individual data files are
+<ul>
+<li>the formats of the files</li>
+<li>the content of the files</li>
+<li>how the specific files relate to each other</li>
+</ul>
+</li>
+</ul>
+<p>The description is not designed to be read directly by end users.
+Rather, software like that running on WorkflowHub will read and
+summarise the file. User-readble documentation is best written in a
+format such as Markdown, and from the RO-Crate perspective, is regarded
+as part of the dataset.</p>
+</div>
+<div class="section level1">
+<h1 id="putting-workflows-into-ro-crates">Putting workflows into RO-Crates<a class="anchor" aria-label="anchor" href="#putting-workflows-into-ro-crates"></a>
+</h1>
+<p>Describe the related testing crate and provenance crate.</p>
+<p>When your primary interest is in sharng your results, but you want to
+very carefully record exactly how you obtained those results, including
+all the input data, software, parameters, platform and procedure
+(workflow) used. This a job for a provenance crate.</p>
+<p>When your primary interest is to share a workflow so that other
+people can use it for their own data, you are talking about a workflow
+crate.</p>
+<p>These two requirements are very closely related. If you have a good
+test dataset for your workflow, as we have carefully created for this
+example, then the idea is to run your full workflow on the toy data and
+capture all the provenance information from that, so that the crate will
+capture everything needed to validate and re-use the workflow. (re-word
+this. what can we do practically?)</p>
+<p>Q1 - What does WorkflowHub put into the RO-Crate (we can take a
+look!).</p>
+<p>Q2 - What else might we want to include (if we go into the provenance
+stuff). Can I actually demo anything in this regard?</p>
+<hr>
+<p>This is where I give a general intro to RO-Crates.</p>
+<p>What do they do, in general.</p>
+<p>What do they do, for you.</p>
+<p>What do you actually need to know:</p>
+<ol style="list-style-type: decimal">
+<li><p>If you are just looking to share your workflow, WFH will deal
+with the RO-Crate stuff for you</p></li>
+<li><p>If you need to make an RO-Crate yourself, you can ? use the
+plugin ???</p></li>
+<li><p>And then?</p></li>
+</ol>
+<!--
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use.
+ -->
+</div></section><section id="aio-08-releasing-a-new-version"><p>Content from <a href="08-releasing-a-new-version.html">Releasing a new version</a></p>
+<hr>
+<p>Last updated on 2025-02-25 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/08-releasing-a-new-version.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
+<div class="overview card">
+<h2 class="card-header">Overview</h2>
+<div class="row g-0">
+<div class="col-md-4">
+<div class="card-body">
+<div class="inner">
+<h3 class="card-title">Questions</h3>
+<ul>
+<li>TODO</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="inner bordered">
+<h3 class="card-title">Objectives</h3>
+<ul>
+<li>Understand sematic versioning</li>
+<li>Push a new workflow version to Workflowhub and GitHub</li>
+<li>???</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
 <p>I need to come up with a change that is plausible.</p>
 <p>Sematic versioning.</p>
 <p>Manual upate process.</p>
 <p>Auto update process.</p>
-<p>Validation and re-testing.</p></section><section id="aio-09-maximum-compatibility"><p>Content from <a href="09-maximum-compatibility.html">Maximum compatibility</a></p>
+<p>Validation and re-testing.</p>
+<section><h2 class="section-heading" id="sematic-versioning">Sematic versioning<a class="anchor" aria-label="anchor" href="#sematic-versioning"></a>
+</h2>
+<hr class="half-width">
+<p><a href="https://semver.org/" class="external-link">Semantic versioning</a> is the
+established way to assign a version number to any piece of software. You
+should use this scheme when releasing any updates to your workflow. A
+sematic version looks like this:</p>
+<div id="code" class="section level15">
+<p class="heading">code</p>
+<p>1.12.3</p>
+</div>
+<div id="section" class="section level12">
+<p class="heading"></p>
+<p>Where “1” is called the major version, “12” is the minor version, and
+“3” is the patch version. The choice of version number indicates to the
+user not only which release is the latest but also how two releases
+relate to each other.</p>
+<p>Guidance for sematic versioning tends to focus on the task of writing
+software libraries for which there is a “public API”. Workflows are a
+little different but analogous guidelines can still be followed.</p>
+</div>
+<div class="section level3">
+<h3 id="incrementing-the-patch-version">Incrementing the patch version<a class="anchor" aria-label="anchor" href="#incrementing-the-patch-version"></a>
+</h3>
+<p>This is for bug fixes only. If you add any new features or options
+you should increment the minor version.</p>
+<p>Changing to a new patch version should not affect the output of the
+workflow at all, other than in the case of fixing something which is
+clearly broken. The versions of any software tools used by the workflow
+should not change, other than to switch up to a new patch version of a
+tool which addresses some bug.</p>
+<p>In many cases there will be no need for a patch version, and so this
+number is normally 0 for most pipeline releases.</p>
+</div>
+<div class="section level3">
+<h3 id="incrementing-the-minor-version">Incrementing the minor version<a class="anchor" aria-label="anchor" href="#incrementing-the-minor-version"></a>
+</h3>
+<p>In the most common case, if you release an update to your workflow
+you will increment the minor version. You can add new features, re-write
+parts of the process, and bring in new software. In general it should be
+possible to re-do any previous analysis with the updated workflow, but
+it is not necessary that you obtain an identical result, as changes to
+tool versions or default parameters may affect that.</p>
+</div>
+<div class="section level3">
+<h3 id="incrementing-the-major-version">Incrementing the major version<a class="anchor" aria-label="anchor" href="#incrementing-the-major-version"></a>
+</h3>
+<p>The decision over whether to make a major or minor release is more
+subjective. For some software (bowtie and bwa are cases in point) the
+new major release is a whole re-write such that the new version is
+essentially a whole new program. In this case it’s reasonable to say
+that making a major release is on the same level of significance as
+giving the software or pipeline a new name.</p>
+<p>A change in major version indicates to any users that they cannot
+assume the workflow will operate as before, and they should re-read the
+documentation before using it. Most workflows will never get a change so
+fundamental that a major version increment is nevessary.</p>
+</div>
+<div class="section level3">
+<h3 id="pre-releases">Pre-releases<a class="anchor" aria-label="anchor" href="#pre-releases"></a>
+</h3>
+<p>If you do not consider your workflow to be ready for general use but
+still wish to track the version number you may version it as “0.1.0”.
+The major version number of 0 indicates a development pre-release. If
+you update the code you should increment the minor or patch releases as
+above, but the distinction between these is understood to be less
+meaningful in the context of development releases.</p>
+</div>
+<div class="section level3">
+<h3 id="variants-on-sematic-versioning">Variants on sematic versioning<a class="anchor" aria-label="anchor" href="#variants-on-sematic-versioning"></a>
+</h3>
+<p>For some well-known software, you will see the versions like 24.12.0
+- a variation where major and minor version numbers encode the year and
+month of release. The patch number is still just a sequential number.
+This works will in projects like Ubuntu Linux which have periodic
+releases, but in the case of workflows you are best to avoid it.</p>
+</div>
+</section><section><h2 class="section-heading" id="updating-our-workflow">Updating our workflow<a class="anchor" aria-label="anchor" href="#updating-our-workflow"></a>
+</h2>
+<hr class="half-width">
+<p>Decide on a change. Maybe I should do the next chapter first so I can
+add resources? Or maybe I should switch to a different assembler??
+Or??</p>
+<p>Decide if this warrants a major, minor, or patch release</p>
+<p>Commit to Git</p>
+<p>Push to WFH. We can now do this via direct import, right? Do I want
+to cover automated push? Maybe just in a callout.</p>
+<div id="automated-update-from-github-to-workflowhub" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="automated-update-from-github-to-workflowhub" class="callout-inner">
+<h3 class="callout-title">Automated update from GitHub to
+WorkflowHub</h3>
+<div class="callout-content">
+<p>It’s overkill for most workflows, but if you want to be able to add
+new versions to WorkflowHub without the chore of going to the site and
+manually importing then this is possible. The following page outlines
+how to set up an automated submission action:</p>
+<p><a href="https://github.com/workflowhub-eu/submission-action" class="external-link uri">https://github.com/workflowhub-eu/submission-action</a></p>
+</div>
+</div>
+</div>
+<!--
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use.
+ -->
+</section></section><section id="aio-09-maximum-compatibility"><p>Content from <a href="09-maximum-compatibility.html">Maximum compatibility</a></p>
 <hr>
-<p>Last updated on 2024-10-29 |
+<p>Last updated on 2025-02-25 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/09-maximum-compatibility.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
+<div class="overview card">
+<h2 class="card-header">Overview</h2>
+<div class="row g-0">
+<div class="col-md-4">
+<div class="card-body">
+<div class="inner">
+<h3 class="card-title">Questions</h3>
+<ul>
+<li>TODO</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="inner bordered">
+<h3 class="card-title">Objectives</h3>
+<ul>
+<li>Add resources to our rules</li>
+<li>Something something containers?</li>
+<li>???</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
 <p>This is currently a placeholder for several things.</p>
 <ol style="list-style-type: decimal">
 <li><p>Resources. Setting them and adding them. That could be most of
@@ -621,7 +1790,20 @@ this episode. Maybe an episode in itself?</p></li>
 care?</p></li>
 <li><p>Container and Conda deployments.</p></li>
 </ol>
-<p>That’s probably it.</p></section>
+<p>Conda is already covered in the main tutorial but there is a bit more
+to say. Containers are a whole new topic.</p>
+<section><h2 class="section-heading" id="callout---hpc-systems-and-cloud-compatibility">Callout - HPC systems and cloud compatibility<a class="anchor" aria-label="anchor" href="#callout---hpc-systems-and-cloud-compatibility"></a>
+</h2>
+<hr class="half-width">
+<p>Also, what about running on an HPC system? Do I want to go into any
+details about the profile setup for that? Maybe just link to the docs as
+a callout.</p>
+<p>That’s probably it. Plenty to be getting on with.</p>
+<!--
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use.
+ -->
+</section></section>
 </div>
     </main>
 </div>
@@ -646,7 +1828,7 @@ care?</p></li>
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.10" class="external-link">sandpaper (0.16.10)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.7" class="external-link">pegboard (0.7.7)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.5" class="external-link">varnish (1.0.5)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.11" class="external-link">sandpaper (0.16.11)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.5" class="external-link">varnish (1.0.5)</a></p>
 			</div>
 		</footer>
 </div> <!-- / div.container -->
@@ -669,8 +1851,8 @@ care?</p></li>
   "url": "https://carpentries.github.io/workbench-template-md/aio.html",
   "identifier": "https://carpentries.github.io/workbench-template-md/aio.html",
   "dateCreated": "2024-10-08",
-  "dateModified": "2024-12-03",
-  "datePublished": "2024-12-03"
+  "dateModified": "2025-02-25",
+  "datePublished": "2025-02-25"
 }
 
   </script><script>

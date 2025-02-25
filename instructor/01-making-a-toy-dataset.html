@@ -216,9 +216,11 @@
 
     <div id="flush-collapsecurrent" class="accordion-collapse collapse show" aria-labelledby="flush-headingcurrent" data-bs-parent="#accordionFlushcurrent">
       <div class="accordion-body">
-        <ul><li><a href="#integration-testing-and-regression-testing-and-unit-testing">Integration testing and regression testing (and unit testing)</a></li>
+        <ul><li><a href="#publishing-and-sharing-your-workflows">Publishing and sharing your workflows</a></li>
+<li><a href="#integration-testing-and-regression-testing">Integration testing and regression testing</a></li>
 <li><a href="#what-is-a-toy-dataset">What is a toy dataset?</a></li>
-<li><a href="#startegy-for-making-a-toy-dataset">Startegy for making a toy dataset</a></li>
+<li><a href="#a-strategy-for-making-a-toy-dataset">A strategy for making a toy dataset</a></li>
+<li><a href="#making-the-integration-test">Making the integration test</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -228,7 +230,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="02-separating-code-and-data.html">2. Separating code and data</a>
+        <a href="02-separating-code-and-data.html">2. Separating code and configuration</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -237,7 +239,7 @@
 <div class="accordion accordion-flush" id="accordionFlush4">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading4">
-        <a href="03-source-code-control.html">3. Source code control</a>
+        <a href="03-using-standard-file-locations.html">3. Using standard file locations</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -246,7 +248,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="04-using-standrd-file-locations.html">4. Using standard file locations</a>
+        <a href="04-source-code-control.html">4. Source code control</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -264,7 +266,7 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="07-upload-to-workflowhub.html">6. Upload to workflowhub</a>
+        <a href="06-upload-to-workflowhub.html">6. Upload to workflowhub</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -273,7 +275,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="08-releasing-a-new-version.html">7. Releasing a new version</a>
+        <a href="07-ro-crates.html">7. RO-Crates</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -282,7 +284,16 @@
 <div class="accordion accordion-flush" id="accordionFlush9">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading9">
-        <a href="09-maximum-compatibility.html">8. Maximum compatibility</a>
+        <a href="08-releasing-a-new-version.html">8. Releasing a new version</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush10">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading10">
+        <a href="09-maximum-compatibility.html">9. Maximum compatibility</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -346,7 +357,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Making a toy dataset</h1>
-        <p>Last updated on 2024-10-29 |
+        <p>Last updated on 2025-02-25 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/01-making-a-toy-dataset.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -360,69 +371,300 @@
 
         
 
-<p>In this episode, we’ll consider how to make a toy dataset for your
-workflow.</p>
-<section><h2 class="section-heading" id="integration-testing-and-regression-testing-and-unit-testing">Integration testing and regression testing (and unit testing)<a class="anchor" aria-label="anchor" href="#integration-testing-and-regression-testing-and-unit-testing"></a></h2>
-<hr class="half-width"><p>TODO - Give some practical examples.</p>
-<p>We already have a working workflow, so why are we now talking about
-testing it? Let’s consider some specific issues that may arise when the
-workflow is set to work on a new analysis task on a new environment.</p>
-<ol style="list-style-type: decimal"><li><p>A specific step may not work on a specific new input. For
-example, does the filter step still work if the FASTQ is not gzipped?
-What if the filter criteria are too stringent and eliminate all the
-sequences? What if we try to index a reference genome contains ambiguous
-bases? You can’t check every possible such case but it’s good practise
-to look through your rules and see if there are obvious cases that could
-be tested. Such checks would be called “unit tests” as they test a
-single unit (in this case a rule) in your workflow.</p></li>
-<li><p>A workflow that runs on one system (like your local compute
-server) may not run on another system. Maybe you depend on particular
-software versions, including Snakemake itself? Maybe you assume that
-certain paths or local databases are available. Maybe you assume that
-there is always network access. Maybe you have bugs that only manifest
-when multiple jobs are run in parallel. Tests that check that the whole
-workflow is operational are “integration tests” as they ensure all the
-components are working together. Integration tests are great to have
-when you are setting up the workflow on a new system, as they reassure
-you everything is working before you try to analyse real data.</p></li>
-<li><p>If you modify your workflow in future, how do you know that
-changes to add functionality or to fix one problem do not cause a new
-problem elsewhere? Such bugs in code are called “regressions” and
-“Regression tests” are checks you can make to reassure yourself you did
-not introduce any. In practise, both “unit tests” and “integration
-tests” can act as regression tests as long as you have the ability to go
-back and re-run them.</p></li>
-</ol><p>So, a “test suite” is a collection of unit tests and/or integration
-tests that can be run, ideally with a single script, whenever you modify
-the code or install the workflow on a new system. At minimum, your test
-suite will have an integration test that involves running the whole
-workflow based on your toy dataset.</p>
-<p>Right. Now make that relevant to the example at hand.</p>
+<div class="overview card">
+<h2 class="card-header">Overview</h2>
+<div class="row g-0">
+<div class="col-md-4">
+<div class="card-body">
+<div class="inner">
+<h3 class="card-title">Questions</h3>
+<ul><li>What do we mean by testing in the context of workflows?</li>
+<li>What makes a suitable dataset for testing?</li>
+<li>How do we go about designing tests?</li>
+</ul></div>
+</div>
+</div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="inner bordered">
+<h3 class="card-title">Objectives</h3>
+<ul><li>Learn about unit tests, integration tests and regression tests</li>
+<li>Review the example assembly workflow</li>
+<li>Create a toy dataset to test the workflow</li>
+</ul></div>
+</div>
+</div>
+</div>
+</div>
+<section><h2 class="section-heading" id="publishing-and-sharing-your-workflows">Publishing and sharing your workflows<a class="anchor" aria-label="anchor" href="#publishing-and-sharing-your-workflows"></a></h2>
+<hr class="half-width"><p>In this and the following episodes, we’ll look at the requirements
+and considerations to make your workflow into a re-usable resource that
+you can publish and share. If all you want is to archive your code and
+get a DOI for publication then you may find that some of this is
+overkill, but if you envision your workflow being actively used in
+future then the time invested to follow these steps will be well worth
+it.</p>
+<p>We will start with the assembly workflow from <a href="https://carpentries-incubator.github.io/snakemake-novice-bioinformatics/12-assembly_challenge.html" class="external-link">episode
+12 of the introductory lessons</a>. We will take this workflow and
+imagine this is something that we are looking to publish. If you have
+your own working solution you may want to work with that, but for
+demonstration purposes we will use <a href="https://carpentries-incubator.github.io/snakemake-novice-bioinformatics/files/ep12/sample_answer.Snakefile" class="external-link">the
+standard sample answer</a>.</p>
+<p>In this first episode, we’ll consider how and why to make a toy
+dataset for our workflow.</p>
+</section><section><h2 class="section-heading" id="integration-testing-and-regression-testing">Integration testing and regression testing<a class="anchor" aria-label="anchor" href="#integration-testing-and-regression-testing"></a></h2>
+<hr class="half-width"><p>We are starting with a working workflow, so it may seem strange that
+we are now talking about testing it, but we want to assure ourselves
+that it will behave when set to work on a new analysis task or in a new
+computing environment.</p>
+<div id="quick-quiz" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<div id="quick-quiz" class="callout-inner">
+<h3 class="callout-title">Quick quiz</h3>
+<div class="callout-content">
+<p>What things might stop a Snakefile from running if it was copied over
+to a new system or given new data?</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<p>A workflow may depend on:</p>
+<ul><li>Details of the input data format or file naming</li>
+<li>Specific software packages, including Snakemake itself</li>
+<li>Features of a particular operating system</li>
+<li>Filesystem paths or local databases being available</li>
+<li>Network resources or internet access</li>
+<li>Additional files that are outside of the Snakefile</li>
+<li>Features or capacity of the hardware being used</li>
+</ul><p>…and probably more.</p>
+</div>
+</div>
+</div>
+</div>
+<p>A software test consists of some sample input data, a command to run,
+and an expected result. The test may run through the whole workflow,
+which would be termed an <strong>integration test</strong>, or you could
+make individual tests that run specific rules in the workflow and these
+would be called <strong>unit tests</strong>. <em>Either approach is
+valid here.</em> Such tests can be re-run at any time to check that the
+whole workflow is operational. When setting up the workflow on a new
+system, this provides reassurance that everything is working before any
+attempt to analyse real data.</p>
+<p>Further, if you modify your workflow in future, or want to use
+updated versions of tools, you want to be sure that your changes do not
+cause a new bug in something that already worked. Such bugs in code are
+called <strong>regression</strong>, and <strong>regression
+tests</strong> aim to show them up. In practise, both unit tests and
+integration tests can be effective regression tests as long as you have
+an easy way to go back and re-run them.</p>
+<p>A <strong>test suite</strong> is a collection of unit tests and/or
+integration tests that can be run quickly, ideally with a single
+command. For this simple workflow, our “suite” can be an integration
+test that runs the whole workflow on a <strong>toy dataset</strong>.</p>
 </section><section><h2 class="section-heading" id="what-is-a-toy-dataset">What is a toy dataset?<a class="anchor" aria-label="anchor" href="#what-is-a-toy-dataset"></a></h2>
 <hr class="half-width"><p>A toy dataset is a small sample dataset that can be used to run the
 pipeline. You may want to include other test datasets with your
 pipeline, but having one which is as small as possible has many
 uses.</p>
-<ol style="list-style-type: decimal"><li>The small toy files can be stored directly in Git with the
-code.</li>
+<ol style="list-style-type: decimal"><li>The small “toy” files can be stored alongside the code, eg. in
+GitHub.</li>
 <li>The whole pipeline can be run very quickly even on a small computer,
 to check that all the tools, conda envs, containers, etc. are behaving
 themselves.</li>
 <li>In Snakemake, you can use the toy dataset as a basis for generating
-the sample DAG (ie. a diagram to represent your workflow).</li>
-<li>Even a small FASTQ file nowadays will have thousands of lines, but a
-user or developer should be able to directly examine the toy dataset and
-the intermediate and final results.</li>
+a sample DAG (ie. a diagram to represent your workflow).</li>
+<li>Even a small FASTQ file nowadays is too large for a human to read,
+but a user or developer should be able to directly examine the toy
+dataset and the intermediate and final results on their screen.</li>
 <li>If you developed the pipeline on your own research data, this may
-not be freely redistributable. The toy dataset should be at least as
-re-usable as the pipeline itself.</li>
-</ol></section><section><h2 class="section-heading" id="startegy-for-making-a-toy-dataset">Startegy for making a toy dataset<a class="anchor" aria-label="anchor" href="#startegy-for-making-a-toy-dataset"></a></h2>
-<hr class="half-width"><p>Here we need a practical example. We can base it on the existing
-sample data.</p>
-<p>Do I want to say anything about making a sample dataset for genome
-assembly? - Maybe using <a href="https://github.com/lh3/wgsim" class="external-link uri">https://github.com/lh3/wgsim</a></p>
-<p>I’m not sure if this belongs here, but it is cool, and worth a
-look.</p>
+not be freely redistributable. The toy dataset should be open data, or
+at least as redistributable as the pipeline itself.</li>
+</ol></section><section><h2 class="section-heading" id="a-strategy-for-making-a-toy-dataset">A strategy for making a toy dataset<a class="anchor" aria-label="anchor" href="#a-strategy-for-making-a-toy-dataset"></a></h2>
+<hr class="half-width"><p>We’re working with RNA reads in FASTQ files, so an obvious idea is to
+down-sample these files to, say, a couple of hundred reads. However,
+these reads are going to be from different parts of the yeast
+transcriptome and are not going to assemble together. We could map reads
+back to the draft assembly and look to extract an assembly-friendly set,
+but in practise it’s easier to go back to the transcriptome and make up
+some synthetic reads.</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">$</span> zcat transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="st">'^&gt;'</span> <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="ex">6612</span></span></code></pre>
+</div>
+<p>In this code, <code>zcat</code> deals with uncompressing the gzipped
+data, <code>grep</code> is selecting just the FASTA header lines, and
+this reveals that there are…</p>
+<p>6612 transcripts in our yeast transcriptome. Let’s take the first
+five.</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">$</span> zcat transcriptome/Saccharomyces_cerevisiae.R64-1-1.cdna.all.fa.gz <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>   <span class="ex">fasta_formatter</span> <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>   <span class="fu">head</span> <span class="at">-n</span> 10 <span class="op">&gt;</span> first5.fa</span></code></pre>
+</div>
+<p>In the code above, the <code>fasta_formatter</code> is part of the
+standard fastx_toolkit (the same set of tools that includes
+<code>fastx_trimmer</code>) and this joins the sequences onto a single
+line each, meaning that the first ten lines, as saved from the
+<code>head</code> command, contain the first five transcripts.</p>
+<p>We will now use <code>wgsim</code>, a simple short read simulator. It
+can be installed standalone but is normally <a href="https://anaconda.org/bioconda/samtools/files" class="external-link">packaged with
+samtools</a>.</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">$</span> wgsim <span class="at">-e0.01</span> <span class="at">-d50</span> <span class="at">-N120</span> <span class="at">-175</span> <span class="at">-275</span> first5.fa toy_1_1.fq toy_1_2.fq</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="ex">$</span> wgsim <span class="at">-e0.01</span> <span class="at">-d50</span> <span class="at">-N120</span> <span class="at">-175</span> <span class="at">-275</span> first5.fa toy_2_1.fq toy_2_2.fq</span></code></pre>
+</div>
+<p>With the above commands, we generate a total of 240 read pairs
+(<code>-N120</code>) with a read length of 75 (<code>-175 -275</code>).
+The <code>-d</code> parameter sets the virtual fragment length and the
+<code>-e0.01</code> add a few errors in the reads. We can confirm that
+these reads do assemble (to some extent) with velvet.</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">$</span> velveth velvet_toy 21 <span class="at">-shortPaired</span> <span class="at">-fastq</span> <span class="at">-separate</span> <span class="dt">\</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>    toy_1_1.fq toy_1_2.fq <span class="dt">\</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    toy_2_1.fq toy_2_2.fq</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="ex">$</span> velvetg velvet_toy</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="ex">$</span> tail velvet_toy/contigs.fa</span></code></pre>
+</div>
+<p>The exact result will vary since there are random variables in both
+the <code>wgsim</code> read generation and the <code>velveth</code>
+graph construction, but you should expect to see around 60 contigs. By
+no means a good assembly, but this is not the point. The longest contig
+is a few hundred bases and this is enough. It may be biological
+nonsense, but now have a suitable toy dataset for our workflow.</p>
+<p>Let’s put these into a test directory.</p>
+<pre><code>$ mkdir -p tests/integration/toy_reads
+$ mv -v toy_*.fq tests/integration/toy_reads</code></pre>
+<div id="coming-to-a-toy-dataset-through-trial-and-error" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="coming-to-a-toy-dataset-through-trial-and-error" class="callout-inner">
+<h3 class="callout-title">Coming to a toy dataset through trial and error</h3>
+<div class="callout-content">
+<p>Finding the right flags to <code>wgsim</code> to make the commands
+above took a mixture of guesswork and trial and error. Different options
+were tried and Velvet was repeatedly re-run to see the result. There is
+no correct answer here, we just need something that works, and as the
+commands run in a matter of seconds the tinkering process can be pretty
+quick.</p>
+<p>We can also see in the <em>wgsim</em> log messages that one of the
+transcripts is too short to use, so we are actually simulating reads
+from just four sequences. If we were really sequencing such short
+fragments on a physical sequencer then the read pairs would overlap and
+we might even sequence right through the whole fragment into the
+adapter. <em>wgsim</em> cannot simulate this so it just skips the short
+sequence.</p>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="making-the-integration-test">Making the integration test<a class="anchor" aria-label="anchor" href="#making-the-integration-test"></a></h2>
+<hr class="half-width"><p>These toy reads will be the basis of our automated tests.</p>
+<div id="running-the-toy-dataset" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<div id="running-the-toy-dataset" class="callout-inner">
+<h3 class="callout-title">Running the toy dataset</h3>
+<div class="callout-content">
+<p>Starting with the original working answer, adapt the assembler
+Snakefile so that it processes these toy reads and assembles them with
+the four different k-mer length settings.</p>
+<p>What did you need to change?</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div class="accordion-body">
+<p>Assuming you started with the sample answer, three changes are
+needed:</p>
+<ol style="list-style-type: decimal"><li>The <code>CONDITIONS</code> list needs to change to just
+<code>["toy"]</code>
+</li>
+<li>In the <code>cutadapt</code> rule, the <code>input</code> directory
+needs to change from <code>reads</code> to
+<code>tests/integration/toy_reads</code>.</li>
+<li>In the <code>concatenate</code> rule, the <code>input</code> lists
+need to be shortened from three to two items.</li>
+</ol></div>
+</div>
+</div>
+</div>
+<p>It’s easiest to decide if a test has passed or failed if the expected
+output is identical every time, but that might not be the case here as
+the assemblies can vary a bit. If we can’t guarantee identical output,
+we can at least make some stipulations for the test run to be judged
+successful.</p>
+<div id="discussion1" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<p>Which of these should always be true for our toy dataset? Which would
+be most reasonable to check?</p>
+<ol style="list-style-type: decimal"><li>There will always be a contig <em>longer than 300bp</em>
+</li>
+<li>There will always be a contig <em>longer than 500bp</em>
+</li>
+<li>The max contig with <em>k21</em> will be longer than with
+<em>k25</em>
+</li>
+<li>There will always be exactly 313 contigs in total, over all output
+files</li>
+<li>There will be over 50 contigs in every output file</li>
+</ol></div>
+</div>
+</div>
+<p>Finally, we can look to automate the tests. This version just checks
+that the <code>assem/toy_k19_max_contig.txt</code> file has a number
+over 300. We’ll save this into a file named
+<code>tests/integration/run.sh</code>.</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="ex">snakemake</span> <span class="at">-F</span> <span class="at">--use-conda</span> <span class="at">-j1</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="va">max_len</span><span class="op">=</span><span class="va">$(</span> <span class="fu">egrep</span> <span class="at">-o</span> <span class="st">'[0-9]+$'</span> assem/toy_k19_max_contig.txt <span class="va">)</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="cf">if</span> <span class="kw">[[</span> <span class="st">"</span><span class="va">$max_len</span><span class="st">"</span>  <span class="ot">&gt;</span> 300 <span class="kw">]]</span> <span class="kw">;</span> <span class="cf">then</span> <span class="bu">echo</span> PASS <span class="kw">;</span> <span class="cf">else</span> <span class="bu">echo</span> FAIL <span class="kw">;</span> <span class="cf">fi</span></span></code></pre>
+</div>
+<p>The fist line marks this out as a shell script. After running
+<em>snakemake</em>, the <code>egrep -o ...</code> command is used to get
+just the number from the file, the <code>max_len=$( ... )</code> syntax
+captures that number into a shell variable named <code>max len</code>,
+and we can use internal shell arithmetic to check the number is &gt;300,
+finally printing <em>PASS</em> or <em>FAIL</em>.</p>
+<p>And we can run the test in the terminal:</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="ex">$</span> chmod +x tests/integration/run.sh</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="ex">$</span> tests/integration/run.sh</span></code></pre>
+</div>
+<p>It’s simple, and it can be improved, but it works. Our workflow has
+an integration test.</p>
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
@@ -463,7 +705,7 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.10" class="external-link">sandpaper (0.16.10)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.7" class="external-link">pegboard (0.7.7)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.5" class="external-link">varnish (1.0.5)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.11" class="external-link">sandpaper (0.16.11)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.5" class="external-link">varnish (1.0.5)</a></p>
 			</div>
 		</footer></div> <!-- / div.container -->
 	<div id="to-top">
@@ -485,8 +727,8 @@ any links that you are not going to use.
   "url": "https://carpentries.github.io/workbench-template-md/instructor/01-making-a-toy-dataset.html",
   "identifier": "https://carpentries.github.io/workbench-template-md/instructor/01-making-a-toy-dataset.html",
   "dateCreated": "2024-10-08",
-  "dateModified": "2024-10-29",
-  "datePublished": "2024-12-03"
+  "dateModified": "2025-02-25",
+  "datePublished": "2025-02-25"
 }
 
   </script><script>

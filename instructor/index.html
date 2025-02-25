@@ -197,12 +197,19 @@
                   <div class="accordion accordion-flush" id="accordionFlushcurrent">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-headingcurrent">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsecurrent" aria-expanded="true" aria-controls="flush-collapsecurrent">
         <span class="visually-hidden">Current Chapter</span>
         <span class="current-chapter">
         Summary and Schedule
         </span>
-      
+      </button>
     </div><!--/div.accordion-header-->
+
+    <div id="flush-collapsecurrent" class="accordion-collapse collapse show" aria-labelledby="flush-headingcurrent" data-bs-parent="#accordionFlushcurrent">
+      <div class="accordion-body">
+        <ul><li><a href="#notes">Notes</a></li>
+        </ul></div><!--/div.accordion-body-->
+    </div><!--/div.accordion-collapse-->
 
   </div><!--/div.accordion-item-->
 </div><!--/div.accordion-flush-->
@@ -219,7 +226,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="02-separating-code-and-data.html">2. Separating code and data</a>
+        <a href="02-separating-code-and-data.html">2. Separating code and configuration</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -228,7 +235,7 @@
 <div class="accordion accordion-flush" id="accordionFlush4">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading4">
-        <a href="03-source-code-control.html">3. Source code control</a>
+        <a href="03-using-standard-file-locations.html">3. Using standard file locations</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -237,7 +244,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="04-using-standrd-file-locations.html">4. Using standard file locations</a>
+        <a href="04-source-code-control.html">4. Source code control</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -255,7 +262,7 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="07-upload-to-workflowhub.html">6. Upload to workflowhub</a>
+        <a href="06-upload-to-workflowhub.html">6. Upload to workflowhub</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -264,7 +271,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="08-releasing-a-new-version.html">7. Releasing a new version</a>
+        <a href="07-ro-crates.html">7. RO-Crates</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -273,7 +280,16 @@
 <div class="accordion accordion-flush" id="accordionFlush9">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading9">
-        <a href="09-maximum-compatibility.html">8. Maximum compatibility</a>
+        <a href="08-releasing-a-new-version.html">8. Releasing a new version</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush10">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading10">
+        <a href="09-maximum-compatibility.html">9. Maximum compatibility</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -330,15 +346,51 @@
       <hr></nav><main id="main-content" class="main-content"><h1 class="schedule-heading">Summary and Schedule</h1>
       
 
-<p>This is a new lesson built with <a href="https://carpentries.github.io/sandpaper-docs" class="external-link">The Carpentries
+<p>A supplementary lesson for users of the <a href="https://snakemake.github.io/" class="external-link">Snakemake workflow system</a> that
+covers how to share your worflows. This is not just a matter of
+uploading code, but a whole way of thinking about the workflow as a
+re-usable entity. Tools and approaches that lead to re-usable code are
+introduced with practical examples, and the <a href="https://workflowhub.eu" class="external-link">WorkflowHub.eu</a> site is presented as a
+publicly-funded and standards-compliant repository for shared
+workflows.</p>
+<p>This lesson is designed to be taught in around in one day, and
+follows on from the material in the <a href="https://carpentries-incubator.github.io/snakemake-novice-bioinformatics/" class="external-link">Snakemake
+for Bioinformatics</a> episodes.</p>
+<!-- this is an html comment -->
+<div id="learner-prerequisites" class="callout prereq">
+<div class="callout-square">
+<i class="callout-icon" data-feather="check"></i>
+</div>
+<div id="learner-prerequisites" class="callout-inner">
+<h3 class="callout-title">Learner Prerequisites</h3>
+<div class="callout-content">
+<p>If learners have not worked through the introductory <a href="https://carpentries-incubator.github.io/snakemake-novice-bioinformatics/" class="external-link">Snakemake
+for Bioinformatics</a> course then they should be already familiar with
+writing pipelines in Snakemake, for example:</p>
+<ul><li>Writing rules and linking them via input/output filenames</li>
+<li>Visualising the DAG generated by Snakemake (<code>--dag</code>
+option)</li>
+<li>Using <code>--configfile</code> and config items with Snakemake
+workflows</li>
+<li>Specifying Conda environments for Snakemake rules</li>
+</ul><p>Learners should also follow the set-up instructions for the
+introductory course, in order to have the full software environment.</p>
+</div>
+</div>
+</div>
+<section><h2 class="section-heading" id="notes">Notes<a class="anchor" aria-label="anchor" href="#notes"></a></h2>
+<hr class="half-width"><p><a href="https://workflowhub.eu" class="external-link">WorkflowHub.eu</a> is a a FAIR
+registry for describing, sharing and publishing scientific computational
+workflows. The registry is sponsored by the European RI Cluster
+EOSC-Life, the European Research Infrastructure ELIXIR, and multiple
+EU-wide projects.</p>
+<p>This lesson was built with <a href="https://carpentries.github.io/sandpaper-docs" class="external-link">The Carpentries
 Workbench</a>.</p>
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
-
-
-      <section id="schedule"><table class="table table schedule table-striped" role="presentation"><tbody><tr><td></td><td><a href="#setup">Setup Instructions</a></td><td> Download files required for the lesson</td>
+</section><section id="schedule"><table class="table table schedule table-striped" role="presentation"><tbody><tr><td></td><td><a href="#setup">Setup Instructions</a></td><td> Download files required for the lesson</td>
           </tr><tr><td>
 <span class="visually-hidden">Duration: </span>00h 00m
 </td>
@@ -346,32 +398,42 @@ any links that you are not going to use.
  1. <a href="01-making-a-toy-dataset.html">Making a toy dataset</a>
 </td>
 <td>
+What do we mean by testing in the context of workflows?<br>What makes a
+suitable dataset for testing?<br>How do we go about designing tests?
 </td>
 </tr><tr><td>
 <span class="visually-hidden">Duration: </span>01h 00m
 </td>
 <td>
  2. <a href="02-separating-code-and-data.html">Separating code and
-data</a>
+configuration</a>
 </td>
 <td>
+What needs to be configurable in our workflow?<br>How do we express
+these settings using the Snakemake config mechanism?<br>How does this
+fit in with testing?
 </td>
 </tr><tr><td>
 <span class="visually-hidden">Duration: </span>02h 00m
 </td>
 <td>
- 3. <a href="03-source-code-control.html">Source code control</a>
+ 3. <a href="03-using-standard-file-locations.html">Using standard file
+locations</a>
 </td>
 <td>
+What tools exist to check that the workflow files are all present and
+correct?
 </td>
 </tr><tr><td>
 <span class="visually-hidden">Duration: </span>03h 00m
 </td>
 <td>
- 4. <a href="04-using-standrd-file-locations.html">Using standard file
-locations</a>
+ 4. <a href="04-source-code-control.html">Source code control</a>
 </td>
 <td>
+What are the key ideas of source control?<br>What are the essential GIT
+commands we need to manage our simple code?<br>How can git tags help to
+manage our code updates?
 </td>
 </tr><tr><td>
 <span class="visually-hidden">Duration: </span>04h 00m
@@ -380,34 +442,50 @@ locations</a>
  5. <a href="05-adding-a-license.html">Adding a license</a>
 </td>
 <td>
+What OSI licenses are available?<br>How do I record ownership and
+authorship of my code?
 </td>
 </tr><tr><td>
 <span class="visually-hidden">Duration: </span>05h 00m
 </td>
 <td>
- 6. <a href="07-upload-to-workflowhub.html">Upload to workflowhub</a>
+ 6. <a href="06-upload-to-workflowhub.html">Upload to workflowhub</a>
 </td>
 <td>
+Why should I use WorkflowHub?<br>How does WorkflowHub compare with the
+Snakemake Workflow Catalogue?
 </td>
 </tr><tr><td>
 <span class="visually-hidden">Duration: </span>06h 00m
 </td>
 <td>
- 7. <a href="08-releasing-a-new-version.html">Releasing a new
-version</a>
+ 7. <a href="07-ro-crates.html">RO-Crates</a>
 </td>
 <td>
+What are RO-crates in general?<br>What are the specific types of
+RO-Crate?<br>What can I do with an RO-Crate?
 </td>
 </tr><tr><td>
 <span class="visually-hidden">Duration: </span>07h 00m
 </td>
 <td>
- 8. <a href="09-maximum-compatibility.html">Maximum compatibility</a>
+ 8. <a href="08-releasing-a-new-version.html">Releasing a new
+version</a>
 </td>
 <td>
+TODO
 </td>
 </tr><tr><td>
 <span class="visually-hidden">Duration: </span>08h 00m
+</td>
+<td>
+ 9. <a href="09-maximum-compatibility.html">Maximum compatibility</a>
+</td>
+<td>
+TODO
+</td>
+</tr><tr><td>
+<span class="visually-hidden">Duration: </span>09h 00m
 </td>
 <td>
 Finish
@@ -420,14 +498,14 @@ any links that you are not going to use.
  --></tbody></table><p>
       The actual schedule may vary slightly depending on the topics and exercises chosen by the instructor.
       </p>
-      </section><section id="setup"><p>FIXME: Setup instructions live in this document. Please specify the
-tools and the data sets the Learner needs to have installed.</p>
-<section><h2 class="section-heading" id="data-sets">Data Sets<a class="anchor" aria-label="anchor" href="#data-sets"></a></h2>
+      </section><section id="setup"><section><h2 class="section-heading" id="data-sets">Data Sets<a class="anchor" aria-label="anchor" href="#data-sets"></a></h2>
 <hr class="half-width"><!--
 FIXME: place any data you want learners to use in `episodes/data` and then use
        a relative link ( [data zip file](data/lesson-data.zip) ) to provide a
        link to it, replacing the example.com link.
---><p>Download the <a href="https://example.com/FIXME" class="external-link">data zip file</a>
+--><p>We’ll need to start with a sample Snakefile. I think the assembly one
+from the main course seems reasonable.</p>
+<p>Download the <a href="https://example.com/FIXME" class="external-link">data zip file</a>
 and unzip it to your Desktop</p>
 </section><section><h2 class="section-heading" id="software-setup">Software Setup<a class="anchor" aria-label="anchor" href="#software-setup"></a></h2>
 <hr class="half-width"><div id="details" class="callout discussion">
@@ -437,11 +515,9 @@ and unzip it to your Desktop</p>
 <div id="details" class="callout-inner">
 <h3 class="callout-title">Details</h3>
 <div class="callout-content">
-<p>Setup for different systems can be presented in dropdown menus via a
-<code>spoiler</code> tag. They will join to this discussion block, so
-you can give a general overview of the software used in this lesson here
-and fill out the individual operating systems (and potentially add more,
-e.g. online setup) in the solutions blocks.</p>
+<p>You will need the Snakemake software installed and working. One way
+to do this is to follow the same setup instructions as for the <a href="https://carpentries-incubator.github.io/snakemake-novice-bioinformatics/#software-installation" class="external-link">Snakemake
+for Bioinformatics lesson</a>.</p>
 </div>
 </div>
 </div>
@@ -453,9 +529,10 @@ e.g. online setup) in the solutions blocks.</p>
   Windows
   </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
-<p>Use PuTTY</p>
+<p>This lesson is currently not tested to work on Windows. You may use a
+WSL Linux environment, or else connect to a Linux system.</p>
 </div>
 </div>
 </div>
@@ -468,7 +545,7 @@ e.g. online setup) in the solutions blocks.</p>
   MacOS
   </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
 <div class="accordion-body">
 <p>Use Terminal.app</p>
 </div>
@@ -483,9 +560,9 @@ e.g. online setup) in the solutions blocks.</p>
   Linux
   </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
 <div class="accordion-body">
-<p>Use Terminal</p>
+<p>You are good.</p>
 </div>
 </div>
 </div>
@@ -521,7 +598,7 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.10" class="external-link">sandpaper (0.16.10)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.7" class="external-link">pegboard (0.7.7)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.5" class="external-link">varnish (1.0.5)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.16.11" class="external-link">sandpaper (0.16.11)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.5" class="external-link">varnish (1.0.5)</a></p>
 			</div>
 		</footer></div> <!-- / div.container -->
 	<div id="to-top">
@@ -543,8 +620,8 @@ any links that you are not going to use.
   "url": "https://carpentries.github.io/workbench-template-md/instructor/index.html",
   "identifier": "https://carpentries.github.io/workbench-template-md/instructor/index.html",
   "dateCreated": "2024-10-08",
-  "dateModified": "2024-12-03",
-  "datePublished": "2024-12-03"
+  "dateModified": "2025-02-25",
+  "datePublished": "2025-02-25"
 }
 
   </script><script>
