@@ -842,7 +842,7 @@ a <code>WildcardError</code>.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>This is an equivalent config file, which could go under
 <code>tests/integration/toy_config.yaml</code>:</p>
@@ -917,7 +917,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-03-using-standard-file-locations"><p>Content from <a href="03-using-standard-file-locations.html">Using standard file locations</a></p>
 <hr>
-<p>Last updated on 2025-02-25 |
+<p>Last updated on 2025-02-26 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/03-using-standard-file-locations.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -944,6 +944,7 @@ and correct?</li>
 <ul>
 <li>Understand the Snakemake recommended file layout</li>
 <li>Reorganise our sample code to comply with this standard</li>
+<li>Run the snakemake lint checker over the code</li>
 </ul>
 </div>
 </div>
@@ -954,8 +955,8 @@ and correct?</li>
 </h2>
 <hr class="half-width">
 <p>There is a recommended layout for files in a Snakemake workflow.
-Following this convention will help other users to understand your
-workflow when you share it.</p>
+Following this convention will help other users to understand and use
+your workflow when you share it.</p>
 <p>The following listing is taken from the <a href="https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html" class="external-link">Snakemake
 reference documenation</a></p>
 <pre><code>├── .gitignore
@@ -1011,21 +1012,23 @@ suggested</li>
 <li>We’ll leave all our rules in the main Snakefile for now, but notice
 that we have the option to break out rules or groups of rules into
 modules.</li>
-<li>We have no scripts, notebooks, or reports in our simple workflow
-just now.</li>
+<li>We have no <em>scripts</em>, <em>notebooks</em>, <em>reports</em> or
+<em>resources</em> in our simple workflow just now.</li>
 <li>We should put our <code>yeast_config.yaml</code> into a
 <code>config</code> subdirectory.</li>
-<li>The Snakemake workflow should put results into a
+<li>The Snakemake workflow should put output files into a
 <code>results</code> subdirectory.</li>
 </ul>
 <p>We’ll tidy our code to comply with the above points, and then keep to
 using standard file locations from now on. Let’s do the simpler stuff
 first.</p>
-</section><section><h2 class="section-heading" id="making-a-rulegraph-svg">Making a rulegraph.svg<a class="anchor" aria-label="anchor" href="#making-a-rulegraph-svg"></a>
-</h2>
-<hr class="half-width">
-<p>We could make the rulegraph from the yeast transcriptome data or the
-toy data. We’ll use the toy dataset.</p>
+<div class="section level3">
+<h3 id="making-a-rulegraph-svg">Making a rulegraph.svg<a class="anchor" aria-label="anchor" href="#making-a-rulegraph-svg"></a>
+</h3>
+<p>This is just a picture of our workflow DAG. Remember that in
+Snakemake the DAG is always constructed with reference to a specific
+target. We could make the rulegraph based on the yeast transcriptome
+data or the toy data. We’ll use the toy dataset.</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -1041,10 +1044,12 @@ tool to generate the <em>SVG</em>.</p>
 </div>
 <p><em>SVG</em> is the Scalable Vector Graphics format. If you want to
 view the SVG directly you can try loading it in a web browser.</p>
-</section><section><h2 class="section-heading" id="moving-the-files-around">Moving the files around<a class="anchor" aria-label="anchor" href="#moving-the-files-around"></a>
-</h2>
-<hr class="half-width">
-<p>First, we’ll make the required subdirectories.</p>
+</div>
+<div class="section level3">
+<h3 id="moving-the-files-around">Moving the files around<a class="anchor" aria-label="anchor" href="#moving-the-files-around"></a>
+</h3>
+<p>Some files just need to move to a standard location. First, we’ll
+make the required subdirectories.</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -1059,19 +1064,21 @@ view the SVG directly you can try loading it in a web browser.</p>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="ex">$</span> mv mv assembly_conda_env.yaml workflow/envs/</span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="ex">$</span> mv yeast_config.yaml config/</span></code></pre>
 </div>
-</section><section><h2 class="section-heading" id="renaming-the-tests-directory">Renaming the tests directory<a class="anchor" aria-label="anchor" href="#renaming-the-tests-directory"></a>
-</h2>
-<hr class="half-width">
+</div>
+<div class="section level3">
+<h3 id="renaming-the-tests-directory">Renaming the tests directory<a class="anchor" aria-label="anchor" href="#renaming-the-tests-directory"></a>
+</h3>
 <p>The official layout guidance says that that tests should be in a
 directory called <code>.tests</code> which would be a hidden directory.
-Do we really need to hide our tests away in order to comply with the
-standard? A compromise is to rename the directory, but then make a
-symlink to keep it visible.</p>
+If we don’t want to test files to be hidden, a compromise is to rename
+the directory, but then make a symlink to keep it visible in our file
+listings.</p>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="ex">$</span> mv tests .tests</span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="ex">$</span> ln <span class="at">-s</span> .tests tests</span></code></pre>
+</div>
 </div>
 </section><section><h2 class="section-heading" id="adding-a-readme-md">Adding a README.md<a class="anchor" aria-label="anchor" href="#adding-a-readme-md"></a>
 </h2>
@@ -1084,7 +1091,8 @@ file. We’ll just add a brief description.</p>
 text format</a> that supports all sorts of formatting but for now we
 just need to know that lines beginning <code>#</code> will be shown as
 headings.</p>
-<p>Paste this into the file <code>README.md</code></p>
+<p>Create the file <code>README.md</code> in the text editor, and paste
+in the following text.</p>
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -1094,15 +1102,15 @@ headings.</p>
 <span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>the same assembly on every sample with different k-mer length settings, and reports the longest</span>
 <span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>contig in each case.</span></code></pre>
 </div>
-</section><section><h2 class="section-heading" id="output-to-the-results-directory">Output to the results directory<a class="anchor" aria-label="anchor" href="#output-to-the-results-directory"></a>
-</h2>
-<hr class="half-width">
+<div class="section level3">
+<h3 id="saving-output-to-a-results-directory">Saving output to a results directory<a class="anchor" aria-label="anchor" href="#saving-output-to-a-results-directory"></a>
+</h3>
 <p>All of our output files currently go into subdirectories within the
 current working directiory, but the standard says they need to be under
-<code>results</code>. On the face of it, it seems that we need to
-re-write all of our rules and add <code>results/</code> to all the
+<code>results</code>. On the face of it, it seems that we need to modify
+all of our rules and add <code>results/</code> to the start of the
 paths. Fortunately there is a trick to avoid this.</p>
-<pre><code><span><span class="va">READS_DIR</span> <span class="op">=</span> <span class="fu">os.path.join</span><span class="op">(</span><span class="st">".."</span>, <span class="va">config</span><span class="op">[</span><span class="st">"reads_dir"</span><span class="op">]</span><span class="op">)</span></span>
+<pre><code><span><span class="va">READS_DIR</span> <span class="op">=</span> <span class="fu">os.path.abspath</span><span class="op">(</span><span class="va">config</span><span class="op">[</span><span class="st">"reads_dir"</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">workdir</span><span class="op">:</span></span>
 <span>    <span class="fu">config.get</span><span class="op">(</span><span class="st">"results"</span>, <span class="st">"results"</span><span class="op">)</span></span></code></pre>
 <p>Then in the <em>cutadapt</em> rule, modify the <em>input</em> part to
@@ -1110,13 +1118,14 @@ reference the new variable.</p>
 <pre><code>input:
     read1 = READS_DIR + "/{sample}_1.fq",
     read2 = READS_DIR + "/{sample}_2.fq",</code></pre>
-<p>The use of <code>os.path.join("..", ...)</code> will work regardless
-if the reads directory is given as a relative or absolute path.</p>
+<p>The use of <code>os.path.abspath(config["reads_dir"])</code> will
+convert the <em>reads_dir</em> to an absolute path, so it will work
+regardless of what we use for the <em>workdir</em>.</p>
 <p>The <em>workdir</em> will now default to <code>results</code>, as per
-the standard layout, but we can override it.</p>
-<div id="discussion1" class="callout discussion">
+the standard layout, but we can override it in the configuration.</p>
+<div id="challenge1" class="callout challenge">
 <div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
+<i class="callout-icon" data-feather="zap"></i>
 </div>
 <div class="callout-inner">
 <h3 class="callout-title">Challenge</h3>
@@ -1128,7 +1137,54 @@ need to fix?</p>
 </div>
 </div>
 </div>
-<p>Do I lint the code at this point?</p>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div class="accordion-body">
+<p>Add this line to the file
+<code>tests/integration/toy_config.yaml</code></p>
+<pre class="source"><code><span><span class="va">results</span><span class="op">:</span> <span class="st">"test_results"</span></span></code></pre>
+<p>After this, we can try the test script.</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="ex">$</span> ./tests/integration/run.sh</span></code></pre>
+</div>
+<p>At this point you are liable to see an error about a missing file for
+<code>assembly_conda_env.yaml</code>. In the Snakefile, the path for all
+<em>conda:</em> environments needs to have <code>envs/</code> added
+since we have moved the file.</p>
+<p>Also, you need to change the line in the <code>run.sh</code> script
+so that it checks the correct file after running Snakemake.</p>
+<div class="codewrapper sourceCode" id="cb12">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="va">max_len</span><span class="op">=</span><span class="va">$(</span> <span class="fu">egrep</span> <span class="at">-o</span> <span class="st">'[0-9]+$'</span> assem/toy_k19_max_contig.txt <span class="va">)</span></span></code></pre>
+</div>
+<p>If you didn’t spot this, it’s likely because you still have the old
+file under <code>./assem</code> and the test script is picking this up
+and printing <em>PASS</em> at the end.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="linting-the-code">Linting the code<a class="anchor" aria-label="anchor" href="#linting-the-code"></a>
+</h2>
+<hr class="half-width">
+<p>Now is a good time to run the <code>--lint</code> option of
+Snakemake.</p>
+<div class="codewrapper sourceCode" id="cb13">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="ex">$</span> snakemake <span class="at">--configfile</span> tests/integration/toy_config.yaml <span class="at">--lint</span></span></code></pre>
+</div>
+<p>“Linting” a program is defined by <a href="https://en.wikipedia.org/wiki/Lint_%28software%29" class="external-link">Wikipedia</a>
+as running a “tool used to flag programming errors, bugs, stylistic
+errors and suspicious constructs”</p>
 <p>At what point do I want to talk about “snakedeploy”? I still don’t
 get what it does. Need to do some testing of that on the sample
 workflow.</p>
@@ -1851,8 +1907,8 @@ any links that you are not going to use.
   "url": "https://carpentries.github.io/workbench-template-md/aio.html",
   "identifier": "https://carpentries.github.io/workbench-template-md/aio.html",
   "dateCreated": "2024-10-08",
-  "dateModified": "2025-02-25",
-  "datePublished": "2025-02-25"
+  "dateModified": "2025-02-26",
+  "datePublished": "2025-02-26"
 }
 
   </script><script>
