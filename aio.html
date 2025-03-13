@@ -481,7 +481,7 @@ to a new system or given new data?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>A workflow may depend on:</p>
 <ul>
@@ -650,7 +650,7 @@ the four different k-mer length settings.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Assuming you started with the sample answer, three changes are
 needed:</p>
@@ -917,7 +917,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-03-using-standard-file-locations"><p>Content from <a href="03-using-standard-file-locations.html">Using standard file locations</a></p>
 <hr>
-<p>Last updated on 2025-02-26 |
+<p>Last updated on 2025-03-13 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/03-using-standard-file-locations.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1036,7 +1036,7 @@ data or the toy data. We’ll use the toy dataset.</p>
 </div>
 <p>This file made by Snakemake is in <em>GraphViz</em> formay, not
 <em>SVG</em> format, but we can use the <code>dot</code> command line
-tool to generate the <em>SVG</em>.</p>
+tool to convert to <em>SVG</em>.</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -1088,7 +1088,7 @@ and introduction to your workflow. Some people will just add a brief
 description, while others will add comprehensive documentation in this
 file. We’ll just add a brief description.</p>
 <p>The <code>.md</code>/<em>Markdown</em> format, is an <a href="https://github.com/adam-p/markdown-here/wiki/markdown-cheatsheet" class="external-link">enhanced
-text format</a> that supports all sorts of formatting but for now we
+text format</a> that supports all sorts of formatting, but for now we
 just need to know that lines beginning <code>#</code> will be shown as
 headings.</p>
 <p>Create the file <code>README.md</code> in the text editor, and paste
@@ -1114,7 +1114,7 @@ paths. Fortunately there is a trick to avoid this.</p>
 <span><span class="va">workdir</span><span class="op">:</span></span>
 <span>    <span class="fu">config.get</span><span class="op">(</span><span class="st">"results"</span>, <span class="st">"results"</span><span class="op">)</span></span></code></pre>
 <p>Then in the <em>cutadapt</em> rule, modify the <em>input</em> part to
-reference the new variable.</p>
+reference the <code>READS_DIR</code> variable.</p>
 <pre><code>input:
     read1 = READS_DIR + "/{sample}_1.fq",
     read2 = READS_DIR + "/{sample}_2.fq",</code></pre>
@@ -1157,15 +1157,23 @@ need to fix?</p>
 <code>assembly_conda_env.yaml</code>. In the Snakefile, the path for all
 <em>conda:</em> environments needs to have <code>envs/</code> added
 since we have moved the file.</p>
-<p>Also, you need to change the line in the <code>run.sh</code> script
-so that it checks the correct file after running Snakemake.</p>
+<p>Also, you need to change the line in the
+<code>tests/integration/run.sh</code> script so that it checks the
+correct file after running Snakemake.</p>
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="va">max_len</span><span class="op">=</span><span class="va">$(</span> <span class="fu">egrep</span> <span class="at">-o</span> <span class="st">'[0-9]+$'</span> assem/toy_k19_max_contig.txt <span class="va">)</span></span></code></pre>
 </div>
+<p>It should check the file in the <code>test_results/</code>
+subdirectory:</p>
+<div class="codewrapper sourceCode" id="cb13">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="va">max_len</span><span class="op">=</span><span class="va">$(</span> <span class="fu">egrep</span> <span class="at">-o</span> <span class="st">'[0-9]+$'</span> test_results/assem/toy_k19_max_contig.txt <span class="va">)</span></span></code></pre>
+</div>
 <p>If you didn’t spot this, it’s likely because you still have the old
-file under <code>./assem</code> and the test script is picking this up
+file under <code>./assem/</code> and the test script is picking this up
 and printing <em>PASS</em> at the end.</p>
 </div>
 </div>
@@ -1177,24 +1185,74 @@ and printing <em>PASS</em> at the end.</p>
 <hr class="half-width">
 <p>Now is a good time to run the <code>--lint</code> option of
 Snakemake.</p>
-<div class="codewrapper sourceCode" id="cb13">
+<div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="ex">$</span> snakemake <span class="at">--configfile</span> tests/integration/toy_config.yaml <span class="at">--lint</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="ex">$</span> snakemake <span class="at">--configfile</span> tests/integration/toy_config.yaml <span class="at">--lint</span></span></code></pre>
 </div>
 <p>“Linting” a program is defined by <a href="https://en.wikipedia.org/wiki/Lint_%28software%29" class="external-link">Wikipedia</a>
 as running a “tool used to flag programming errors, bugs, stylistic
-errors and suspicious constructs”</p>
-<p>At what point do I want to talk about “snakedeploy”? I still don’t
-get what it does. Need to do some testing of that on the sample
-workflow.</p>
+errors and suspicious constructs”.</p>
+<p>In this case, Snakemake points out a few things:</p>
+<ul>
+<li>
+<strong>Specify a conda environment</strong> for the
+<em>concatenate</em> rule</li>
+<li>
+<strong>Absolute path</strong> and <strong>Path composition</strong>
+warnings regarding the data file locations</li>
+<li>
+<strong>No log directive defined</strong> for all the rules with a
+<em>shell</em> part</li>
+</ul>
+<p>The first of these is unreasonable. We don’t need a special conda
+environment to run the <code>cat</code> command! But for most rules that
+run <em>shell</em> commands, you should indeed be defining a conda
+environment or a container to use.</p>
+<p>The second is also unreasonable. Reading input files and reference
+files from outside of the current directory is fine, and in fact
+necessary here when using <code>workdir: "results"</code>. However, you
+should avoid ever getting Snakemake to <em>write</em> files outside of
+the working directory. Snakemake will do it, but it is problematic.</p>
+<p>The third point is very reasonable. Command output should be logged
+to a file, not just printed on the screen. A trick that works in most
+cases to do this easily is to add this line at the start of each piece
+of shell code.</p>
+<div class="codewrapper sourceCode" id="cb15">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="bu">exec</span> <span class="op">&gt;</span>{log} <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span></code></pre>
+</div>
+<p>Assuming you have defined a <em>log</em> filename for the rule (you
+should make these under a <code>logs/</code> subdirectory), this will
+send anything that would have been printed to the terminal into that
+file. You do not need to modify the existing <em>shell</em>
+commands.</p>
+<div id="discussion1" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<p>Add <em>log</em> outputs for the rules. You can skip doing this for
+the <em>concatenate</em> rule.</p>
+</div>
+</div>
+</div>
+<!-- TODO TODO
+
+At what point do I want to talk about "snakedeploy"? I still don't get what it does. Need to do
+some testing of that on the sample workflow.
+
+-->
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
 </section></section><section id="aio-04-source-code-control"><p>Content from <a href="04-source-code-control.html">Source code control</a></p>
 <hr>
-<p>Last updated on 2025-02-25 |
+<p>Last updated on 2025-03-13 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/04-source-code-control.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1233,12 +1291,12 @@ code?</li>
 <section><h2 class="section-heading" id="source-code-control-with-git">Source code control with Git<a class="anchor" aria-label="anchor" href="#source-code-control-with-git"></a>
 </h2>
 <hr class="half-width">
-<p>Covering anything but the bare basics of Git here is not possible,
-but we need to know a few fundamentals:</p>
+<p>Covering anything but the bare basics of <em>Git</em> here is not
+possible, but we need to know a few fundamentals:</p>
 <ul>
 <li>
 <em>Git</em> is a program that takes snapshots of all the files in a
-directory, and saves a log of every snapshot taken.</li>
+directory, and remembers every snapshot taken.</li>
 <li>These snapshots are known as <em>commits</em>, and a sequential
 timeline of commits is known as a <em>branch</em>. In the simple case,
 we have a linear series of <em>commits</em> over time, so just one
@@ -1250,19 +1308,19 @@ exactly what changed (a <em>diff</em>) between two version.</li>
 </ul>
 <p>All this happens on your local system, by saving special files into a
 <code>.git</code> subdirectory, but you have the option to <em>push</em>
-that information to a <em>remote server</em>. The most popular such
-system, and the one we will use today, is GitHub.</p>
+that information to a <em>remote repository</em>. The most popular such
+service, and the one we will use today, is <a href="https://github.com" class="external-link">GitHub</a>.</p>
 <ul>
 <li>GitHub is a free-to-use service owned by Microsoft.</li>
-<li>It allows you to view your code on-line, and <em>pull</em> it to
+<li>It allows anyone to view your code on-line, and <em>pull</em> it to
 another computer.</li>
 </ul></section><section><h2 class="section-heading" id="git-github">Git + GitHub<a class="anchor" aria-label="anchor" href="#git-github"></a>
 </h2>
 <hr class="half-width">
-<p>Explain how these components interact. I need a diagram with paths
-going between them. Maybe have a version now and then a second version
-later that adds WorkflowHub? Yes!</p>
-<div class="section level3">
+<figure><img src="fig/git-github.svg" alt="Schematic of how Git and GitHub interact" class="figure mx-auto d-block"></figure><!-- TODO
+Explain how these components interact. I need a diagram with paths going between them. Maybe have
+a version now and then a second version later that adds WorkflowHub? Yes!
+--><div class="section level3">
 <h3 id="i-think-this-probably-goes-in-the-version-episode-">I think this probably goes in the version episode.<a class="anchor" aria-label="anchor" href="#i-think-this-probably-goes-in-the-version-episode-"></a>
 </h3>
 <p>Tag = git allows you to give a name to any commit. Ultimataly we want
@@ -1288,7 +1346,7 @@ that.</p>
 <p>??? Should I do the signups for GitHub and Workflowhub at the same
 time?</p>
 <ol start="3" style="list-style-type: decimal">
-<li>We’re nto doing Workflowhub yet.</li>
+<li>We’re not doing Workflowhub yet.</li>
 </ol>
 <div id="github-dangers" class="callout">
 <div class="callout-square">
@@ -1907,8 +1965,8 @@ any links that you are not going to use.
   "url": "https://carpentries.github.io/workbench-template-md/aio.html",
   "identifier": "https://carpentries.github.io/workbench-template-md/aio.html",
   "dateCreated": "2024-10-08",
-  "dateModified": "2025-03-11",
-  "datePublished": "2025-03-11"
+  "dateModified": "2025-03-13",
+  "datePublished": "2025-03-13"
 }
 
   </script><script>

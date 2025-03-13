@@ -380,11 +380,11 @@ introductory course, in order to have the full software environment.</p>
 </div>
 </div>
 <section><h2 class="section-heading" id="notes">Notes<a class="anchor" aria-label="anchor" href="#notes"></a></h2>
-<hr class="half-width"><p><a href="https://workflowhub.eu" class="external-link">WorkflowHub.eu</a> is a a FAIR
-registry for describing, sharing and publishing scientific computational
-workflows. The registry is sponsored by the European RI Cluster
-EOSC-Life, the European Research Infrastructure ELIXIR, and multiple
-EU-wide projects.</p>
+<hr class="half-width"><p><a href="https://workflowhub.eu" class="external-link">WorkflowHub.eu</a> is a <a href="https://www.go-fair.org/fair-principles/" class="external-link">FAIR</a> registry for
+describing, sharing and publishing scientific computational workflows.
+The registry is sponsored by the <a href="https://www.eosc-life.eu/" class="external-link">European RI Cluster EOSC-Life</a>, the
+<a href="https://elixir-europe.org/" class="external-link">European Research Infrastructure
+ELIXIR</a>, and multiple EU-wide projects.</p>
 <p>This lesson was built with <a href="https://carpentries.github.io/sandpaper-docs" class="external-link">The Carpentries
 Workbench</a>.</p>
 <!--
@@ -396,10 +396,39 @@ any links that you are not going to use.
 FIXME: place any data you want learners to use in `episodes/data` and then use
        a relative link ( [data zip file](data/lesson-data.zip) ) to provide a
        link to it, replacing the example.com link.
---><p>We’ll need to start with a sample Snakefile. I think the assembly one
-from the main course seems reasonable.</p>
-<p>Download the <a href="https://example.com/FIXME" class="external-link">data zip file</a>
-and unzip it to your Desktop</p>
+--><p>We’ll need to start with a simple example Snakefile, which in this
+case is the sample answer given to the <a href="https://carpentries-incubator.github.io/snakemake-novice-bioinformatics/12-assembly_challenge.html" class="external-link">sequence
+assembly challenge</a>.</p>
+<p>Download <a href="files/setup/Snakefile">the Snakefile</a> and save
+it.</p>
+<p>If you do not have the yeast files from the intro course, unpack the
+sample dataset tarball from <a href="https://figshare.com/ndownloader/files/42467370" class="external-link">https://figshare.com/ndownloader/files/42467370</a></p>
+<p>You may do this in the shell with the command:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">$</span> wget <span class="at">--content-disposition</span> https://figshare.com/ndownloader/files/42467370</span></code></pre>
+</div>
+<p>The <a href="https://www.gnu.org/software/tar/manual/html_node/Tutorial.html" class="external-link">tar
+file</a> needs to be unpacked to yield the directory of files used in
+the course. In the shell you may do this with:</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">$</span> tar <span class="at">-xvaf</span> data-for-snakemake-novice-bioinformatics.tar.xz</span></code></pre>
+</div>
+<p>You will also need to rename the files as is normally done at the
+start of <a href="https://carpentries-incubator.github.io/snakemake-novice-bioinformatics/06-expansion.html" class="external-link">episode
+06</a>.</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">$</span> cd yeast/reads</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="ex">$</span> rename <span class="at">-v</span> <span class="at">-s</span> ref ref_ <span class="pp">*</span></span></code></pre>
+</div>
+<p><a href="https://figshare.com/articles/dataset/data-for-snakemake-novice-bioinformatics_tar_xz/19733338/1" class="external-link">See
+this link</a> for details about this dataset and the redistribution
+license.</p>
 </section><section><h2 class="section-heading" id="software-setup">Software Setup<a class="anchor" aria-label="anchor" href="#software-setup"></a></h2>
 <hr class="half-width"><div id="details" class="callout discussion">
 <div class="callout-square">
@@ -408,8 +437,9 @@ and unzip it to your Desktop</p>
 <div id="details" class="callout-inner">
 <h3 class="callout-title">Details</h3>
 <div class="callout-content">
-<p>You will need the Snakemake software installed and working. One way
-to do this is to follow the same setup instructions as for the <a href="https://carpentries-incubator.github.io/snakemake-novice-bioinformatics/#software-installation" class="external-link">Snakemake
+<p>You will need the Snakemake software installed and working with
+conda. One way to do this is to follow the same setup instructions as
+for the <a href="https://carpentries-incubator.github.io/snakemake-novice-bioinformatics/#software-installation" class="external-link">Snakemake
 for Bioinformatics lesson</a>.</p>
 </div>
 </div>
@@ -513,8 +543,8 @@ any links that you are not going to use.
   "url": "https://carpentries.github.io/workbench-template-md/index.html",
   "identifier": "https://carpentries.github.io/workbench-template-md/index.html",
   "dateCreated": "2024-10-08",
-  "dateModified": "2025-03-11",
-  "datePublished": "2025-03-11"
+  "dateModified": "2025-03-13",
+  "datePublished": "2025-03-13"
 }
 
   </script><script>

@@ -355,7 +355,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Using standard file locations</h1>
-        <p>Last updated on 2025-02-26 |
+        <p>Last updated on 2025-03-13 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/03-using-standard-file-locations.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -471,7 +471,7 @@ data or the toy data. We’ll use the toy dataset.</p>
 </div>
 <p>This file made by Snakemake is in <em>GraphViz</em> formay, not
 <em>SVG</em> format, but we can use the <code>dot</code> command line
-tool to generate the <em>SVG</em>.</p>
+tool to convert to <em>SVG</em>.</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -519,7 +519,7 @@ and introduction to your workflow. Some people will just add a brief
 description, while others will add comprehensive documentation in this
 file. We’ll just add a brief description.</p>
 <p>The <code>.md</code>/<em>Markdown</em> format, is an <a href="https://github.com/adam-p/markdown-here/wiki/markdown-cheatsheet" class="external-link">enhanced
-text format</a> that supports all sorts of formatting but for now we
+text format</a> that supports all sorts of formatting, but for now we
 just need to know that lines beginning <code>#</code> will be shown as
 headings.</p>
 <p>Create the file <code>README.md</code> in the text editor, and paste
@@ -544,7 +544,7 @@ paths. Fortunately there is a trick to avoid this.</p>
 <span><span class="va">workdir</span><span class="op">:</span></span>
 <span>    <span class="fu">config.get</span><span class="op">(</span><span class="st">"results"</span>, <span class="st">"results"</span><span class="op">)</span></span></code></pre>
 <p>Then in the <em>cutadapt</em> rule, modify the <em>input</em> part to
-reference the new variable.</p>
+reference the <code>READS_DIR</code> variable.</p>
 <pre><code>input:
     read1 = READS_DIR + "/{sample}_1.fq",
     read2 = READS_DIR + "/{sample}_2.fq",</code></pre>
@@ -587,15 +587,23 @@ need to fix?</p>
 <code>assembly_conda_env.yaml</code>. In the Snakefile, the path for all
 <em>conda:</em> environments needs to have <code>envs/</code> added
 since we have moved the file.</p>
-<p>Also, you need to change the line in the <code>run.sh</code> script
-so that it checks the correct file after running Snakemake.</p>
+<p>Also, you need to change the line in the
+<code>tests/integration/run.sh</code> script so that it checks the
+correct file after running Snakemake.</p>
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="va">max_len</span><span class="op">=</span><span class="va">$(</span> <span class="fu">egrep</span> <span class="at">-o</span> <span class="st">'[0-9]+$'</span> assem/toy_k19_max_contig.txt <span class="va">)</span></span></code></pre>
 </div>
+<p>It should check the file in the <code>test_results/</code>
+subdirectory:</p>
+<div class="codewrapper sourceCode" id="cb13">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="va">max_len</span><span class="op">=</span><span class="va">$(</span> <span class="fu">egrep</span> <span class="at">-o</span> <span class="st">'[0-9]+$'</span> test_results/assem/toy_k19_max_contig.txt <span class="va">)</span></span></code></pre>
+</div>
 <p>If you didn’t spot this, it’s likely because you still have the old
-file under <code>./assem</code> and the test script is picking this up
+file under <code>./assem/</code> and the test script is picking this up
 and printing <em>PASS</em> at the end.</p>
 </div>
 </div>
@@ -605,17 +613,65 @@ and printing <em>PASS</em> at the end.</p>
 </section><section><h2 class="section-heading" id="linting-the-code">Linting the code<a class="anchor" aria-label="anchor" href="#linting-the-code"></a></h2>
 <hr class="half-width"><p>Now is a good time to run the <code>--lint</code> option of
 Snakemake.</p>
-<div class="codewrapper sourceCode" id="cb13">
+<div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="ex">$</span> snakemake <span class="at">--configfile</span> tests/integration/toy_config.yaml <span class="at">--lint</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="ex">$</span> snakemake <span class="at">--configfile</span> tests/integration/toy_config.yaml <span class="at">--lint</span></span></code></pre>
 </div>
 <p>“Linting” a program is defined by <a href="https://en.wikipedia.org/wiki/Lint_%28software%29" class="external-link">Wikipedia</a>
 as running a “tool used to flag programming errors, bugs, stylistic
-errors and suspicious constructs”</p>
-<p>At what point do I want to talk about “snakedeploy”? I still don’t
-get what it does. Need to do some testing of that on the sample
-workflow.</p>
+errors and suspicious constructs”.</p>
+<p>In this case, Snakemake points out a few things:</p>
+<ul><li>
+<strong>Specify a conda environment</strong> for the
+<em>concatenate</em> rule</li>
+<li>
+<strong>Absolute path</strong> and <strong>Path composition</strong>
+warnings regarding the data file locations</li>
+<li>
+<strong>No log directive defined</strong> for all the rules with a
+<em>shell</em> part</li>
+</ul><p>The first of these is unreasonable. We don’t need a special conda
+environment to run the <code>cat</code> command! But for most rules that
+run <em>shell</em> commands, you should indeed be defining a conda
+environment or a container to use.</p>
+<p>The second is also unreasonable. Reading input files and reference
+files from outside of the current directory is fine, and in fact
+necessary here when using <code>workdir: "results"</code>. However, you
+should avoid ever getting Snakemake to <em>write</em> files outside of
+the working directory. Snakemake will do it, but it is problematic.</p>
+<p>The third point is very reasonable. Command output should be logged
+to a file, not just printed on the screen. A trick that works in most
+cases to do this easily is to add this line at the start of each piece
+of shell code.</p>
+<div class="codewrapper sourceCode" id="cb15">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="bu">exec</span> <span class="op">&gt;</span>{log} <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span></code></pre>
+</div>
+<p>Assuming you have defined a <em>log</em> filename for the rule (you
+should make these under a <code>logs/</code> subdirectory), this will
+send anything that would have been printed to the terminal into that
+file. You do not need to modify the existing <em>shell</em>
+commands.</p>
+<div id="discussion1" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<p>Add <em>log</em> outputs for the rules. You can skip doing this for
+the <em>concatenate</em> rule.</p>
+</div>
+</div>
+</div>
+<!-- TODO TODO
+
+At what point do I want to talk about "snakedeploy"? I still don't get what it does. Need to do
+some testing of that on the sample workflow.
+
+-->
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
@@ -678,8 +734,8 @@ any links that you are not going to use.
   "url": "https://carpentries.github.io/workbench-template-md/03-using-standard-file-locations.html",
   "identifier": "https://carpentries.github.io/workbench-template-md/03-using-standard-file-locations.html",
   "dateCreated": "2024-10-08",
-  "dateModified": "2025-02-26",
-  "datePublished": "2025-03-11"
+  "dateModified": "2025-03-13",
+  "datePublished": "2025-03-13"
 }
 
   </script><script>
