@@ -3,7 +3,7 @@ permalink: index.html
 site: sandpaper::sandpaper_site
 ---
 
-A supplementary lesson for users of the [Snakemake workflow system](https://snakemake.github.io/)
+A supplementary lesson for users of the [Snakemake workflow system][snakemake]
 that covers how to share your worflows. This is not just a matter of uploading code, but a whole
 way of thinking about the workflow as a re-usable entity. Tools and approaches that lead to
 re-usable code are introduced with practical examples, and the [WorkflowHub.eu][wfh] site
@@ -35,12 +35,17 @@ the full software environment.
 
 ## Notes
 
-[WorkflowHub.eu][wfh] is a a FAIR registry for describing, sharing and publishing scientific
-computational workflows. The registry is sponsored by the European RI Cluster EOSC-Life, the
-European Research Infrastructure ELIXIR, and multiple EU-wide projects.
+[WorkflowHub.eu][wfh] is a [FAIR][fair] registry for describing, sharing and publishing scientific
+computational workflows. The registry is sponsored by
+the [European RI Cluster EOSC-Life][eosclife],
+the [European Research Infrastructure ELIXIR][elixir], and multiple EU-wide projects.
 
 This lesson was built with [The Carpentries Workbench][workbench].
 
 [workbench]: https://carpentries.github.io/sandpaper-docs
 [sforb]: https://carpentries-incubator.github.io/snakemake-novice-bioinformatics/
 [wfh]: https://workflowhub.eu
+[snakemake]: https://snakemake.github.io/
+[fair]: https://www.go-fair.org/fair-principles/
+[eosclife]: https://www.eosc-life.eu/
+[elixir]: https://elixir-europe.org/

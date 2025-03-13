@@ -91,7 +91,7 @@ $ snakemake -F --dag --configfile tests/integration/toy_config.yaml > rulegraph.
 ```
 
 This file made by Snakemake is in *GraphViz* formay, not *SVG* format, but we can use the `dot`
-command line tool to generate the *SVG*.
+command line tool to convert to *SVG*.
 
 ```bash
 $ dot -Tsvg rulegraph.dag -o rulegraph.svg
@@ -134,9 +134,8 @@ The idea of this *README* is to provide a top-level summary and introduction to 
 Some people will just add a brief description, while others will add comprehensive documentation
 in this file. We'll just add a brief description.
 
-The `.md`/*Markdown* format, is an [enhanced text format](
-https://github.com/adam-p/markdown-here/wiki/markdown-cheatsheet) that supports all sorts of
-formatting but for now we just need to know that lines beginning `#` will be shown as headings.
+The `.md`/*Markdown* format, is an [enhanced text format][markdown] that supports all sorts of
+formatting, but for now we just need to know that lines beginning `#` will be shown as headings.
 
 Create the file `README.md` in the text editor, and paste in the following text.
 
@@ -161,7 +160,7 @@ workdir:
     config.get("results", "results")
 ```
 
-Then in the *cutadapt* rule, modify the *input* part to reference the new variable.
+Then in the *cutadapt* rule, modify the *input* part to reference the `READS_DIR` variable.
 
 ```
 input:
@@ -199,14 +198,20 @@ At this point you are liable to see an error about a missing file for `assembly_
 In the Snakefile, the path for all *conda:* environments needs to have `envs/` added since we have
 moved the file.
 
-Also, you need to change the line in the `run.sh` script so that it checks the correct file after
-running Snakemake.
+Also, you need to change the line in the `tests/integration/run.sh` script so that it checks the
+correct file after running Snakemake.
 
 ```bash
 max_len=$( egrep -o '[0-9]+$' assem/toy_k19_max_contig.txt )
 ```
 
-If you didn't spot this, it's likely because you still have the old file under `./assem` and
+It should check the file in the `test_results/` subdirectory:
+
+```bash
+max_len=$( egrep -o '[0-9]+$' test_results/assem/toy_k19_max_contig.txt )
+```
+
+If you didn't spot this, it's likely because you still have the old file under `./assem/` and
 the test script is picking this up and printing *PASS* at the end.
 
 :::::::::
@@ -223,10 +228,47 @@ $ snakemake --configfile tests/integration/toy_config.yaml --lint
 
 "Linting" a program is defined by [Wikipedia](https://en.wikipedia.org/wiki/Lint_%28software%29)
 as running a "tool used to flag programming errors, bugs, stylistic errors and suspicious
-constructs"
+constructs".
+
+In this case, Snakemake points out a few things:
+
+* **Specify a conda environment** for the *concatenate* rule
+* **Absolute path** and **Path composition** warnings regarding the data file locations
+* **No log directive defined** for all the rules with a *shell* part
+
+The first of these is unreasonable. We don't need a special conda environment to run the `cat`
+command! But for most rules that run *shell* commands, you should indeed be defining a conda
+environment or a container to use.
+
+The second is also unreasonable. Reading input files and reference files from outside of the
+current directory is fine, and in fact necessary here when using `workdir: "results"`. However,
+you should avoid ever getting Snakemake to *write* files outside of the working directory.
+Snakemake will do it, but it is problematic.
+
+The third point is very reasonable. Command output should be logged to a file, not just
+printed on the screen. A trick that works in most cases to do this easily is to add this line at
+the start of each piece of shell code.
+
+```bash
+exec >{log} 2>&1
+```
+
+Assuming you have defined a *log* filename for the rule (you should make these under a `logs/`
+subdirectory), this will send anything that would have been printed to the terminal into that
+file. You do not need to modify the existing *shell* commands.
+
+::::::::::::::::::::: challenge
+
+Add *log* outputs for the rules. You can skip doing this for the *concatenate* rule.
+
+::::::::
+
+<!-- TODO TODO
 
 At what point do I want to talk about "snakedeploy"? I still don't get what it does. Need to do
 some testing of that on the sample workflow.
 
+-->
 
+[markdown]: https://github.com/adam-p/markdown-here/wiki/markdown-cheatsheet
 
