@@ -22,10 +22,10 @@ exercises: 30
 
 ## Source code control with Git
 
-Covering anything but the bare basics of Git here is not possible, but we need to know a few
+Covering anything but the bare basics of *Git* here is not possible, but we need to know a few
 fundamentals:
 
-- *Git* is a program that takes snapshots of all the files in a directory, and saves a log of
+- *Git* is a program that takes snapshots of all the files in a directory, and remembers
   every snapshot taken.
 - These snapshots are known as *commits*, and a sequential timeline of commits is known as a
   *branch*. In the simple case, we have a linear series of *commits* over time, so just one
@@ -35,16 +35,20 @@ fundamentals:
   between two version.
 
 All this happens on your local system, by saving special files into a `.git` subdirectory, but
-you have the option to *push* that information to a *remote server*. The most popular such system,
-and the one we will use today, is GitHub.
+you have the option to *push* that information to a *remote repository*. The most popular such
+service, and the one we will use today, is [GitHub][github].
 
 - GitHub is a free-to-use service owned by Microsoft.
-- It allows you to view your code on-line, and *pull* it to another computer.
+- It allows anyone to view your code on-line, and *pull* it to another computer.
 
 ## Git + GitHub
 
+![][fig-git-github]
+
+<!-- TODO
 Explain how these components interact. I need a diagram with paths going between them. Maybe have
 a version now and then a second version later that adds WorkflowHub? Yes!
+-->
 
 ### I think this probably goes in the version episode.
 Tag = git allows you to give a name to any commit. Ultimataly we want to use tags to indicate versions of the
@@ -69,7 +73,7 @@ Now push the code to a new personal repo. Again we need to do that.
 
 ??? Should I do the signups for GitHub and Workflowhub at the same time?
 
-3) We're nto doing Workflowhub yet.
+3) We're not doing Workflowhub yet.
 
 :::::::::::::::::::: callout
 
@@ -95,3 +99,5 @@ time.
 
 *** TODO - maybe say something about credential management. Does that belong here?
 
+[github]: https://github.com
+[fig-git-github]: fig/git-github.svg {alt='Schematic of how Git and GitHub interact'}
