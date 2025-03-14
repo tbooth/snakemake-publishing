@@ -484,7 +484,7 @@ to a new system or given new data?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>A workflow may depend on:</p>
 <ul>
@@ -653,7 +653,7 @@ the four different k-mer length settings.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>Assuming you started with the sample answer, three changes are
 needed:</p>
@@ -846,7 +846,7 @@ a <code>WildcardError</code>.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>This is an equivalent config file, which could go under
 <code>tests/integration/toy_config.yaml</code>:</p>
@@ -1257,7 +1257,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-04-source-code-control"><p>Content from <a href="04-source-code-control.html">Source code control</a></p>
 <hr>
-<p>Last updated on 2025-03-13 |
+<p>Last updated on 2025-03-14 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/04-source-code-control.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 60 minutes</p>
@@ -1303,14 +1303,14 @@ possible, but we need to know a few fundamentals:</p>
 <li>
 <em>Git</em> is a program that takes snapshots of all the files in a
 directory, and remembers every snapshot taken.</li>
-<li>These snapshots are known as <em>commits</em>, and a sequential
-timeline of commits is known as a <em>branch</em>. In the simple case,
-we have a linear series of <em>commits</em> over time, so just one
+<li>These snapshots are known as <em>commits</em>, and a sequence of
+commits logged over time is known as a <em>branch</em>. In the simple
+case, we have a linear series of <em>commits</em> over time, so just one
 <em>branch</em>.</li>
-<li>You decide when to make a commit, and enter a comment to summarize
-what changed.</li>
-<li>Git can then show you a <em>history</em> of you commits, or tell you
-exactly what changed (a <em>diff</em>) between two version.</li>
+<li>You decide when to make a commit, providing a comment to summarize
+what you changed.</li>
+<li>Git can then show you a <em>history</em> of your commits, or show
+you exactly what changed (a <em>diff</em>) between two version.</li>
 </ul>
 <p>All this happens on your local system, by saving special files into a
 <code>.git</code> subdirectory, but you have the option to <em>push</em>
@@ -1323,10 +1323,184 @@ another computer.</li>
 </ul></section><section><h2 class="section-heading" id="git-github">Git + GitHub<a class="anchor" aria-label="anchor" href="#git-github"></a>
 </h2>
 <hr class="half-width">
-<figure><img src="../fig/git-github.svg" alt="Schematic of how Git and GitHub interact" class="figure mx-auto d-block"></figure><!-- TODO
-Explain how these components interact. I need a diagram with paths going between them. Maybe have
-a version now and then a second version later that adds WorkflowHub? Yes!
---><div class="section level3">
+<p>We’ll now commit our code to Git and push it to GitHub. You are going
+to need a GitHub account for this, so if you did not create one before
+the course <a href="https://github.com/signup" class="external-link">do so now</a>.</p>
+<p>The figure below shows how the components connect. We’ll commit the
+code locally, then push to GitHub, then view the code in a browser.</p>
+<figure><img src="../fig/git-github.svg" alt="Schematic of how Git and GitHub interact" class="figure mx-auto d-block"></figure><div class="section level3">
+<h3 id="making-the-initial-local-git-commit">Making the initial local Git commit<a class="anchor" aria-label="anchor" href="#making-the-initial-local-git-commit"></a>
+</h3>
+<p>First, set some settings for Git. These will be saved into a file
+<code>.gitconfig</code> in your home directory, and so will apply any
+time you use Git within this account on this computer.</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">$</span> git config <span class="at">--global</span> init.defaultBranch main</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="ex">$</span> git config <span class="at">--global</span> push.autoSetupRemote true</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="ex">$</span> git config <span class="at">--global</span> user.email <span class="st">"you@example.com"</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="ex">$</span> git config <span class="at">--global</span> user.name <span class="st">"Your Name"</span></span></code></pre>
+</div>
+<p>Now, tell Git that the directory containing your workflow is to be
+treated as a Git local repository. This creates a new directory named
+<code>.git/</code> where all commits will be saved.</p>
+<p>Make sure you run this in the directory where you have your
+<code>workflow</code>, <code>README.md</code>, <code>.tests</code>,
+etc.</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">$</span> git init</span></code></pre>
+</div>
+<p>And now make the first commit. This is a two step process, as we
+first select what files to save and then commit them with a message. We
+do not want to commit all the files, just a specific selection. In
+particular, avoid adding large data files into a Git snapshot.</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">$</span> git add .tests tests config workflow images README.md</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="ex">$</span> git commit</span></code></pre>
+</div>
+<p>The second command will bring up a text editor, probably
+<em>nano</em> unless you configured something else. You will see
+something like this:</p>
+<pre><code><span><span class="co"># Please enter the commit message for your changes. Lines starting</span></span>
+<span><span class="co"># with '#' will be ignored, and an empty message aborts the commit.</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co"># On branch main</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co"># Initial commit</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co"># Changes to be committed:</span></span>
+<span><span class="co">#       new file:   .tests/integration/run.sh</span></span>
+<span><span class="co">#       new file:   .tests/integration/toy_config.yaml</span></span>
+<span><span class="co">#       new file:   .tests/integration/toy_reads/toy_1_1.fq</span></span>
+<span><span class="co">#       new file:   .tests/integration/toy_reads/toy_1_2.fq</span></span>
+<span><span class="co">#       new file:   .tests/integration/toy_reads/toy_2_1.fq</span></span>
+<span><span class="co">#       new file:   .tests/integration/toy_reads/toy_2_2.fq</span></span>
+<span><span class="co">#       new file:   config/yeast_config.yaml</span></span>
+<span><span class="co">#       new file:   images/rulegraph.svg</span></span>
+<span><span class="co">#       new file:   tests</span></span>
+<span><span class="co">#       new file:   workflow/Snakefile</span></span>
+<span><span class="co">#       new file:   workflow/envs/assembly_conda_env.yaml</span></span>
+<span><span class="co">#</span></span>
+<span><span class="co"># Untracked files:</span></span>
+<span><span class="co">#       .snakemake/</span></span>
+<span><span class="co">#       Snakefile2</span></span>
+<span><span class="co">#       concatenate/</span></span>
+<span><span class="co">#       cutadapt/</span></span>
+<span><span class="co">#       first5.fa</span></span></code></pre>
+<p>As the message says, you are invited to enter a <em>commit
+message</em>. In this case it’s reasonable to just type something
+like:</p>
+<pre><code>initial commit</code></pre>
+<p>The lines starting with ‘#’ just serve to remind you what you are
+committing. If you see these lines and decide you don’t want to commit
+after all, you can exit the editor without saving to abort the commit.
+Back at the command line you may add more files with
+<code>git add ...</code>, or you may start the selection again with
+<code>git reset</code>.</p>
+<p>Once you are happy, type your commit message at the top of the file
+and save it. If you are in the <em>nano</em> editor,
+<code>Ctrl+X</code>, then <code>y</code>, then <code>[Enter]</code> will
+do this and get you back to the terminal. You should see:</p>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>[main (root-commit) de0037f] initial commit
+ 11 files changed, 2167 insertions(+)
+ create mode 100755 .tests/integration/run.sh
+ create mode 100644 .tests/integration/toy_config.yaml
+ create mode 100644 .tests/integration/toy_reads/toy_1_1.fq
+ create mode 100644 .tests/integration/toy_reads/toy_1_2.fq
+ create mode 100644 .tests/integration/toy_reads/toy_2_1.fq
+ create mode 100644 .tests/integration/toy_reads/toy_2_2.fq
+ create mode 100644 config/yeast_config.yaml
+ create mode 100644 images/rulegraph.svg
+ create mode 120000 tests
+ create mode 100644 workflow/Snakefile
+ create mode 100644 workflow/envs/assembly_conda_env.yaml</code></pre>
+</div>
+</div>
+<div class="section level3">
+<h3 id="pushing-to-github">Pushing to GitHub<a class="anchor" aria-label="anchor" href="#pushing-to-github"></a>
+</h3>
+<p>Sending new code to GitHub is normally a matter of running one
+command.</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="ex">$</span> git push</span></code></pre>
+</div>
+<p>If you run this just now, you will see an error.</p>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>fatal: No configured push destination.
+Either specify the URL from the command-line or configure a remote repository using
+
+    git remote add &lt;name&gt; &lt;url&gt;
+
+and then push using the remote name
+
+    git push &lt;name&gt;</code></pre>
+</div>
+<p>Before we configure the remote repository, we have to add a SSH key
+credential to GitHub. This is a secure way to tell GitHub that we do
+have permission to push code from this login account.</p>
+<pre><code>$ cat ~/.ssh/id_rsa.pub</code></pre>
+<p>If this shows a long line of characters then you already have a key
+and can use that. If not, you can create one.</p>
+<pre><code>$ ssh-keygen -t rsa</code></pre>
+<p>Press enter three times to accept the default options, and now you
+should have a <code>~/.ssh/id_rsa.pub</code> file. This goes into GitHub
+under your <a href="https://github.com/settings/keys" class="external-link">SSH and GPG
+keys</a> page which is under the account settings area.</p>
+<ol style="list-style-type: decimal">
+<li>Select <em>Add new SSH Key</em>
+</li>
+<li>For the title, use the format <code>user@hostname</code> for where
+you made the key, eg. <code>training@vm-07</code>
+</li>
+<li>Set the type as <em>Authentication Key</em>
+</li>
+<li>Paste the whole contents of your <code>~/.ssh/id_rsa.pub</code> file
+into the big box</li>
+</ol>
+<p>Now we make a repository for our code. This also needs to be done on
+the web interface.</p>
+<ol style="list-style-type: decimal">
+<li>Use the <a href="https://github.com/new" class="external-link">New Repository</a> option
+from the GitHub main page.</li>
+<li>Give the name <em>yeast_demo_assembly</em>
+</li>
+<li>Give a description like <em>Demo workflow for training
+course</em>
+</li>
+<li>Ensure this repository is <em>Public</em>
+</li>
+<li>Do not add any further items, just click <em>Create
+repository</em>
+</li>
+</ol>
+<p>And after this you should see instructions to “push an existing
+repository from the command line”. This is exactly what we need to do,
+but the instructions (at the time of writing), do not account for us
+having the <code>push.autoSetupRemote</code> setting. Therefore use the
+commands below, but remembering to fill in your own GitHub username.</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="ex">$</span> git remote add origin https://github.com/<span class="op">&lt;</span>your user name<span class="op">&gt;</span>/yeast_demo_assembly.git</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="ex">$</span> git push</span></code></pre>
+</div>
+<p>And we are done. The code is public in GitHub. In the web browser,
+navigate to the new repository and view your files.</p>
+<figure><img src="../fig/github-browse.png" alt="Browsing the files in the GitHub web interface" class="figure mx-auto d-block"></figure>
+</div>
+<div class="section level3">
 <h3 id="i-think-this-probably-goes-in-the-version-episode-">I think this probably goes in the version episode.<a class="anchor" aria-label="anchor" href="#i-think-this-probably-goes-in-the-version-episode-"></a>
 </h3>
 <p>Tag = git allows you to give a name to any commit. Ultimataly we want
@@ -1369,8 +1543,10 @@ Git. If you ever add such an item to a commit then removing it from the
 Git history is nearly impossible. Git is designed to never forget!
 Having good habits about separating your code, configuration and data is
 the best way to avoid this. For example, if your workflow needs to
-retrieve data from a server with a user name and password, put this into
-a configuration file outside of the workflow source directory.</p>
+retrieve data from a server with a user name and password, either
+pre-fetch the data or if you must automate acess then at least put the
+password into a configuration file outside of the workflow source
+directory.</p>
 <p>You may also worry that data on GitHub might be corrupted or lost,
 but this is less of a worry. The chain of commits on Git is
 cryptographically signed, so it’s unlikely that code can ever be
@@ -2013,8 +2189,8 @@ any links that you are not going to use.
   "url": "https://carpentries.github.io/workbench-template-md/instructor/aio.html",
   "identifier": "https://carpentries.github.io/workbench-template-md/instructor/aio.html",
   "dateCreated": "2024-10-08",
-  "dateModified": "2025-03-13",
-  "datePublished": "2025-03-13"
+  "dateModified": "2025-03-14",
+  "datePublished": "2025-03-14"
 }
 
   </script><script>
