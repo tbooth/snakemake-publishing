@@ -20,6 +20,14 @@ exercises: 30
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
+<!--
+As of March 2023, GitHub requires 2FA, so you will need either an authenticator app or to be
+able to receive a code via SMS. We'll assume you use SMS. Once you are logged in on the browser
+you will stay logged in.
+
+??? Should I do the signups for GitHub and Workflowhub at the same time? Yes!
+-->
+
 ## Source code control with Git
 
 Covering anything but the bare basics of *Git* here is not possible, but we need to know a few
@@ -174,7 +182,7 @@ $ cat ~/.ssh/id_rsa.pub
 ```
 
 If this shows a long line of characters then you already have a key and can use that. If not,
-you can create one.
+you need to create one.
 
 ```
 $ ssh-keygen -t rsa
@@ -198,9 +206,9 @@ Now we make a repository for our code. This also needs to be done on the web int
 5) Do not add any further items, just click *Create repository*
 
 And after this you should see instructions to "push an existing repository from the command line".
-This is exactly what we need to do, but the instructions (at the time of writing), do not account
-for us having the `push.autoSetupRemote` setting. Therefore use the commands below, but remembering
-to fill in your own GitHub username.
+This is exactly what we need to do, but the instructions shown by GitHub (at the time of writing)
+do not account for us having the `push.autoSetupRemote` setting. Therefore use the commands below,
+but remembering to fill in your own GitHub username.
 
 ```bash
 $ git remote add origin https://github.com/<your user name>/yeast_demo_assembly.git
@@ -213,32 +221,6 @@ and view your files.
 ![][fig-github-browse]
 
 
-### I think this probably goes in the version episode.
-
-Tag = git allows you to give a name to any commit. Ultimataly we want to use tags to indicate versions of the
-code. The match between the tag in git and the version in Workflowhub will tie everything together.
-
-Here's what we need to do, practically:
-
-1) Git init (see this creates ./.git) and "git add . && git commit" (adding a message)
-
-"git log" to reassure ourselves we are good.
-
-2) Ensure everyone has a GitHub account. Many will have one aready. How is the sign-up process
-nowadays? Should we do this in advance?
-
-As of March 2023, GitHub requires 2FA, so you will need either an authenticator app or to be
-able to receive a code via SMS. We'll assume you use SMS. Once you are logged in on the browser
-you will stay logged in.
-
-Need to generate and add an SSH key. Step them through that.
-
-Now push the code to a new personal repo. Again we need to do that.
-
-??? Should I do the signups for GitHub and Workflowhub at the same time?
-
-3) We're not doing Workflowhub yet.
-
 :::::::::::::::::::: callout
 
 ## GitHub dangers
@@ -250,7 +232,7 @@ Avoid leaking passwords, authentication tokens, and private data into Git. If yo
 add such an item to a commit then removing it from the Git history is nearly impossible. Git is
 designed to never forget! Having good habits about separating your code, configuration and data is
 the best way to avoid this. For example, if your workflow needs to retrieve data from a server
-with a user name and password, either pre-fetch the data or if you must automate acess then
+with a user name and password, either pre-fetch the data or, if you must automate acess, then
 at least put the password into a configuration file outside of the workflow source
 directory.
 
@@ -260,9 +242,10 @@ tampered with. Also, moving code to another Git hosting service, along with the 
 history, is very easy. If you start out using GitHub you can move to an alternative host at any
 time.
 
-:::::::::::::
+Finally, having your code up on a public repository does allow others to copy from it, but if
+anyone tries to pass off your the code as their own you have very strong evidence of ownership.
 
-*** TODO - maybe say something about credential management. Does that belong here?
+:::::::::::::
 
 [github]: https://github.com
 [fig-git-github]: fig/git-github.svg {alt='Schematic of how Git and GitHub interact'}
