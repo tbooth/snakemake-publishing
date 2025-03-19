@@ -1,11 +1,16 @@
 ---
 title: "Licenses"
+permalink: LICENSE.html
 ---
 
 ## Instructional Material
 
-All Carpentries (Software Carpentry, Data Carpentry, and Library Carpentry)
-instructional material is made available under the [Creative Commons
+The materials within this workshop incorporate text and templates copyright The Carpentries,
+with teaching material by Timothy Booth, written at The University of Edinburgh for the
+[BioFAIR project](https://biofair.uk/).
+
+As with Carpentries (Software Carpentry, Data Carpentry, and Library Carpentry)
+instructional material, this course is made available under the [Creative Commons
 Attribution license][cc-by-human]. The following is a human-readable summary of
 (and not a substitute for) the [full legal text of the CC BY 4.0
 license][cc-by-legal].
@@ -66,11 +71,25 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
+## Specific exception
+
+The sample code `Snakefile` and `assembly_conda_env.yaml` provided in this course may be
+copied and redistributed without restriction. Those following the tutorial steps are encouraged
+to submit the code to public websites while labelling them as their own work. As such, the
+authors waive any legal or moral expectation that ownership is correctly assigned in these or
+any subsequent copies.
+
 ## Trademark
 
 "The Carpentries", "Software Carpentry", "Data Carpentry", and "Library
 Carpentry" and their respective logos are registered trademarks of [Community
 Initiatives][ci].
+
+The name "Git" and the Git logo are registered trademarks of Software Freedom Conservancy, Inc.
+
+The name "GitHub" and the GitHub logos are registered trademarks of GitHub, Inc.
+
+The name WorkflowHub logo is (c) The University of Manchester.
 
 [cc-by-human]: https://creativecommons.org/licenses/by/4.0/
 [cc-by-legal]: https://creativecommons.org/licenses/by/4.0/legalcode
