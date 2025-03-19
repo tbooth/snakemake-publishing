@@ -27,6 +27,8 @@ The [MIT license](https://opensource.org/license/mit) is a simple permissive lic
 * permits others to re-use, modify and share it
 * disclaims any liability for bugs or errors in the code
 
+The GitHub web interface has an option to add the license file, but we'll just do it manually.
+
 In your workflow source directory, download the MIT license text template and add your own name
 at the top, along with the date.
 
@@ -71,7 +73,7 @@ make that stipulation.
 
 Given the above, putting your own name on the `LICENSE.txt` file in your Git repository is
 looking problematic, since the Snakefile was created by the authors of this course. However, the
-[terms of use](LICENSE.html) here explicitly say you can do that.
+[terms of use](LICENSE.html) for the course material explicitly say that you can do that.
 
 :::::::
 
@@ -85,11 +87,10 @@ https://opensource.org/licenses) but most are for niche applications, or concern
 versus compiled code, or concerned with patents. These probably do not apply to your workflow. As
 stated above, you should use the MIT license unless you have a good reason not to.
 
-If you have
-incorporated any code that was shared with you under a different license then that license may
-stipulate (the [GPL](https://opensource.org/license/gpl-3-0) is a notable example) that your
-new derived work *must* use that same license. However, this is not the case for tools that are
-called by your workflow, only code you are directly copying into your workflow.
+If you have incorporated any code that was shared with you under a different license then that
+license may stipulate (the [GPL](https://opensource.org/license/gpl-3-0) is a notable example)
+that your new derived work *must* use that same license. However, this does not apply to tools
+that are *called by* your workflow, only code you are directly *copying into* your workflow.
 
 If you are distributing tutorials, presentations or other substantial documentation along with the
 code then you likely want to consider a separate license for these. The OSI Licenses are all geared
@@ -154,5 +155,12 @@ Note there is some redundancy with `LICENSE.txt`, in that the license name and t
 specified, but the authors for the purpose of citation are not necessarily the legal copyright
 owners of the code. Also, the `LICENSE.txt` statement is generally understood to hold legal weight
 while this `CITATION.cff` file is informative and may be updated as needed. If you publish the
-code or mint a new DOI for it then add the info here.
+workflow in a journal, or mint a new DOI for it, then add the info here.
 
+Add the new `CITATION.cff` file to Git.
+
+```bash
+$ git add CITATION.cff
+$ git commit -m 'add citation CFF'
+$ git push
+```
