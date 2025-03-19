@@ -8,7 +8,7 @@ exercises: 30
 
 - Download the RO-crate for our workflow
 - Understand the structure of an RO-Crate
-- ???
+- Put the metadata file into Git
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -20,10 +20,10 @@ exercises: 30
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-# A general introduction to RO-Crates
+## A general introduction to RO-Crates
 
-An [RO-Crate](https://www.researchobject.org/ro-crate/about_ro_crate) is simply a zip file that
-contains a collection of data files, and includes a description of what those files are.
+An [RO-Crate](https://www.researchobject.org/ro-crate/about_ro_crate) is simply a *zip* file that
+contains a collection of data files, and includes a structured description of what those files are.
 
 The base RO-Crate specification says that you can include any types of data files you like, but
 it does stipulate that the description must be in a file named `ro-crate-metadata.json` and that
@@ -41,18 +41,82 @@ contains:
   * the content of the files
   * how the specific files relate to each other
 
-The description is not designed to be read directly by end users. Rather, software like that
-running on WorkflowHub will read and summarise the file. User-readble documentation is best
+The *JSON LD* file is not designed to be read directly by end users. Rather, software like that
+running on WorkflowHub will read and summarise the file. User-readable documentation is best
 written in a format such as Markdown, and from the RO-Crate perspective, is regarded as part of
 the dataset.
 
-# Putting workflows into RO-Crates
+## Putting workflows into RO-Crates
 
-Describe the related testing crate and provenance crate.
+The *RO-Crate* standard was not specifically designed for sharing workflows, but the base standard
+has been extended by several *profiles*.
 
-When your primary interest is in sharng your results, but you want to very carefully record
-exactly how you obtained those results, including all the input data, software, parameters,
-platform and procedure (workflow) used. This a job for a provenance crate.
+* [Workflow RO-Crate](https://about.workflowhub.eu/Workflow-RO-Crate/)
+  * [Workflow Run Crate](https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate/)
+    * [Provenence Run Crate](https://www.researchobject.org/workflow-run-crate/profiles/provenance_run_crate/)
+  * [Workflow Testing RO-Crate](https://crs4.github.io/workflow-testing-ro-crate/)
+
+The most comprehensive of the profiles is the *Provenance Run Crate*. The goal of this standard is
+to cater for users who want to share their workflow outputs, but desire to very carefully record
+exactly how they obtained those output files, including all the *input data*, *software versions*,
+*parameters*, *platform* and *procedure (workflow)* used. Imagine for example a forensics
+laboratory where the whole analysis process could be audited and questioned, even several years
+after the analysis. Work is ongoing to add reporting plugins to Snakemake that provide for
+automated recording at this level of detail in a single archive.
+
+The *Workflow Run Crate* is a less stringent version, recording that a particular analysis was
+made with a particular workflow, and the results of that analysis.
+
+The *Workflow Testing RO-Crate* would be suitable to capture information about our toy dataset and
+any other tests included with the workflow. (But we'll not look further into this topic within
+this course).
+
+Here, will will just look at the basic *Workflow RO-Crate*. As suggested in [the WorkflowHub docs](
+https://about.workflowhub.eu/developer/how-to-make-a-workflow-ro-crate/):
+
+> The most convenient way to make a workflow RO-crate at this moment is by making use of
+> WorkflowHub capabilities.
+
+## Getting the RO-Crate matadata from WorkflowHub
+
+So we will download our workflow as an *RO-Crate* from WorkflowHub.  Use the
+*Download RO-Crate* button on the website. Assuming you save the resulting `.crate.zip` file in
+your `Downloads` directory, you can look at the contents on the command line, or you can open
+the file in GUI.
+
+```bash
+$ ls ~/Downloads/*.crate.zip
+...see the actual filename...
+$ unzip -tv ~/Downloads/workflow-XXXX.crate.zip
+```
+
+Aside from the files we made ourselves, we see:
+
+```output
+    testing: ro-crate-metadata.json   OK
+    testing: ro-crate-preview.html    OK
+```
+
+The HTML file is just a visual preview of the JSON file. We extract the JSON file into our source
+directory.
+
+```bash
+$ unzip ~/Downloads/workflow-XXXX.crate.zip ro-crate-metadata.json
+```
+
+And commit it back to GIT.
+
+```bash
+$ git add ro-crate-metadata.json
+$ git commit -m "Add RO-Crate metadata"
+```
+
+Now you have a backup of all the information that WorkflowHub stores about the workflow, saved
+along with your code.
+
+Why do we do this, again? I feel like I'm losing myself a little.
+
+---
 
 When your primary interest is to share a workflow so that other people can use it for their own
 data, you are talking about a workflow crate.
