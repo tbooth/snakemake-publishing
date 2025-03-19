@@ -242,12 +242,21 @@
 <div class="accordion accordion-flush" id="accordionFlushcurrent">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-headingcurrent">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsecurrent" aria-expanded="true" aria-controls="flush-collapsecurrent">
         <span class="visually-hidden">Current Chapter</span>
         <span class="current-chapter">
         5. Adding a license
         </span>
-      
+      </button>
     </div><!--/div.accordion-header-->
+
+    <div id="flush-collapsecurrent" class="accordion-collapse collapse show" aria-labelledby="flush-headingcurrent" data-bs-parent="#accordionFlushcurrent">
+      <div class="accordion-body">
+        <ul><li><a href="#the-short-answer-add-the-mit-license">The short answer: add the MIT license</a></li>
+<li><a href="#licence-copyright-and-other-stipulations">Licence, copyright, and other stipulations</a></li>
+<li><a href="#requesting-a-citation">Requesting a citation</a></li>
+        </ul></div><!--/div.accordion-body-->
+    </div><!--/div.accordion-collapse-->
 
   </div><!--/div.accordion-item-->
 </div><!--/div.accordion-flush-->
@@ -255,7 +264,7 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="06-upload-to-workflowhub.html">6. Upload to workflowhub</a>
+        <a href="06-upload-to-workflowhub.html">6. Upload to WorkflowHub</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -346,7 +355,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Adding a license</h1>
-        <p>Last updated on 2025-02-25 |
+        <p>Last updated on 2025-03-19 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/05-adding-a-license.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -382,29 +391,171 @@
 </div>
 </div>
 </div>
-<p>Explain the difference between licence and copyright.</p>
-<p>Explain the difference between legal restrictions and requests. Ie.
-“please cite” vs. “you must cite”, and why this is problematic for
-sharing services.</p>
-<p>Chosing a license:</p>
-<ul><li>Is it compatible with the tools you are using?</li>
-<li>Is it suitable for your users?</li>
-<li>Is it acceptable to your employer?</li>
-</ul><div class="section level1">
-<h1 id="a-citation-file">A citation file<a class="anchor" aria-label="anchor" href="#a-citation-file"></a></h1>
-<p>Here we can explain the citation .cff and how to make it, and how to
-validate it.</p>
-<p>Apparently the .cff file is parsed by WFH and translated to the
-format needed for RO-Crate, so that’s good.</p>
+<section><h2 class="section-heading" id="the-short-answer-add-the-mit-license">The short answer: add the MIT license<a class="anchor" aria-label="anchor" href="#the-short-answer-add-the-mit-license"></a></h2>
+<hr class="half-width"><p>The <a href="https://opensource.org/license/mit" class="external-link">MIT license</a> is a
+simple permissive license that…</p>
+<ul><li>asserts your right to be identified as the creator/owner of the
+code</li>
+<li>permits others to re-use, modify and share it</li>
+<li>disclaims any liability for bugs or errors in the code</li>
+</ul><p>The GitHub web interface has an option to add the license file, but
+we’ll just do it manually.</p>
+<p>In your workflow source directory, download the MIT license text
+template and add your own name at the top, along with the date.</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">$</span> wget https://raw.githubusercontent.com/licenses/license-templates/refs/heads/master/templates/mit.txt</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="ex">$</span> mv mit.txt LICENSE.txt</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="ex">$</span> nano LICENSE.txt</span></code></pre>
+</div>
+<p>You may now <em>commit</em> and <em>push</em> the change to
+GitHub.</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">$</span> git add LICENSE.txt</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">'Add a license'</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="ex">$</span> git push</span></code></pre>
+</div>
+</section><section><h2 class="section-heading" id="licence-copyright-and-other-stipulations">Licence, copyright, and other stipulations<a class="anchor" aria-label="anchor" href="#licence-copyright-and-other-stipulations"></a></h2>
+<hr class="half-width"><div class="section level3">
+<h3 id="copyright-ownership">Copyright ownership<a class="anchor" aria-label="anchor" href="#copyright-ownership"></a></h3>
+<p>License and copyright are two different things. Copyright means
+identifying the legal owner of the code and related files. Often this is
+obvious, but you need to get it right.</p>
+<ul><li>If you wrote the code as part of your paid work, your employer is
+generally the owner.</li>
+<li>Code written in your own time, outside of work projects, belongs to
+you.</li>
+<li>Copyright ownership can be assigned to another owner by formal
+agreement.</li>
+<li>Ownership can be disclaimed entirely, but this is generally a bad
+idea as noted below.</li>
+<li>If you incorporated pieces of code from other work, the owners of
+that work share ownership.</li>
+<li>Code that you produce with AI tools is not owned by you (but to some
+degree this is an open legal question).</li>
+</ul><p>Questions of ownership have led to costly and acrimonious legal
+actions, including ones between academic institutions and between
+employees and employers. Where the ownership of code is not specified,
+many organisations and projects will simply refuse to touch it, so even
+if you do not intend to restrict the copying of your code, you need to
+explicitly identify who had the right to make that stipulation.</p>
+<div id="copyright-on-the-sample-workflow" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="copyright-on-the-sample-workflow" class="callout-inner">
+<h3 class="callout-title">Copyright on the sample workflow</h3>
+<div class="callout-content">
+<p>Given the above, putting your own name on the
+<code>LICENSE.txt</code> file in your Git repository is looking
+problematic, since the Snakefile was created by the authors of this
+course. However, the <a href="LICENSE.html">terms of use</a> for the
+course material explicitly say that you can do that.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="licensing-the-code">Licensing the code<a class="anchor" aria-label="anchor" href="#licensing-the-code"></a></h3>
+<p>Having identified the owner of the code, you need to say what others
+may legally do with it. In the case of software products that you plan
+to sell or otherwise monetize you would want to make careful and
+explicit restrictions, but in this context we assume that you want your
+workflow to be shared and re-used by whoever may need it. There are many
+<a href="https://opensource.org/licenses" class="external-link">OSI Approved Licenses</a> but
+most are for niche applications, or concerned with source code versus
+compiled code, or concerned with patents. These probably do not apply to
+your workflow. As stated above, you should use the MIT license unless
+you have a good reason not to.</p>
+<p>If you have incorporated any code that was shared with you under a
+different license then that license may stipulate (the <a href="https://opensource.org/license/gpl-3-0" class="external-link">GPL</a> is a notable
+example) that your new derived work <em>must</em> use that same license.
+However, this does not apply to tools that are <em>called by</em> your
+workflow, only code you are directly <em>copying into</em> your
+workflow.</p>
+<p>If you are distributing tutorials, presentations or other substantial
+documentation along with the code then you likely want to consider a
+separate license for these. The OSI Licenses are all geared to the
+sharing of code, whereas the <a href="https://creativecommons.org/share-your-work/cclicenses/" class="external-link">Creative
+Commons</a> licenses are designed for other creative works. The
+equivalent of the MIT license here is the least restrictive
+<em>CC-BY</em>, which is used for these lessons and all the Carpentries
+materials, but you may prefer to opt for an alternative.</p>
+</div>
+<div class="section level3">
+<h3 id="other-stipulations">Other stipulations<a class="anchor" aria-label="anchor" href="#other-stipulations"></a></h3>
+<p>You would probably like your workflow to be cited by anyone who uses
+it for their research. You may like the idea that users should send you
+a postcard. Maybe you are concerned that your workflow should not be
+used for nefarious purposes, like developing bio-weapons. In the past,
+extra stipulations like this were added to many licenses and it causes a
+big headache, less for the end users but more for the projects and sites
+that archive and redistribute code. For this reason, we give you this
+edict:</p>
+<p><strong>Choose an established Open Source license, and do not edit
+the legal text in the LICENSE file</strong></p>
+<p>Having said this, you can add any further requests that you like.
+Just do not give them legal weight unless you or your employer would be
+prepared to take legal action over them. You could ask your users to
+send you a postcard. You may vent your anger at those who use science
+for the disbenefit of humanity, though they are unlikely to care.</p>
+<p>We’ll assume here that, like most researchers, you would like your
+work to be cited.</p>
+</div>
+</section><section><h2 class="section-heading" id="requesting-a-citation">Requesting a citation<a class="anchor" aria-label="anchor" href="#requesting-a-citation"></a></h2>
+<hr class="half-width"><p>While it may not be a legal requirement, the expectation of citation
+is enforced by academic publishers and the norms of the scientific
+community. Different publications use different citation formats, and
+there are also several open citation formats. Fortunately in this case
+there is one <em>best</em> way, using <a href="https://citation-file-format.github.io/" class="external-link">CFF</a>. This standard is
+promoted by GitHub, but it’s widely supported and can be auto-converted
+to whatever is actually needed.</p>
+<p>Save the following text to a file <code>CITATION.cff</code>. You can
+edit the text if you like (the underlying format is YAML, as used for
+the workflow configuration files), but the <a href="https://citation-file-format.github.io/cff-initializer-javascript/#/" class="external-link">official
+on-line CFF editor</a> provides a better way to create and amend these
+files.</p>
+<pre><code># This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Demo assembly workflow
+message: &gt;-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Timothy
+    family-names: Booth
+    affiliation: University of Edinburgh
+  - name: BioFAIR
+    website: 'https://biofair.uk'
+url: 'https://tbooth.github.io/snakemake-publishing'
+license: MIT</code></pre>
+<p>Note there is some redundancy with <code>LICENSE.txt</code>, in that
+the license name and the authors are specified, but the authors for the
+purpose of citation are not necessarily the legal copyright owners of
+the code. Also, the <code>LICENSE.txt</code> statement is generally
+understood to hold legal weight while this <code>CITATION.cff</code>
+file is informative and may be updated as needed. If you publish the
+workflow in a journal, or mint a new DOI for it, then add the info
+here.</p>
+<p>Add the new <code>CITATION.cff</code> file to Git.</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">$</span> git add CITATION.cff</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">'add citation CFF'</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="ex">$</span> git push</span></code></pre>
+</div>
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
-</div>
-
-
-
-      </div> <!-- / div.lesson-content -->
+</section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="04-source-code-control.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
         <a class="chapter-link float-end" href="06-upload-to-workflowhub.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
@@ -462,8 +613,8 @@ any links that you are not going to use.
   "url": "https://carpentries.github.io/workbench-template-md/05-adding-a-license.html",
   "identifier": "https://carpentries.github.io/workbench-template-md/05-adding-a-license.html",
   "dateCreated": "2024-10-08",
-  "dateModified": "2025-02-25",
-  "datePublished": "2025-03-18"
+  "dateModified": "2025-03-19",
+  "datePublished": "2025-03-19"
 }
 
   </script><script>

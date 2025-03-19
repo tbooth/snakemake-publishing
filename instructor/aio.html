@@ -304,7 +304,7 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="06-upload-to-workflowhub.html">6. Upload to workflowhub</a>
+        <a href="06-upload-to-workflowhub.html">6. Upload to WorkflowHub</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -484,7 +484,7 @@ to a new system or given new data?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>A workflow may depend on:</p>
 <ul>
@@ -653,7 +653,7 @@ the four different k-mer length settings.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>Assuming you started with the sample answer, three changes are
 needed:</p>
@@ -1257,7 +1257,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-04-source-code-control"><p>Content from <a href="04-source-code-control.html">Source code control</a></p>
 <hr>
-<p>Last updated on 2025-03-14 |
+<p>Last updated on 2025-03-19 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/04-source-code-control.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 60 minutes</p>
@@ -1452,7 +1452,7 @@ credential to GitHub. This is a secure way to tell GitHub that we do
 have permission to push code from this login account.</p>
 <pre><code>$ cat ~/.ssh/id_rsa.pub</code></pre>
 <p>If this shows a long line of characters then you already have a key
-and can use that. If not, you can create one.</p>
+and can use that. If not, you need to create one.</p>
 <pre><code>$ ssh-keygen -t rsa</code></pre>
 <p>Press enter three times to accept the default options, and now you
 should have a <code>~/.ssh/id_rsa.pub</code> file. This goes into GitHub
@@ -1487,9 +1487,10 @@ repository</em>
 </ol>
 <p>And after this you should see instructions to “push an existing
 repository from the command line”. This is exactly what we need to do,
-but the instructions (at the time of writing), do not account for us
-having the <code>push.autoSetupRemote</code> setting. Therefore use the
-commands below, but remembering to fill in your own GitHub username.</p>
+but the instructions shown by GitHub (at the time of writing) do not
+account for us having the <code>push.autoSetupRemote</code> setting.
+Therefore use the commands below, but remembering to fill in your own
+GitHub username.</p>
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -1498,37 +1499,7 @@ commands below, but remembering to fill in your own GitHub username.</p>
 </div>
 <p>And we are done. The code is public in GitHub. In the web browser,
 navigate to the new repository and view your files.</p>
-<figure><img src="../fig/github-browse.png" alt="Browsing the files in the GitHub web interface" class="figure mx-auto d-block"></figure>
-</div>
-<div class="section level3">
-<h3 id="i-think-this-probably-goes-in-the-version-episode-">I think this probably goes in the version episode.<a class="anchor" aria-label="anchor" href="#i-think-this-probably-goes-in-the-version-episode-"></a>
-</h3>
-<p>Tag = git allows you to give a name to any commit. Ultimataly we want
-to use tags to indicate versions of the code. The match between the tag
-in git and the version in Workflowhub will tie everything together.</p>
-<p>Here’s what we need to do, practically:</p>
-<ol style="list-style-type: decimal">
-<li>Git init (see this creates ./.git) and “git add . &amp;&amp; git
-commit” (adding a message)</li>
-</ol>
-<p>“git log” to reassure ourselves we are good.</p>
-<ol start="2" style="list-style-type: decimal">
-<li>Ensure everyone has a GitHub account. Many will have one aready. How
-is the sign-up process nowadays? Should we do this in advance?</li>
-</ol>
-<p>As of March 2023, GitHub requires 2FA, so you will need either an
-authenticator app or to be able to receive a code via SMS. We’ll assume
-you use SMS. Once you are logged in on the browser you will stay logged
-in.</p>
-<p>Need to generate and add an SSH key. Step them through that.</p>
-<p>Now push the code to a new personal repo. Again we need to do
-that.</p>
-<p>??? Should I do the signups for GitHub and Workflowhub at the same
-time?</p>
-<ol start="3" style="list-style-type: decimal">
-<li>We’re not doing Workflowhub yet.</li>
-</ol>
-<div id="github-dangers" class="callout">
+<figure><img src="../fig/github-browse.png" alt="Browsing the files in the GitHub web interface" class="figure mx-auto d-block"></figure><div id="github-dangers" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
@@ -1544,7 +1515,7 @@ Git history is nearly impossible. Git is designed to never forget!
 Having good habits about separating your code, configuration and data is
 the best way to avoid this. For example, if your workflow needs to
 retrieve data from a server with a user name and password, either
-pre-fetch the data or if you must automate acess then at least put the
+pre-fetch the data or, if you must automate acess, then at least put the
 password into a configuration file outside of the workflow source
 directory.</p>
 <p>You may also worry that data on GitHub might be corrupted or lost,
@@ -1553,11 +1524,12 @@ cryptographically signed, so it’s unlikely that code can ever be
 tampered with. Also, moving code to another Git hosting service, along
 with the full commit history, is very easy. If you start out using
 GitHub you can move to an alternative host at any time.</p>
+<p>Finally, having your code up on a public repository does allow others
+to copy from it, but if anyone tries to pass off your the code as their
+own you have very strong evidence of ownership.</p>
 </div>
 </div>
 </div>
-<p>*** TODO - maybe say something about credential management. Does that
-belong here?</p>
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
@@ -1565,7 +1537,7 @@ any links that you are not going to use.
 </div>
 </section></section><section id="aio-05-adding-a-license"><p>Content from <a href="05-adding-a-license.html">Adding a license</a></p>
 <hr>
-<p>Last updated on 2025-02-25 |
+<p>Last updated on 2025-03-19 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/05-adding-a-license.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 60 minutes</p>
@@ -1600,30 +1572,186 @@ any links that you are not going to use.
 </div>
 </div>
 </div>
-<p>Explain the difference between licence and copyright.</p>
-<p>Explain the difference between legal restrictions and requests. Ie.
-“please cite” vs. “you must cite”, and why this is problematic for
-sharing services.</p>
-<p>Chosing a license:</p>
+<section><h2 class="section-heading" id="the-short-answer-add-the-mit-license">The short answer: add the MIT license<a class="anchor" aria-label="anchor" href="#the-short-answer-add-the-mit-license"></a>
+</h2>
+<hr class="half-width">
+<p>The <a href="https://opensource.org/license/mit" class="external-link">MIT license</a> is a
+simple permissive license that…</p>
 <ul>
-<li>Is it compatible with the tools you are using?</li>
-<li>Is it suitable for your users?</li>
-<li>Is it acceptable to your employer?</li>
+<li>asserts your right to be identified as the creator/owner of the
+code</li>
+<li>permits others to re-use, modify and share it</li>
+<li>disclaims any liability for bugs or errors in the code</li>
 </ul>
-<div class="section level1">
-<h1 id="a-citation-file">A citation file<a class="anchor" aria-label="anchor" href="#a-citation-file"></a>
-</h1>
-<p>Here we can explain the citation .cff and how to make it, and how to
-validate it.</p>
-<p>Apparently the .cff file is parsed by WFH and translated to the
-format needed for RO-Crate, so that’s good.</p>
+<p>The GitHub web interface has an option to add the license file, but
+we’ll just do it manually.</p>
+<p>In your workflow source directory, download the MIT license text
+template and add your own name at the top, along with the date.</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">$</span> wget https://raw.githubusercontent.com/licenses/license-templates/refs/heads/master/templates/mit.txt</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="ex">$</span> mv mit.txt LICENSE.txt</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="ex">$</span> nano LICENSE.txt</span></code></pre>
+</div>
+<p>You may now <em>commit</em> and <em>push</em> the change to
+GitHub.</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">$</span> git add LICENSE.txt</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">'Add a license'</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="ex">$</span> git push</span></code></pre>
+</div>
+</section><section><h2 class="section-heading" id="licence-copyright-and-other-stipulations">Licence, copyright, and other stipulations<a class="anchor" aria-label="anchor" href="#licence-copyright-and-other-stipulations"></a>
+</h2>
+<hr class="half-width">
+<div class="section level3">
+<h3 id="copyright-ownership">Copyright ownership<a class="anchor" aria-label="anchor" href="#copyright-ownership"></a>
+</h3>
+<p>License and copyright are two different things. Copyright means
+identifying the legal owner of the code and related files. Often this is
+obvious, but you need to get it right.</p>
+<ul>
+<li>If you wrote the code as part of your paid work, your employer is
+generally the owner.</li>
+<li>Code written in your own time, outside of work projects, belongs to
+you.</li>
+<li>Copyright ownership can be assigned to another owner by formal
+agreement.</li>
+<li>Ownership can be disclaimed entirely, but this is generally a bad
+idea as noted below.</li>
+<li>If you incorporated pieces of code from other work, the owners of
+that work share ownership.</li>
+<li>Code that you produce with AI tools is not owned by you (but to some
+degree this is an open legal question).</li>
+</ul>
+<p>Questions of ownership have led to costly and acrimonious legal
+actions, including ones between academic institutions and between
+employees and employers. Where the ownership of code is not specified,
+many organisations and projects will simply refuse to touch it, so even
+if you do not intend to restrict the copying of your code, you need to
+explicitly identify who had the right to make that stipulation.</p>
+<div id="copyright-on-the-sample-workflow" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="copyright-on-the-sample-workflow" class="callout-inner">
+<h3 class="callout-title">Copyright on the sample workflow</h3>
+<div class="callout-content">
+<p>Given the above, putting your own name on the
+<code>LICENSE.txt</code> file in your Git repository is looking
+problematic, since the Snakefile was created by the authors of this
+course. However, the <a href="LICENSE.html">terms of use</a> for the
+course material explicitly say that you can do that.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="licensing-the-code">Licensing the code<a class="anchor" aria-label="anchor" href="#licensing-the-code"></a>
+</h3>
+<p>Having identified the owner of the code, you need to say what others
+may legally do with it. In the case of software products that you plan
+to sell or otherwise monetize you would want to make careful and
+explicit restrictions, but in this context we assume that you want your
+workflow to be shared and re-used by whoever may need it. There are many
+<a href="https://opensource.org/licenses" class="external-link">OSI Approved Licenses</a> but
+most are for niche applications, or concerned with source code versus
+compiled code, or concerned with patents. These probably do not apply to
+your workflow. As stated above, you should use the MIT license unless
+you have a good reason not to.</p>
+<p>If you have incorporated any code that was shared with you under a
+different license then that license may stipulate (the <a href="https://opensource.org/license/gpl-3-0" class="external-link">GPL</a> is a notable
+example) that your new derived work <em>must</em> use that same license.
+However, this does not apply to tools that are <em>called by</em> your
+workflow, only code you are directly <em>copying into</em> your
+workflow.</p>
+<p>If you are distributing tutorials, presentations or other substantial
+documentation along with the code then you likely want to consider a
+separate license for these. The OSI Licenses are all geared to the
+sharing of code, whereas the <a href="https://creativecommons.org/share-your-work/cclicenses/" class="external-link">Creative
+Commons</a> licenses are designed for other creative works. The
+equivalent of the MIT license here is the least restrictive
+<em>CC-BY</em>, which is used for these lessons and all the Carpentries
+materials, but you may prefer to opt for an alternative.</p>
+</div>
+<div class="section level3">
+<h3 id="other-stipulations">Other stipulations<a class="anchor" aria-label="anchor" href="#other-stipulations"></a>
+</h3>
+<p>You would probably like your workflow to be cited by anyone who uses
+it for their research. You may like the idea that users should send you
+a postcard. Maybe you are concerned that your workflow should not be
+used for nefarious purposes, like developing bio-weapons. In the past,
+extra stipulations like this were added to many licenses and it causes a
+big headache, less for the end users but more for the projects and sites
+that archive and redistribute code. For this reason, we give you this
+edict:</p>
+<p><strong>Choose an established Open Source license, and do not edit
+the legal text in the LICENSE file</strong></p>
+<p>Having said this, you can add any further requests that you like.
+Just do not give them legal weight unless you or your employer would be
+prepared to take legal action over them. You could ask your users to
+send you a postcard. You may vent your anger at those who use science
+for the disbenefit of humanity, though they are unlikely to care.</p>
+<p>We’ll assume here that, like most researchers, you would like your
+work to be cited.</p>
+</div>
+</section><section><h2 class="section-heading" id="requesting-a-citation">Requesting a citation<a class="anchor" aria-label="anchor" href="#requesting-a-citation"></a>
+</h2>
+<hr class="half-width">
+<p>While it may not be a legal requirement, the expectation of citation
+is enforced by academic publishers and the norms of the scientific
+community. Different publications use different citation formats, and
+there are also several open citation formats. Fortunately in this case
+there is one <em>best</em> way, using <a href="https://citation-file-format.github.io/" class="external-link">CFF</a>. This standard is
+promoted by GitHub, but it’s widely supported and can be auto-converted
+to whatever is actually needed.</p>
+<p>Save the following text to a file <code>CITATION.cff</code>. You can
+edit the text if you like (the underlying format is YAML, as used for
+the workflow configuration files), but the <a href="https://citation-file-format.github.io/cff-initializer-javascript/#/" class="external-link">official
+on-line CFF editor</a> provides a better way to create and amend these
+files.</p>
+<pre><code># This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Demo assembly workflow
+message: &gt;-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Timothy
+    family-names: Booth
+    affiliation: University of Edinburgh
+  - name: BioFAIR
+    website: 'https://biofair.uk'
+url: 'https://tbooth.github.io/snakemake-publishing'
+license: MIT</code></pre>
+<p>Note there is some redundancy with <code>LICENSE.txt</code>, in that
+the license name and the authors are specified, but the authors for the
+purpose of citation are not necessarily the legal copyright owners of
+the code. Also, the <code>LICENSE.txt</code> statement is generally
+understood to hold legal weight while this <code>CITATION.cff</code>
+file is informative and may be updated as needed. If you publish the
+workflow in a journal, or mint a new DOI for it, then add the info
+here.</p>
+<p>Add the new <code>CITATION.cff</code> file to Git.</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">$</span> git add CITATION.cff</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">'add citation CFF'</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="ex">$</span> git push</span></code></pre>
+</div>
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
-</div></section><section id="aio-06-upload-to-workflowhub"><p>Content from <a href="06-upload-to-workflowhub.html">Upload to workflowhub</a></p>
+</section></section><section id="aio-06-upload-to-workflowhub"><p>Content from <a href="06-upload-to-workflowhub.html">Upload to WorkflowHub</a></p>
 <hr>
-<p>Last updated on 2025-02-25 |
+<p>Last updated on 2025-03-19 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/06-upload-to-workflowhub.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 60 minutes</p>
@@ -1650,7 +1778,7 @@ Catalogue?</li>
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
 <ul>
-<li>Create an account on the WorkflowHub test server</li>
+<li>Create an account on the WorkflowHub dev server</li>
 <li>Submit our workflow to the system via the web interface</li>
 <li>Add tags and documentation to our workflow</li>
 <li>Review how our workflow will appear on the website</li>
@@ -1668,7 +1796,7 @@ Catalogue?</li>
   Accounts on dev.workflowhub.eu
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <p>In this part, we are asking learners to interact with a website which
 we do not directly control.</p>
@@ -1688,10 +1816,11 @@ course: <strong>Submission Tutorial</strong> Secondary account (to demo
 as a learner): <strong>tbooth2_2</strong></p>
 <p>For the learners, you probably want to have them register for
 WorkflowHub the day before this episode, even though signup is quick and
-automated. Using GitHub or a password is fine. They can request
-membership of the course team and this can very quickly be approved on
-the dashboard of the team owner.</p>
-<p>In the event that that website becomes unavailable, be there are
+automated. Using a password is fine, but given they also need a GitHub
+account they are best using GitHub authentication.</p>
+<p>They can request membership of the course team and this can very
+quickly be approved on the dashboard of the team owner.</p>
+<p>In the event that that website becomes unavailable, there are
 screenshots below so we can at least see the process.</p>
 </div>
 </div>
@@ -1740,23 +1869,23 @@ with test workflows.</p>
 </section><section><h2 class="section-heading" id="registering-on-the-workflowhub-test-server">Registering on the WorkflowHub test server<a class="anchor" aria-label="anchor" href="#registering-on-the-workflowhub-test-server"></a>
 </h2>
 <hr class="half-width">
-<p>You will need an account on the test server to upload your workflow.
-Even if you previously registered on WorkflowHub, register a new account
-on the development server as the accounts are completely separate.</p>
+<p>You will need an account on the <em>dev</em> server to upload your
+workflow. Even if you previously registered on WorkflowHub, make a new
+account on the development server as the accounts are completely
+separate.</p>
 <ol style="list-style-type: decimal">
 <li>Visit <a href="https://dev.workflowhub.eu" class="external-link uri">https://dev.workflowhub.eu</a>
 </li>
-<li>Click the Register button</li>
-<li>Log in with GitHub to create a new account (todo - test
-this!!!)</li>
-<li>or… choose a user name and a password. You will need to use a real
-e-mail address that you can access today because there is a verification
-step.</li>
+<li>Click the <strong>Log in</strong> button (not the Register
+button)</li>
+<li>Log in with <em>GitHub</em> to create a new account</li>
 <li>On the next screen, enter your name but leave the other details
-blank.</li>
+blank</li>
 <li>Verify your account using the e-mail token</li>
-<li>Finally, log in using your user name and password</li>
 </ol>
+<p>If for some reason you are unable to use your GitHub login then it is
+possible to register a standalone account with your e-mail address. You
+will need to verify your e-mail before the account can be active.</p>
 <div id="callout2" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -1791,38 +1920,71 @@ organisation or not.</li>
 </ol></section><section><h2 class="section-heading" id="submitting-our-test-workflow">Submitting our test workflow<a class="anchor" aria-label="anchor" href="#submitting-our-test-workflow"></a>
 </h2>
 <hr class="half-width">
-<p>[ Insert screenshot here - episodes/fig/wfh_new_workflow.png ]</p>
-<p>As we have now stored our workflow in GitHub, and the file layout
+<p>Once you are enrolled in the team, you may
+<strong>Contribute</strong> your workflow.</p>
+<figure><img src="../fig/wfh-new-workflow.png" alt="Adding a new workflow on WorkflowHub" class="figure mx-auto d-block"></figure><p>As we have now stored our workflow in GitHub, and the file layout
 matches the recommendations, the easiest option is to use the <em>Import
-Git Repository</em> method.</p>
+Git Repository</em> method, rather than uploading the files directly
+from the local machine.</p>
 <p>You will be prompted for the “URL of the git repository”. For
 repositories on GitHub this is simply the regular URL you would use in
 your browser, with “.git” on the end. You can also find this by clicking
-the “Code” button on the project page within GitHub.</p>
-<p>[ step through ]</p>
-</section><section><h2 class="section-heading" id="the-snakemake-workflow-catalogue">The Snakemake Workflow Catalogue<a class="anchor" aria-label="anchor" href="#the-snakemake-workflow-catalogue"></a>
-</h2>
-<hr class="half-width">
+the “Code” button on the project page within GitHub. It will start with
+<code>https://...</code>.</p>
+<figure><img src="../fig/github-find-the-url.png" alt="Finding the repository URL in GitHub" class="figure mx-auto d-block"></figure><p>Once you enter the URL and press <em>Register</em>, you should see an
+option to import the <em>main</em> branch, so go ahead.</p>
+<p>Now you need to confirm that your <em>main workflow</em> is
+<code>workflow/Snakefile</code> and is of type <em>Snakemake</em>. Also
+the diagram is under <code>images/rulegraph.svg</code>.</p>
+<p>Ignore the <em>Abstract CWL</em> - we do not have this.</p>
+<p>On the next screen, you will see that the <code>README.md</code> has
+been loaded into the <code>Description</code> box. You can move the
+header text from here into the <em>Title</em> box above.</p>
+<p>Ensure the workflow is associated with the <strong>Submission
+Tutorial</strong> team.</p>
+<p>You should see that the <em>License</em> is correctly detected as
+<em>MIT License</em>, and you should also see that information from your
+<code>CITATION.cff</code> file has been picked up.</p>
+<p>You could add extra items at this point but we have all we need for
+the initial upload. Click the <em>Register</em> button one more time,
+and confirm you are happy with public visibility. You should now see
+your workflow on the site. You can bookmark the URL for your workflow
+and share it directly, or you could mint a DOI for the workflow if you
+plan to publish this version.</p>
+<p><strong>Note:</strong> DOI creation may not work correctly on the
+<em>dev.workflowhub.eu</em> site.</p>
+<div id="the-snakemake-workflow-catalogue" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="the-snakemake-workflow-catalogue" class="callout-inner">
+<h3 class="callout-title">The Snakemake Workflow Catalogue</h3>
+<div class="callout-content">
+<p>This site, made by the Snakemake developers, can be found at:</p>
 <p><a href="https://snakemake.github.io/snakemake-workflow-catalog/" class="external-link uri">https://snakemake.github.io/snakemake-workflow-catalog/</a></p>
 <p>This is another resource where you may find and share Snakemake
-workflows. It works a little differently to WorkflowHub, in that.</p>
+workflows. It works very differently to <em>WorkflowHub</em>, in
+that.</p>
 <ul>
 <li>This resource is specific to Snakemake workflows</li>
-<li>Workflows are not submitted directly to the catalogue, but are
+<li>Workflows are not submitted directly to the catalog, but are
 discovered and listed from GitHub</li>
 <li>All the listed workflows are public, as they must be public projects
 on GitHub to begin with</li>
 <li>There is no option to upload a workflow diagram or any extra
-documentation</li>
+documentation files</li>
 <li>There is no option to mint a DOI for publication</li>
+<li>You can add extra information to the catalog by adding a
+<code>.snakemake-workflow-catalog.yml</code> file in your Git
+repository</li>
+<li>You update your workflow by making <a href="https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases" class="external-link">releases</a>
+on GitHub</li>
 </ul>
 <p>There is no reason why your workflow should not be in both
 places.</p>
-<p>I’ll include making a diagram in here.</p>
-<p>Upload to WFH is as per the instructions.</p>
-<p>Then we, I think, retrieve the Ro-Crate and commit it back to
-GIT.</p>
-<p>Check how that pans out with the sample workflow.</p>
+</div>
+</div>
+</div>
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
@@ -2189,8 +2351,8 @@ any links that you are not going to use.
   "url": "https://carpentries.github.io/workbench-template-md/instructor/aio.html",
   "identifier": "https://carpentries.github.io/workbench-template-md/instructor/aio.html",
   "dateCreated": "2024-10-08",
-  "dateModified": "2025-03-18",
-  "datePublished": "2025-03-18"
+  "dateModified": "2025-03-19",
+  "datePublished": "2025-03-19"
 }
 
   </script><script>
