@@ -112,37 +112,6 @@ $ git commit -m "Add RO-Crate metadata"
 ```
 
 Now you have a backup of all the information that WorkflowHub stores about the workflow, saved
-along with your code.
+along with your code. You can also use this file to automate submission of new versions of the
+workflow to WorkflowHub, as outlined in the next episode.
 
-Why do we do this, again? I feel like I'm losing myself a little.
-
----
-
-When your primary interest is to share a workflow so that other people can use it for their own
-data, you are talking about a workflow crate.
-
-These two requirements are very closely related. If you have a good test dataset for your workflow,
-as we have carefully created for this example, then the idea is to run your full workflow on the
-toy data and capture all the provenance information from that, so that the crate will capture
-everything needed to validate and re-use the workflow. (re-word this. what can we do practically?)
-
-Q1 - What does WorkflowHub put into the RO-Crate (we can take a look!).
-
-Q2 - What else might we want to include (if we go into the provenance stuff). Can I actually demo
-anything in this regard?
-
----
-
-This is where I give a general intro to RO-Crates.
-
-What do they do, in general.
-
-What do they do, for you.
-
-What do you actually need to know:
-
-1) If you are just looking to share your workflow, WFH will deal with the RO-Crate stuff for you
-
-2) If you need to make an RO-Crate yourself, you can ? use the plugin ???
-
-3) And then?

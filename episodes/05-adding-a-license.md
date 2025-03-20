@@ -38,7 +38,9 @@ $ mv mit.txt LICENSE.txt
 $ nano LICENSE.txt
 ```
 
-You may now *commit* and *push* the change to GitHub.
+You may now *commit* and *push* the change to GitHub. The `-m` option to `git commit` allows you
+to set a short commit message without going through the text editor. We'll use this in the examples
+from now on as it is easier to write things out this way in the code snippets.
 
 ```bash
 $ git add LICENSE.txt
