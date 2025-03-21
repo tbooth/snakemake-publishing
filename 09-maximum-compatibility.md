@@ -7,19 +7,20 @@ exercises: 30
 ::::::::::::::::::::::::::::::::::::::: objectives
 
 - Add resources to our rules
-- Something something containers?
-- ???
+- Consider containers
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- TODO
+- What helps a workflow to run on different environments.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-This is currently a placeholder for several things.
+## Setting resources for rules
+
+When Snakemake runs a workflow using the default *local* executor.
 
 1) Resources. Setting them and adding them. That could be most of this episode. Maybe an episode
 in itself?

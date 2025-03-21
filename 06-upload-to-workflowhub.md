@@ -177,7 +177,7 @@ differently to *WorkflowHub*, in that.
 * There is no option to mint a DOI for publication
 * You can add extra information to the catalog by adding a `.snakemake-workflow-catalog.yml` file
   in your Git repository
-* You update your workflow by making [releases](
+* You automatically update your workflow by making [releases](
   https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases) on GitHub
 
 There is no reason why your workflow should not be in both places.
