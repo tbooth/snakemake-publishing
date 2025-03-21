@@ -260,12 +260,21 @@
 <div class="accordion accordion-flush" id="accordionFlushcurrent">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-headingcurrent">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapsecurrent" aria-expanded="true" aria-controls="flush-collapsecurrent">
         <span class="visually-hidden">Current Chapter</span>
         <span class="current-chapter">
         7. RO-Crates
         </span>
-      
+      </button>
     </div><!--/div.accordion-header-->
+
+    <div id="flush-collapsecurrent" class="accordion-collapse collapse show" aria-labelledby="flush-headingcurrent" data-bs-parent="#accordionFlushcurrent">
+      <div class="accordion-body">
+        <ul><li><a href="#a-general-introduction-to-ro-crates">A general introduction to RO-Crates</a></li>
+<li><a href="#putting-workflows-into-ro-crates">Putting workflows into RO-Crates</a></li>
+<li><a href="#getting-the-ro-crate-matadata-from-workflowhub">Getting the RO-Crate matadata from WorkflowHub</a></li>
+        </ul></div><!--/div.accordion-body-->
+    </div><!--/div.accordion-collapse-->
 
   </div><!--/div.accordion-item-->
 </div><!--/div.accordion-flush-->
@@ -346,7 +355,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>RO-Crates</h1>
-        <p>Last updated on 2025-02-25 |
+        <p>Last updated on 2025-03-21 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/07-ro-crates.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -379,17 +388,16 @@
 <h3 class="card-title">Objectives</h3>
 <ul><li>Download the RO-crate for our workflow</li>
 <li>Understand the structure of an RO-Crate</li>
-<li>???</li>
+<li>Put the metadata file into Git</li>
 </ul></div>
 </div>
 </div>
 </div>
 </div>
-<div class="section level1">
-<h1 id="a-general-introduction-to-ro-crates">A general introduction to RO-Crates<a class="anchor" aria-label="anchor" href="#a-general-introduction-to-ro-crates"></a></h1>
-<p>An <a href="https://www.researchobject.org/ro-crate/about_ro_crate" class="external-link">RO-Crate</a>
-is simply a zip file that contains a collection of data files, and
-includes a description of what those files are.</p>
+<section><h2 class="section-heading" id="a-general-introduction-to-ro-crates">A general introduction to RO-Crates<a class="anchor" aria-label="anchor" href="#a-general-introduction-to-ro-crates"></a></h2>
+<hr class="half-width"><p>An <a href="https://www.researchobject.org/ro-crate/about_ro_crate" class="external-link">RO-Crate</a>
+is simply a <em>zip</em> file that contains a collection of data files,
+and includes a structured description of what those files are.</p>
 <p>The base RO-Crate specification says that you can include any types
 of data files you like, but it does stipulate that the description must
 be in a file named <code>ro-crate-metadata.json</code> and that the
@@ -406,49 +414,94 @@ for us. But we do need to understand that it contains:</p>
 <li>the content of the files</li>
 <li>how the specific files relate to each other</li>
 </ul></li>
-</ul><p>The description is not designed to be read directly by end users.
-Rather, software like that running on WorkflowHub will read and
-summarise the file. User-readble documentation is best written in a
+</ul><p>The <em>JSON LD</em> file is not designed to be read directly by end
+users. Rather, software like that running on WorkflowHub will read and
+summarise the file. User-readable documentation is best written in a
 format such as Markdown, and from the RO-Crate perspective, is regarded
 as part of the dataset.</p>
+</section><section><h2 class="section-heading" id="putting-workflows-into-ro-crates">Putting workflows into RO-Crates<a class="anchor" aria-label="anchor" href="#putting-workflows-into-ro-crates"></a></h2>
+<hr class="half-width"><p>The <em>RO-Crate</em> standard was not specifically designed for
+sharing workflows, but the base standard has been extended by several
+<em>profiles</em>.</p>
+<ul><li>
+<a href="https://about.workflowhub.eu/Workflow-RO-Crate/" class="external-link">Workflow
+RO-Crate</a>
+<ul><li>
+<a href="https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate/" class="external-link">Workflow
+Run Crate</a>
+<ul><li><a href="https://www.researchobject.org/workflow-run-crate/profiles/provenance_run_crate/" class="external-link">Provenence
+Run Crate</a></li>
+</ul></li>
+<li><a href="https://crs4.github.io/workflow-testing-ro-crate/" class="external-link">Workflow
+Testing RO-Crate</a></li>
+</ul></li>
+</ul><p>The most comprehensive of the profiles is the <em>Provenance Run
+Crate</em>. The goal of this standard is to cater for users who want to
+share their workflow outputs, but desire to very carefully record
+exactly how they obtained those output files, including all the
+<em>input data</em>, <em>software versions</em>, <em>parameters</em>,
+<em>platform</em> and <em>procedure (workflow)</em> used. Imagine for
+example a forensics laboratory where the whole analysis process could be
+audited and questioned, even several years after the analysis. Work is
+ongoing to add reporting plugins to Snakemake that provide for automated
+recording at this level of detail in a single archive.</p>
+<p>The <em>Workflow Run Crate</em> is a less stringent version,
+recording that a particular analysis was made with a particular
+workflow, and the results of that analysis.</p>
+<p>The <em>Workflow Testing RO-Crate</em> would be suitable to capture
+information about our toy dataset and any other tests included with the
+workflow. (But we’ll not look further into this topic within this
+course).</p>
+<p>Here, will will just look at the basic <em>Workflow RO-Crate</em>. As
+suggested in <a href="https://about.workflowhub.eu/developer/how-to-make-a-workflow-ro-crate/" class="external-link">the
+WorkflowHub docs</a>:</p>
+<blockquote>
+<p>The most convenient way to make a workflow RO-crate at this moment is
+by making use of WorkflowHub capabilities.</p>
+</blockquote>
+</section><section><h2 class="section-heading" id="getting-the-ro-crate-matadata-from-workflowhub">Getting the RO-Crate matadata from WorkflowHub<a class="anchor" aria-label="anchor" href="#getting-the-ro-crate-matadata-from-workflowhub"></a></h2>
+<hr class="half-width"><p>So we will download our workflow as an <em>RO-Crate</em> from
+WorkflowHub. Use the <em>Download RO-Crate</em> button on the website.
+Assuming you save the resulting <code>.crate.zip</code> file in your
+<code>Downloads</code> directory, you can look at the contents on the
+command line, or you can open the file in GUI.</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">$</span> ls ~/Downloads/<span class="pp">*</span>.crate.zip</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="ex">...see</span> the actual filename...</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="ex">$</span> unzip <span class="at">-tv</span> ~/Downloads/workflow-XXXX.crate.zip</span></code></pre>
 </div>
-<div class="section level1">
-<h1 id="putting-workflows-into-ro-crates">Putting workflows into RO-Crates<a class="anchor" aria-label="anchor" href="#putting-workflows-into-ro-crates"></a></h1>
-<p>Describe the related testing crate and provenance crate.</p>
-<p>When your primary interest is in sharng your results, but you want to
-very carefully record exactly how you obtained those results, including
-all the input data, software, parameters, platform and procedure
-(workflow) used. This a job for a provenance crate.</p>
-<p>When your primary interest is to share a workflow so that other
-people can use it for their own data, you are talking about a workflow
-crate.</p>
-<p>These two requirements are very closely related. If you have a good
-test dataset for your workflow, as we have carefully created for this
-example, then the idea is to run your full workflow on the toy data and
-capture all the provenance information from that, so that the crate will
-capture everything needed to validate and re-use the workflow. (re-word
-this. what can we do practically?)</p>
-<p>Q1 - What does WorkflowHub put into the RO-Crate (we can take a
-look!).</p>
-<p>Q2 - What else might we want to include (if we go into the provenance
-stuff). Can I actually demo anything in this regard?</p>
-<hr><p>This is where I give a general intro to RO-Crates.</p>
-<p>What do they do, in general.</p>
-<p>What do they do, for you.</p>
-<p>What do you actually need to know:</p>
-<ol style="list-style-type: decimal"><li><p>If you are just looking to share your workflow, WFH will deal
-with the RO-Crate stuff for you</p></li>
-<li><p>If you need to make an RO-Crate yourself, you can ? use the
-plugin ???</p></li>
-<li><p>And then?</p></li>
-</ol><!--
+<p>Aside from the files we made ourselves, we see:</p>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>    testing: ro-crate-metadata.json   OK
+    testing: ro-crate-preview.html    OK</code></pre>
+</div>
+<p>The HTML file is just a visual preview of the JSON file. We extract
+the JSON file into our source directory.</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">$</span> unzip ~/Downloads/workflow-XXXX.crate.zip ro-crate-metadata.json</span></code></pre>
+</div>
+<p>And commit it back to GIT.</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">$</span> git add ro-crate-metadata.json</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Add RO-Crate metadata"</span></span></code></pre>
+</div>
+<p>Now you have a backup of all the information that WorkflowHub stores
+about the workflow, saved along with your code. You can also use this
+file to automate submission of new versions of the workflow to
+WorkflowHub, as outlined in the next episode.</p>
+<!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
- --></div>
-
-
-
-      </div> <!-- / div.lesson-content -->
+ -->
+</section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="../instructor/06-upload-to-workflowhub.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
         <a class="chapter-link float-end" href="../instructor/08-releasing-a-new-version.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
@@ -506,8 +559,8 @@ any links that you are not going to use.
   "url": "https://carpentries.github.io/workbench-template-md/instructor/07-ro-crates.html",
   "identifier": "https://carpentries.github.io/workbench-template-md/instructor/07-ro-crates.html",
   "dateCreated": "2024-10-08",
-  "dateModified": "2025-02-25",
-  "datePublished": "2025-03-19"
+  "dateModified": "2025-03-21",
+  "datePublished": "2025-03-21"
 }
 
   </script><script>

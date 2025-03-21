@@ -481,7 +481,7 @@ to a new system or given new data?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>A workflow may depend on:</p>
 <ul>
@@ -650,7 +650,7 @@ the four different k-mer length settings.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Assuming you started with the sample answer, three changes are
 needed:</p>
@@ -1531,7 +1531,7 @@ any links that you are not going to use.
 </div>
 </section></section><section id="aio-05-adding-a-license"><p>Content from <a href="05-adding-a-license.html">Adding a license</a></p>
 <hr>
-<p>Last updated on 2025-03-19 |
+<p>Last updated on 2025-03-21 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/05-adding-a-license.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1587,8 +1587,11 @@ template and add your own name at the top, along with the date.</p>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="ex">$</span> mv mit.txt LICENSE.txt</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="ex">$</span> nano LICENSE.txt</span></code></pre>
 </div>
-<p>You may now <em>commit</em> and <em>push</em> the change to
-GitHub.</p>
+<p>You may now <em>commit</em> and <em>push</em> the change to GitHub.
+The <code>-m</code> option to <code>git commit</code> allows you to set
+a short commit message without going through the text editor. We’ll use
+this in the examples from now on as it is easier to write things out
+this way in the code snippets.</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -1744,7 +1747,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-06-upload-to-workflowhub"><p>Content from <a href="06-upload-to-workflowhub.html">Upload to WorkflowHub</a></p>
 <hr>
-<p>Last updated on 2025-03-19 |
+<p>Last updated on 2025-03-21 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/06-upload-to-workflowhub.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1931,7 +1934,7 @@ documentation files</li>
 <li>You can add extra information to the catalog by adding a
 <code>.snakemake-workflow-catalog.yml</code> file in your Git
 repository</li>
-<li>You update your workflow by making <a href="https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases" class="external-link">releases</a>
+<li>You automatically update your workflow by making <a href="https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases" class="external-link">releases</a>
 on GitHub</li>
 </ul>
 <p>There is no reason why your workflow should not be in both
@@ -1945,7 +1948,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-07-ro-crates"><p>Content from <a href="07-ro-crates.html">RO-Crates</a></p>
 <hr>
-<p>Last updated on 2025-02-25 |
+<p>Last updated on 2025-03-21 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/07-ro-crates.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1973,19 +1976,19 @@ any links that you are not going to use.
 <ul>
 <li>Download the RO-crate for our workflow</li>
 <li>Understand the structure of an RO-Crate</li>
-<li>???</li>
+<li>Put the metadata file into Git</li>
 </ul>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="section level1">
-<h1 id="a-general-introduction-to-ro-crates">A general introduction to RO-Crates<a class="anchor" aria-label="anchor" href="#a-general-introduction-to-ro-crates"></a>
-</h1>
+<section><h2 class="section-heading" id="a-general-introduction-to-ro-crates">A general introduction to RO-Crates<a class="anchor" aria-label="anchor" href="#a-general-introduction-to-ro-crates"></a>
+</h2>
+<hr class="half-width">
 <p>An <a href="https://www.researchobject.org/ro-crate/about_ro_crate" class="external-link">RO-Crate</a>
-is simply a zip file that contains a collection of data files, and
-includes a description of what those files are.</p>
+is simply a <em>zip</em> file that contains a collection of data files,
+and includes a structured description of what those files are.</p>
 <p>The base RO-Crate specification says that you can include any types
 of data files you like, but it does stipulate that the description must
 be in a file named <code>ro-crate-metadata.json</code> and that the
@@ -2008,52 +2011,106 @@ for us. But we do need to understand that it contains:</p>
 </ul>
 </li>
 </ul>
-<p>The description is not designed to be read directly by end users.
-Rather, software like that running on WorkflowHub will read and
-summarise the file. User-readble documentation is best written in a
+<p>The <em>JSON LD</em> file is not designed to be read directly by end
+users. Rather, software like that running on WorkflowHub will read and
+summarise the file. User-readable documentation is best written in a
 format such as Markdown, and from the RO-Crate perspective, is regarded
 as part of the dataset.</p>
+</section><section><h2 class="section-heading" id="putting-workflows-into-ro-crates">Putting workflows into RO-Crates<a class="anchor" aria-label="anchor" href="#putting-workflows-into-ro-crates"></a>
+</h2>
+<hr class="half-width">
+<p>The <em>RO-Crate</em> standard was not specifically designed for
+sharing workflows, but the base standard has been extended by several
+<em>profiles</em>.</p>
+<ul>
+<li>
+<a href="https://about.workflowhub.eu/Workflow-RO-Crate/" class="external-link">Workflow
+RO-Crate</a>
+<ul>
+<li>
+<a href="https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate/" class="external-link">Workflow
+Run Crate</a>
+<ul>
+<li><a href="https://www.researchobject.org/workflow-run-crate/profiles/provenance_run_crate/" class="external-link">Provenence
+Run Crate</a></li>
+</ul>
+</li>
+<li><a href="https://crs4.github.io/workflow-testing-ro-crate/" class="external-link">Workflow
+Testing RO-Crate</a></li>
+</ul>
+</li>
+</ul>
+<p>The most comprehensive of the profiles is the <em>Provenance Run
+Crate</em>. The goal of this standard is to cater for users who want to
+share their workflow outputs, but desire to very carefully record
+exactly how they obtained those output files, including all the
+<em>input data</em>, <em>software versions</em>, <em>parameters</em>,
+<em>platform</em> and <em>procedure (workflow)</em> used. Imagine for
+example a forensics laboratory where the whole analysis process could be
+audited and questioned, even several years after the analysis. Work is
+ongoing to add reporting plugins to Snakemake that provide for automated
+recording at this level of detail in a single archive.</p>
+<p>The <em>Workflow Run Crate</em> is a less stringent version,
+recording that a particular analysis was made with a particular
+workflow, and the results of that analysis.</p>
+<p>The <em>Workflow Testing RO-Crate</em> would be suitable to capture
+information about our toy dataset and any other tests included with the
+workflow. (But we’ll not look further into this topic within this
+course).</p>
+<p>Here, will will just look at the basic <em>Workflow RO-Crate</em>. As
+suggested in <a href="https://about.workflowhub.eu/developer/how-to-make-a-workflow-ro-crate/" class="external-link">the
+WorkflowHub docs</a>:</p>
+<blockquote>
+<p>The most convenient way to make a workflow RO-crate at this moment is
+by making use of WorkflowHub capabilities.</p>
+</blockquote>
+</section><section><h2 class="section-heading" id="getting-the-ro-crate-matadata-from-workflowhub">Getting the RO-Crate matadata from WorkflowHub<a class="anchor" aria-label="anchor" href="#getting-the-ro-crate-matadata-from-workflowhub"></a>
+</h2>
+<hr class="half-width">
+<p>So we will download our workflow as an <em>RO-Crate</em> from
+WorkflowHub. Use the <em>Download RO-Crate</em> button on the website.
+Assuming you save the resulting <code>.crate.zip</code> file in your
+<code>Downloads</code> directory, you can look at the contents on the
+command line, or you can open the file in GUI.</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">$</span> ls ~/Downloads/<span class="pp">*</span>.crate.zip</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="ex">...see</span> the actual filename...</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="ex">$</span> unzip <span class="at">-tv</span> ~/Downloads/workflow-XXXX.crate.zip</span></code></pre>
 </div>
-<div class="section level1">
-<h1 id="putting-workflows-into-ro-crates">Putting workflows into RO-Crates<a class="anchor" aria-label="anchor" href="#putting-workflows-into-ro-crates"></a>
-</h1>
-<p>Describe the related testing crate and provenance crate.</p>
-<p>When your primary interest is in sharng your results, but you want to
-very carefully record exactly how you obtained those results, including
-all the input data, software, parameters, platform and procedure
-(workflow) used. This a job for a provenance crate.</p>
-<p>When your primary interest is to share a workflow so that other
-people can use it for their own data, you are talking about a workflow
-crate.</p>
-<p>These two requirements are very closely related. If you have a good
-test dataset for your workflow, as we have carefully created for this
-example, then the idea is to run your full workflow on the toy data and
-capture all the provenance information from that, so that the crate will
-capture everything needed to validate and re-use the workflow. (re-word
-this. what can we do practically?)</p>
-<p>Q1 - What does WorkflowHub put into the RO-Crate (we can take a
-look!).</p>
-<p>Q2 - What else might we want to include (if we go into the provenance
-stuff). Can I actually demo anything in this regard?</p>
-<hr>
-<p>This is where I give a general intro to RO-Crates.</p>
-<p>What do they do, in general.</p>
-<p>What do they do, for you.</p>
-<p>What do you actually need to know:</p>
-<ol style="list-style-type: decimal">
-<li><p>If you are just looking to share your workflow, WFH will deal
-with the RO-Crate stuff for you</p></li>
-<li><p>If you need to make an RO-Crate yourself, you can ? use the
-plugin ???</p></li>
-<li><p>And then?</p></li>
-</ol>
+<p>Aside from the files we made ourselves, we see:</p>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>    testing: ro-crate-metadata.json   OK
+    testing: ro-crate-preview.html    OK</code></pre>
+</div>
+<p>The HTML file is just a visual preview of the JSON file. We extract
+the JSON file into our source directory.</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">$</span> unzip ~/Downloads/workflow-XXXX.crate.zip ro-crate-metadata.json</span></code></pre>
+</div>
+<p>And commit it back to GIT.</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">$</span> git add ro-crate-metadata.json</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">"Add RO-Crate metadata"</span></span></code></pre>
+</div>
+<p>Now you have a backup of all the information that WorkflowHub stores
+about the workflow, saved along with your code. You can also use this
+file to automate submission of new versions of the workflow to
+WorkflowHub, as outlined in the next episode.</p>
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
-</div></section><section id="aio-08-releasing-a-new-version"><p>Content from <a href="08-releasing-a-new-version.html">Releasing a new version</a></p>
+</section></section><section id="aio-08-releasing-a-new-version"><p>Content from <a href="08-releasing-a-new-version.html">Releasing a new version</a></p>
 <hr>
-<p>Last updated on 2025-02-25 |
+<p>Last updated on 2025-03-21 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/08-releasing-a-new-version.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -2067,7 +2124,7 @@ any links that you are not going to use.
 <div class="inner">
 <h3 class="card-title">Questions</h3>
 <ul>
-<li>TODO</li>
+<li>What should I do to update the workflow?</li>
 </ul>
 </div>
 </div>
@@ -2079,44 +2136,55 @@ any links that you are not going to use.
 <ul>
 <li>Understand sematic versioning</li>
 <li>Push a new workflow version to Workflowhub and GitHub</li>
-<li>???</li>
+<li>Automate new releases</li>
 </ul>
 </div>
 </div>
 </div>
 </div>
 </div>
-<p>I need to come up with a change that is plausible.</p>
-<p>Sematic versioning.</p>
-<p>Manual upate process.</p>
-<p>Auto update process.</p>
-<p>Validation and re-testing.</p>
-<section><h2 class="section-heading" id="sematic-versioning">Sematic versioning<a class="anchor" aria-label="anchor" href="#sematic-versioning"></a>
+<section><h2 class="section-heading" id="new-versions-of-the-workflow">New versions of the workflow<a class="anchor" aria-label="anchor" href="#new-versions-of-the-workflow"></a>
+</h2>
+<hr class="half-width">
+<p>It may well be that your workflow is used for one study, archived on
+WorkflowHub, and never changed again. On the other had, you may use the
+workflow on some new data and find that you need to add new features or
+options. Or maybe someone alse uses your workflow and writes to suggest
+a bug fix or enhancement that you are happy to incorporate.</p>
+<p>Releasing a new version is essentially the same process as submitting
+the workflow in the first place:</p>
+<ul>
+<li>Make and test the code changes</li>
+<li>Commit the changes in Git</li>
+<li>Push to GitHub</li>
+<li>Register a new update on WorkflowHub.com</li>
+</ul>
+<p>Having said this, there are some considerations that will help you
+and others to understand the nature of the update.</p>
+</section><section><h2 class="section-heading" id="sematic-versioning">Sematic versioning<a class="anchor" aria-label="anchor" href="#sematic-versioning"></a>
 </h2>
 <hr class="half-width">
 <p><a href="https://semver.org/" class="external-link">Semantic versioning</a> is the
 established way to assign a version number to any piece of software. You
 should use this scheme when releasing any updates to your workflow. A
 sematic version looks like this:</p>
-<div id="code" class="section level15">
-<p class="heading">code</p>
-<p>1.12.3</p>
+<div class="code">
+<p>v1.12.3</p>
 </div>
-<div id="section" class="section level12">
-<p class="heading"></p>
-<p>Where “1” is called the major version, “12” is the minor version, and
-“3” is the patch version. The choice of version number indicates to the
-user not only which release is the latest but also how two releases
-relate to each other.</p>
+<p>The <code>v</code> is not part of the version, but is normally
+included to indicate what the numbers are referring to.</p>
+<p>Then <code>1</code> is called the major version, <code>12</code> is
+the minor version, and <code>3</code> is the patch version. The choice
+of version number indicates to the user not only which release is the
+latest but also how two releases relate to each other.</p>
 <p>Guidance for sematic versioning tends to focus on the task of writing
 software libraries for which there is a “public API”. Workflows are a
 little different but analogous guidelines can still be followed.</p>
-</div>
 <div class="section level3">
 <h3 id="incrementing-the-patch-version">Incrementing the patch version<a class="anchor" aria-label="anchor" href="#incrementing-the-patch-version"></a>
 </h3>
-<p>This is for bug fixes only. If you add any new features or options
-you should increment the minor version.</p>
+<p>This is for bug fixes and documentation changes only. If you add any
+new features or options you should increment the minor version.</p>
 <p>Changing to a new patch version should not affect the output of the
 workflow at all, other than in the case of fixing something which is
 clearly broken. The versions of any software tools used by the workflow
@@ -2134,50 +2202,114 @@ parts of the process, and bring in new software. In general it should be
 possible to re-do any previous analysis with the updated workflow, but
 it is not necessary that you obtain an identical result, as changes to
 tool versions or default parameters may affect that.</p>
+<p>In our sample workflow, adding the ability to configure the adapter
+used by <em>cutadapt</em>, for example, would warrant a new minor
+version.</p>
 </div>
 <div class="section level3">
 <h3 id="incrementing-the-major-version">Incrementing the major version<a class="anchor" aria-label="anchor" href="#incrementing-the-major-version"></a>
 </h3>
 <p>The decision over whether to make a major or minor release is more
-subjective. For some software (bowtie and bwa are cases in point) the
-new major release is a whole re-write such that the new version is
-essentially a whole new program. In this case it’s reasonable to say
-that making a major release is on the same level of significance as
-giving the software or pipeline a new name.</p>
+subjective. For some software (the <em>bowtie</em> and <em>bwa</em> read
+aligners are cases in point) the new major release is a whole re-write
+such that the new version is more like a whole new program. It’s
+reasonable to say that making a major release is on the same level of
+significance as giving the software or pipeline a new name.</p>
 <p>A change in major version indicates to any users that they cannot
 assume the workflow will operate as before, and they should re-read the
 documentation before using it. Most workflows will never get a change so
-fundamental that a major version increment is nevessary.</p>
+fundamental that a major version increment is necessary.</p>
+<p>If we changed the assembler in our workflow from <em>Velvet</em> to
+something more modern this would warrant a major new major version.</p>
 </div>
 <div class="section level3">
 <h3 id="pre-releases">Pre-releases<a class="anchor" aria-label="anchor" href="#pre-releases"></a>
 </h3>
-<p>If you do not consider your workflow to be ready for general use but
-still wish to track the version number you may version it as “0.1.0”.
-The major version number of 0 indicates a development pre-release. If
-you update the code you should increment the minor or patch releases as
-above, but the distinction between these is understood to be less
-meaningful in the context of development releases.</p>
+<p>If you consider your workflow to be a work in progress but still wish
+to track the version number you may version it as “0.1.0”. The major
+version number of 0 indicates a development pre-release. If you update
+the code you should increment the minor or patch releases as above, but
+the distinction between these is understood to be less meaningful in the
+context of development releases.</p>
 </div>
 <div class="section level3">
 <h3 id="variants-on-sematic-versioning">Variants on sematic versioning<a class="anchor" aria-label="anchor" href="#variants-on-sematic-versioning"></a>
 </h3>
-<p>For some well-known software, you will see the versions like 24.12.0
-- a variation where major and minor version numbers encode the year and
-month of release. The patch number is still just a sequential number.
-This works will in projects like Ubuntu Linux which have periodic
-releases, but in the case of workflows you are best to avoid it.</p>
+<p>For some well-known software, you will see the versions like
+<code>24.12.0</code> - a variation where major and minor version numbers
+encode the year and month of release. The patch number is still just a
+sequential number. This works will in projects like Ubuntu Linux which
+have periodic releases, but in the case of workflows or other software
+you write you are best to avoid it.</p>
+<p>You will see that in WorkflowHub, since we did not specify a version,
+the versions look like this:</p>
+<blockquote>
+<p>main @ 08522a2</p>
+</blockquote>
+<p>That hexadecimal number comes from the start of the Git commit
+identifier (as seen in the <code>git log</code> command) and serves as a
+unique identifier, but it say nothing about the ordering and
+relationship between workflow versions.</p>
 </div>
 </section><section><h2 class="section-heading" id="updating-our-workflow">Updating our workflow<a class="anchor" aria-label="anchor" href="#updating-our-workflow"></a>
 </h2>
 <hr class="half-width">
-<p>Decide on a change. Maybe I should do the next chapter first so I can
-add resources? Or maybe I should switch to a different assembler??
-Or??</p>
-<p>Decide if this warrants a major, minor, or patch release</p>
-<p>Commit to Git</p>
-<p>Push to WFH. We can now do this via direct import, right? Do I want
-to cover automated push? Maybe just in a callout.</p>
+<p>Let’s make a small change to the workflow, allowing the user to set
+the adapter sequence for <em>cutadapt</em> in the config file.</p>
+<p>In the cutadapt rule, change this part of the <em>cutadapt</em>
+rule.</p>
+<pre><code><span>    <span class="va">params</span><span class="op">:</span></span>
+<span>        <span class="va">adapter</span> <span class="op">=</span> <span class="st">"AGATCGGAAGAGC"</span></span></code></pre>
+<p>to</p>
+<pre><code><span>    <span class="va">params</span><span class="op">:</span></span>
+<span>        <span class="va">adapter</span> <span class="op">=</span> <span class="fu">config.get</span><span class="op">(</span><span class="va">adapter</span>, <span class="st">"AGATCGGAAGAGC"</span><span class="op">)</span></span></code></pre>
+<p>And commit to Git:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="ex">$</span> git add workflow/Snakefile</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="ex">$</span> git commit <span class="at">-m</span> <span class="st">'Allow the adapter to be configured for Cutadapt'</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="ex">$</span> git push</span></code></pre>
+</div>
+<p>As noted above, this warrants an increase in the minor release
+version. As we didn’t actually set the version in the initial upload
+we’ll say that the initial upload was <em>1.0.0</em> and this new one
+will be <em>1.1.0</em>.</p>
+<p>You can change the version for the workflow that’s already in
+WorkflowHub, so do this now. Use the <em>Edit</em> button in the
+<em>Version History</em> section at the bottom of your workflow page,
+and change the version to <em>v1.0.0</em> (including the <code>v</code>
+here is a good idea as we’ll see shortly).</p>
+</section><section><h2 class="section-heading" id="making-a-versioned-github-release">Making a versioned GitHub release<a class="anchor" aria-label="anchor" href="#making-a-versioned-github-release"></a>
+</h2>
+<hr class="half-width">
+<p>We’ll make the release on the GitHub web interface. There are other
+ways to do it, but this is the simplest.</p>
+<ol style="list-style-type: decimal">
+<li>On <em>github.com</em>, when viewing the
+<em>yeast_demo_assembly</em> repository, make sure the latest commit is
+showing up as the change you just pushed.</li>
+<li>Click the <strong>Create a new release</strong> link on the
+right.</li>
+<li>In the <strong>Choose a tag</strong> dropdown, enter the new tag
+<em>v1.1.0</em> and click the option that appears to <strong>Create new
+tag: v1.1.0 on publish</strong>.</li>
+<li>You may enter a release title and description or hit
+<strong>Generate release notes</strong> to auto-fill these options.</li>
+<li>Now <strong>Publish release</strong>
+</li>
+</ol>
+<p>Back on <em>dev.workflowhub.eu</em>, we can tell the site about the
+new release.</p>
+<ol style="list-style-type: decimal">
+<li>Use the <strong>Actions</strong> &gt; <strong>New Version</strong>
+option on the web interface</li>
+<li>Confirm that we are fetching from the existing repository</li>
+<li>This time, select the <strong>v1.1.0</strong> option from the
+<strong>Tags</strong> target</li>
+<li>Accept all the changes and <strong>Register</strong> the new
+version.</li>
+</ol>
 <div id="automated-update-from-github-to-workflowhub" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -2188,9 +2320,63 @@ WorkflowHub</h3>
 <div class="callout-content">
 <p>It’s overkill for most workflows, but if you want to be able to add
 new versions to WorkflowHub without the chore of going to the site and
-manually importing then this is possible. The following page outlines
-how to set up an automated submission action:</p>
+manually importing then this is possible.</p>
+<p>Instructions on the following page outline how to set up an automated
+submission action:</p>
 <p><a href="https://github.com/workflowhub-eu/submission-action" class="external-link uri">https://github.com/workflowhub-eu/submission-action</a></p>
+<p>We already have a WorkflowHub account and a WorkflowHub team. We do
+need an API token. Get this from the <em>dev.workflowhub.eu</em> website
+under <em>Top-Right Menu</em> &gt; <em>My Profile</em> &gt;
+<em>Actions</em> &gt; <em>API Tokens</em> &gt; <em>New API Token</em>.
+Give the title <em>github_release</em> and <strong>Create</strong>. Then
+leave the next page open so you can copy the token.</p>
+<p>Back on <em>github.com</em>, make sure you are viewing the
+<em>yeast_demo_assembly</em> project and click the <em>Settings</em>
+button in the top bar. On the left, select <em>Secrets and
+variables</em> and then select <em>Actions</em> from the sub-options.
+Then click the button for <strong>New repository secret</strong>.</p>
+<p>Give the name as <em>DEV_WORKFLOWHUB_API_TOKEN</em> (you must use
+this exact name) and paste in the token that is shown in
+<em>dev.workflowhub.eu</em>. Then click <strong>Add secret</strong>.</p>
+<p>Now you need to make sure there are two files in your repository. One
+is the <code>ro-crate-metadata.json</code> obtained in the previous
+episode. You can edit this directly if you want to change the
+information about your workflow when you make a new release. The other
+is a file named
+<code>.github/workflows/submit_to_workflowhub.yml</code>. It must
+contain a version of the text found at <a href="https://github.com/workflowhub-eu/submission-action#user-content-test-workflow-submission-using-devworkflowhubeu" class="external-link">the
+bottom of the instructions page</a>.</p>
+<pre><code>name: Workflow publishing on dev.WorkflowHub.eu
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  wfh-submit:
+    name: dev.WorkflowHub.eu submission
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Submit workflows
+        uses: workflowhub-eu/submission-action@v0
+        env:
+          API_TOKEN: ${{ secrets.DEV_WORKFLOWHUB_API_TOKEN }}
+        with:
+          team_id: 58
+          instance: https://dev.workflowhub.eu</code></pre>
+<p>The <em>team_id</em> is <em>58</em> (which corresponds to the
+<em>Submission Tutorial</em> team), and the submission happens only when
+a release is published, not on every <code>git push</code>.</p>
+<p>Add and commit the files as before.</p>
+<pre><code>$ git add ro-crate-metadata.json .github
+$ git commit -m 'Enable auto-submit'
+$ git push</code></pre>
+<p>And finally, make a new release on GitHub as above. Since the
+workflow has not changed, call this a patch release, and set the version
+tag to <em>v1.1.1</em>.</p>
+<p>In GitHub, under the <em>Actions</em> tab, you should see the action
+triggered by the new release, and any errors with the submission.</p>
 </div>
 </div>
 </div>
@@ -2200,7 +2386,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-09-maximum-compatibility"><p>Content from <a href="09-maximum-compatibility.html">Maximum compatibility</a></p>
 <hr>
-<p>Last updated on 2025-02-25 |
+<p>Last updated on 2025-03-21 |
 
         <a href="https://github.com/carpentries/workbench-template-md/edit/main/episodes/09-maximum-compatibility.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -2214,7 +2400,7 @@ any links that you are not going to use.
 <div class="inner">
 <h3 class="card-title">Questions</h3>
 <ul>
-<li>TODO</li>
+<li>What helps a workflow to run on different environments.</li>
 </ul>
 </div>
 </div>
@@ -2225,15 +2411,18 @@ any links that you are not going to use.
 <h3 class="card-title">Objectives</h3>
 <ul>
 <li>Add resources to our rules</li>
-<li>Something something containers?</li>
-<li>???</li>
+<li>Consider containers</li>
 </ul>
 </div>
 </div>
 </div>
 </div>
 </div>
-<p>This is currently a placeholder for several things.</p>
+<section><h2 class="section-heading" id="setting-resources-for-rules">Setting resources for rules<a class="anchor" aria-label="anchor" href="#setting-resources-for-rules"></a>
+</h2>
+<hr class="half-width">
+<p>When Snakemake runs a workflow using the default <em>local</em>
+executor.</p>
 <ol style="list-style-type: decimal">
 <li><p>Resources. Setting them and adding them. That could be most of
 this episode. Maybe an episode in itself?</p></li>
@@ -2243,7 +2432,7 @@ care?</p></li>
 </ol>
 <p>Conda is already covered in the main tutorial but there is a bit more
 to say. Containers are a whole new topic.</p>
-<section><h2 class="section-heading" id="callout---hpc-systems-and-cloud-compatibility">Callout - HPC systems and cloud compatibility<a class="anchor" aria-label="anchor" href="#callout---hpc-systems-and-cloud-compatibility"></a>
+</section><section><h2 class="section-heading" id="callout---hpc-systems-and-cloud-compatibility">Callout - HPC systems and cloud compatibility<a class="anchor" aria-label="anchor" href="#callout---hpc-systems-and-cloud-compatibility"></a>
 </h2>
 <hr class="half-width">
 <p>Also, what about running on an HPC system? Do I want to go into any
@@ -2302,8 +2491,8 @@ any links that you are not going to use.
   "url": "https://carpentries.github.io/workbench-template-md/aio.html",
   "identifier": "https://carpentries.github.io/workbench-template-md/aio.html",
   "dateCreated": "2024-10-08",
-  "dateModified": "2025-03-19",
-  "datePublished": "2025-03-19"
+  "dateModified": "2025-03-21",
+  "datePublished": "2025-03-21"
 }
 
   </script><script>
