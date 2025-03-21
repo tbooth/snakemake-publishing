@@ -74,7 +74,7 @@ episodes:
 - 06-upload-to-workflowhub.md
 - 07-ro-crates.md
 - 08-releasing-a-new-version.md
-- 09-maximum-compatibility.md
+#- 09-maximum-compatibility.md
 
 
 # Information for Learners
