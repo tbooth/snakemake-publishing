@@ -36,9 +36,9 @@ Assuming this material is ever taught by someone other than Tim Booth, you the t
 create an account, and get a team approved prior to the course. On the day you may create a second
 account so you can follow the same directions as the participants. For my part I have:
 
-Main account (team owner): **tbooth**
-Team for use in course: **Submission Tutorial**
-Secondary account (to demo as a learner): **tbooth2_2**
+* Main account (team owner): **tbooth**
+* Team for use in course: **Submission Tutorial**
+* Secondary account (to demo as a learner): **tbooth2_2**
 
 For the learners, you probably want to have them register for WorkflowHub the day before this
 episode, even though signup is quick and automated. Using a password is fine, but given they
@@ -77,7 +77,7 @@ producing workflows should register them in WorkflowHub:
 
 As an individual user, the ability to search for workflows directly on the site or to obtain a
 workflow cited in a paper can be immediately useful. For the purposes of this workshop we will
-submit our own sample workflow to show how that side of things works. We'l submit to the
+submit our own sample workflow to show how that side of things works. We'll submit to the
 development version of the site, so as not to fill up the main website with test workflows.
 
 ## Registering on the WorkflowHub test server
@@ -109,9 +109,7 @@ In order to use the website, you must be a member of at least one team. One opti
 make a personal team. We'll not do this today as it requires an administrator approval from the
 WorkflowHub maintainers and we don't want to burden them with requests or have to wait for all
 the approvals. Instead, all learners can join a team owned by the course tutor. This team name
-is:
-
-**Submission Tutorial**
+is **"Submission Tutorial"**.
 
 1. Click on the "Join a Team" option you see after successfully logging in.
 1. Find the team as named above and request access.
