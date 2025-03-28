@@ -64,6 +64,9 @@ GitHub, then view the code in a browser.
 First, set some settings for Git. These will be saved into a file `.gitconfig` in your home
 directory, and so will apply any time you use Git within this account on this computer.
 
+Note that the first two options require using a Git version `>= 2.37.0`. Older versions will
+accept the config command but it will have no effect.
+
 ```bash
 $ git config --global init.defaultBranch main
 $ git config --global push.autoSetupRemote true
